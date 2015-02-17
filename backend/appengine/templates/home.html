@@ -1,7 +1,11 @@
 {% extends 'base/base.html' %}
 
+{% block css %}
+    <link rel="stylesheet" href="/static/css/default.css"/>
+{% endblock %}
+
 {% block body %}
-    <div class="content-wrapper" style="margin-left: 0 !important;">
+    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -74,7 +78,7 @@
             <!-- Main row -->
             <div class="row">
                 <!-- Left col -->
-                <section class="col-lg-7 connectedSortable">
+                <section class="col-lg-7 connectedSortable teach-content">
                     <!-- Custom tabs (Charts with tabs)-->
                     <div class="nav-tabs-custom">
                         <!-- Tabs within a box -->
@@ -299,7 +303,7 @@
 
                 </section><!-- /.Left col -->
                 <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                <section class="col-lg-5 connectedSortable">
+                <section class="col-lg-5 connectedSortable teach-content">
 
                     <!-- Map box -->
                     <div class="box box-solid bg-light-blue-gradient">
