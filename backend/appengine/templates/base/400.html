@@ -1,10 +1,17 @@
 {% extends 'base/base.html' %}
+
+{% block title %}
+    {{ super() }} - Error 400
+{% endblock %}
+
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="text-center">{% trans %}Sorry, an error happened and we are investigating{% endtrans %}</h1>
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="text-center">{% trans %}Sorry, an error happened and we are investigating{% endtrans %}</h1>
+                </div>
             </div>
-        </div>
+        </section>
     </div>
 {% endblock %}
