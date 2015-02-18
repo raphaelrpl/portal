@@ -1,3 +1,11 @@
 .teach-content {
     width: 80% !important;
 }
+
+.news-box-display {
+    height: 150px !important;
+}
+
+.news-box-display .small-box-footer {
+    padding: 14px 0 !important;
+}
