@@ -4,10 +4,8 @@
 {% endmacro %}
 {% macro form_input(label,property,type_field,value,error_msg) %}
     <div class="form-group {{ ' has-error' if error_msg }}">
-        <label for="{{ property }}Input"
-               class="control-label">{{ label }} </label>
         <input id="{{ property }}Input" type="{{ type_field }}" class="form-control" name="{{ property }}"
-               value="{{ value }}"/>
+               value="{{ value }}" placeholder="{{ label }}"/>
         {% if error_msg %}<span class="help-block">{{ error_msg }}</span>{% endif %}
     </div>
 {% endmacro %}
@@ -49,6 +47,8 @@
     <![endif]-->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-social.css"/>
+    <link rel="stylesheet" href="/static/font-awesome-4.2.0/css/font-awesome.min.css"/>
     {% block css %}{% endblock %}
 </head>
 <body class="skin-blue">
@@ -304,32 +304,29 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <!-- User image -->
-                                        <li class="user-header">
+                                        <li class="user-header social-login">
                                             <form class="form-row">
                                                 {{ form_input('Email', 'email', 'email', '', '') }}
                                                 {{ form_input('Password', 'password', 'password', '', '') }}
-                                                <button class="btn btn-default btn-flat">Enviar</button>
+                                                <button class="btn btn-warning btn-flat btn-block">Enviar</button>
                                             </form>
-                                        </li>
-                                        <!-- Menu Body -->
-                                        <li class="user-body">
-                                            <div class="col-xs-4 text-center">
-                                                <a href="#">Followers</a>
+                                            <div class="form-row social-margin">
+                                                <a href="/" class="btn btn-default">Esqueceu Senha?</a>
+                                                <a href="/" class="btn btn-success">Cadastrar</a>
                                             </div>
-                                            <div class="col-xs-4 text-center">
-                                                <a href="#">Sales</a>
+                                            <div class="form-row social-margin">
+                                                <a href="{{ login_google_path }}" class="btn btn-social btn-google-plus btn-block"><i
+                                                    class="fa fa-google-plus"></i>Google</a>
                                             </div>
-                                            <div class="col-xs-4 text-center">
-                                                <a href="#">Friends</a>
-                                            </div>
-                                        </li>
-                                        <!-- Menu Footer-->
-                                        <li class="user-footer">
-                                            <div class="pull-left">
-                                                <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                            </div>
-                                            <div class="pull-right">
-                                                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                            <div class="form-row social-margin">
+                                                <button class="btn btn-social btn-facebook btn-block" onclick="fb_login();">
+                                                    <i class="fa fa-facebook"></i>
+                                                    Facebook
+                                                </button>
+                                                <form id="fbform" action="{{ login_facebook_path }}" method="post">
+                                                    {{ csrf_input() }}
+                                                    <input id="tokeninput" type="hidden" name="token"/>
+                                                </form>
                                             </div>
                                         </li>
                                     </ul>

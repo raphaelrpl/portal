@@ -10,12 +10,16 @@ from routes.login import google, facebook
 from routes.login.passwordless import send_email
 
 
-@login_not_required
-@no_csrf
-def index(ret_path='/'):
+def prepare_login_services(ret_path="/"):
     g_path = router.to_path(google.index, ret_path=ret_path)
     dct = {'login_google_path': users.create_login_url(g_path),
            'login_passwordless_path': router.to_path(send_email, ret_path=ret_path),
            'login_facebook_path': router.to_path(facebook.index, ret_path=ret_path),
            'faceapp': facade.get_facebook_app_data().execute().result}
-    return TemplateResponse(dct)
+    return dct
+
+
+@login_not_required
+@no_csrf
+def index(ret_path='/'):
+    return TemplateResponse(prepare_login_services(ret_path))

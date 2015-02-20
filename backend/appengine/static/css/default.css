@@ -2,6 +2,10 @@
     width: 80% !important;
 }
 
+.content-min {
+    min-height: 17px;
+}
+
 .news-box-display {
     height: 160px !important;
 }
@@ -11,5 +15,15 @@
 }
 
 .inner .image-lesson-description {
-    width: 60%;
+    height: 100%;
+    width: 100%;
+}
+
+.social-margin {
+    margin-top: 10px !important;
+}
+
+.social-login {
+    height: 290px !important;
+    background-color: #fff !important;
 }
