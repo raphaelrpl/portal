@@ -67,8 +67,8 @@
                 </a>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        {% macro auth_tab(tab='') %}
-                            {% if _logged_user and 'ADMIN' in _logged_user.groups %}
+                        {% macro select_tabs(tab='') %}
+                            {% if _logged_user %}
                                 <!-- Messages: style can be found in dropdown.less-->
                                 <li class="dropdown messages-menu">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -261,7 +261,7 @@
                                 <li class="dropdown user user-menu">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                         <img src="/static/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                                        <span class="hidden-xs">Alexander Pierce</span>
+                                        <span class="hidden-xs">{{ _logged_user.name }}</span>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <!-- User image -->
@@ -311,10 +311,6 @@
                                                 <button class="btn btn-warning btn-flat btn-block">Enviar</button>
                                             </form>
                                             <div class="form-row social-margin">
-                                                <a href="/" class="btn btn-default">Esqueceu Senha?</a>
-                                                <a href="/" class="btn btn-success">Cadastrar</a>
-                                            </div>
-                                            <div class="form-row social-margin">
                                                 <a href="{{ login_google_path }}" class="btn btn-social btn-google-plus btn-block"><i
                                                     class="fa fa-google-plus"></i>Google</a>
                                             </div>
@@ -328,13 +324,17 @@
                                                     <input id="tokeninput" type="hidden" name="token"/>
                                                 </form>
                                             </div>
+                                            <div class="form-row social-margin">
+                                                <a href="/" class="btn btn-link">Esqueceu Senha?</a>
+                                                <a href="/" class="btn btn-success">Cadastrar</a>
+                                            </div>
                                         </li>
                                     </ul>
                                 </li>
                             {% endif %}
                         {% endmacro %}
                         {% block tabs %}
-                            {{ auth_tab() }}
+                            {{ select_tabs() }}
                         {% endblock %}
                     </ul>
                 </div>
