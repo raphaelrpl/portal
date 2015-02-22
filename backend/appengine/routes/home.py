@@ -7,7 +7,7 @@ from routes.login.home import prepare_login_services
 from tekton import router
 
 
-@login_required
+@login_not_required
 @no_csrf
 def index(_logged_user, ret_path="/"):
     dct = prepare_login_services(ret_path)

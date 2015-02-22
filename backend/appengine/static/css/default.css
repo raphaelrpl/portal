@@ -4,6 +4,12 @@
 
 .content-min {
     min-height: 17px;
+    padding-bottom: 0 !important;
+}
+
+.title-box-adjust {
+    padding-left: 0;
+    padding-bottom: 5px;
 }
 
 .news-box-display {
