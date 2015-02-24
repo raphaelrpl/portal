@@ -21,7 +21,8 @@
 }
 
 .inner .image-lesson-description {
-    height: 100%;
+    /*height: 100%;*/
+    height: 77px;
     width: 100%;
 }
 
@@ -32,4 +33,29 @@
 .social-login {
     height: 100% !important;
     background-color: #fff !important;
+}
+
+.image-td-person {
+    width: 12% !important;
+}
+
+.image-td-lesson {
+    width: 70px !important;
+    height: 70px !important;
+    max-width: 100px !important;
+    max-height: 100px !important;
+}
+
+.small-box:hover {
+    color: #333;
+}
+
+.row-fixed {
+    height: 87px !important;
+}
+
+.todo-image {
+    margin-left: 20% !important;
+    width: 282px !important;
+    height: 282px !important;
 }
