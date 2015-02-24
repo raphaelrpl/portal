@@ -2,10 +2,60 @@
     width: 80% !important;
 }
 
+.content-min {
+    min-height: 17px;
+    padding-bottom: 0 !important;
+}
+
+.title-box-adjust {
+    padding-left: 0;
+    padding-bottom: 5px;
+}
+
 .news-box-display {
-    height: 150px !important;
+    height: 160px !important;
 }
 
 .news-box-display .small-box-footer {
     padding: 14px 0 !important;
+}
+
+.inner .image-lesson-description {
+    /*height: 100%;*/
+    height: 77px;
+    width: 100%;
+}
+
+.social-margin {
+    margin-top: 10px !important;
+}
+
+.social-login {
+    height: 100% !important;
+    background-color: #fff !important;
+}
+
+.image-td-person {
+    width: 12% !important;
+}
+
+.image-td-lesson {
+    width: 70px !important;
+    height: 70px !important;
+    max-width: 100px !important;
+    max-height: 100px !important;
+}
+
+.small-box:hover {
+    color: #333;
+}
+
+.row-fixed {
+    height: 87px !important;
+}
+
+.todo-image {
+    margin-left: 20% !important;
+    width: 282px !important;
+    height: 282px !important;
 }
