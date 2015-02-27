@@ -54,8 +54,28 @@
     height: 87px !important;
 }
 
+.box-yourself-lessons {
+    overflow: scroll !important;
+    overflow-x: hidden !important;
+}
+
 .todo-image {
     margin-left: 20% !important;
     width: 282px !important;
     height: 282px !important;
+}
+
+.table-tbody-scroll {
+    overflow-y: scroll !important;
+}
+
+@media (min-width: 100px) and (min-height: 200px){
+    .box-yourself-lessons {
+        overflow-x: hidden !important;
+    }
+}
+
+.views-label {
+    position: relative;
+    margin-top: 10px;
 }
