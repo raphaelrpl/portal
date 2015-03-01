@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/css/default.css"/>
+{% endblock %}
+
+{% block body %}
+    <div class="content-wrapper">
+        <div class="row col-lg-8 col-lg-offset-2" style="margin-top: 20px;">
+            <form action="#" method="get" class="form-row">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search anything" data-provide="typeahead"/>
+                <span class="input-group-btn">
+                    <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+        </div>
+        <section class="content">
+
+        </section>
+    </div>
+    <!-- http://pac.zscaler.net/centropaulasouza.sp.gov.br/cpsouza.pac -->
+
+    <!--pac.zscaler.net/centropaulasouza.sp.gov.br/cpsouza.pac-->
+{% endblock %}

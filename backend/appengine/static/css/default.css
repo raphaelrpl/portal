@@ -79,3 +79,9 @@
     position: relative;
     margin-top: 10px;
 }
+
+.table-tbody-scroll tr:hover {
+    cursor: pointer !important;
+    /*background-color: red !important;*/
+}
+

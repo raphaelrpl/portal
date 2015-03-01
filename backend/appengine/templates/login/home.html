@@ -1,46 +1,49 @@
 {% extends 'base/base.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/css/default.css"/>
+{% endblock %}
+
 {% block body %}
     <div class="content-wrapper">
         <section class="content">
             <br/>
-            <h1 class="text-center">{% trans %}Login Options{% endtrans %}</h1>
-            <br/>
-            <br/>
             <br/>
             <div class="row">
-                <div class="col-md-4 text-center">
+                <div class="col-md-4 col-md-offset-4 text-center">
                     <div class="well">
-                        <h2>Email</h2><br/>
-                        <form action="{{ login_passwordless_path }}" method="post">
-                            <div class="input-group">
-                                <input type="email" name="email" placeholder="{% trans %}Type your email{% endtrans %}"
-                                       class="form-control"/>
-                                  <span class="input-group-btn">
-                                       <button class="btn btn-success" type="submit">Login</button>
-                                  </span>
+                        <h1 class="text-center">Login Options</h1>
+                        <br/>
+                        <form class="form-row">
+                            <div class="form-group ">
+                                <input id="emailInput" type="email" class="form-control" name="email" value="" placeholder="Email">
                             </div>
-                            {{ csrf_input() }}
+
+                            <div class="form-group ">
+                                <input id="passwordInput" type="password" class="form-control" name="password" value="" placeholder="Password">
+                            </div>
+
+                            <button class="btn btn-warning btn-flat btn-block">Enviar</button>
                         </form>
-                    </div>
-                </div>
-                <div class="col-md-4 text-center">
-                    <div class="well">
-                        <h2>Google</h2><br/>
-                        <a href="{{ login_google_path }}" class="btn btn-social btn-google-plus"><i
-                                class="fa fa-google-plus"></i>Google</a>
-                    </div>
-                </div>
-                <div class="col-md-4 text-center">
-                    <div class="well">
-                        <h2>Facebook</h2><br/>
-                        <button class="btn btn-social btn-facebook" onclick="fb_login();">
-                            <i class="fa fa-facebook"></i>
-                            Facebook
-                        </button>
-                        <form id="fbform" action="{{ login_facebook_path }}" method="post">
-                            {{ csrf_input() }}
-                            <input id="tokeninput" type="hidden" name="token"/>
-                        </form>
+                        <div class="form-row social-margin">
+                            <a href="/_ah/login?continue=http%3A//localhost%3A8080/login/google%3Fret_path%3D%252F" class="btn btn-social btn-google-plus btn-block"><i class="fa fa-google-plus"></i>Google</a>
+                        </div>
+                        <div class="form-row social-margin">
+                            <button class="btn btn-social btn-facebook btn-block" onclick="fb_login();">
+                                <i class="fa fa-facebook"></i>
+                                Facebook
+                            </button>
+                            <form id="fbform" action="/login/facebook?ret_path=%2F" method="post">
+                                <input type="hidden" value="d1fcdba3f3fa01586b8578ab47a83fed" name="_csrf_code">
+
+                                <input id="tokeninput" type="hidden" name="token">
+                            </form>
+                        </div>
+                        <p class="text-center" style="color: black;">ou</p>
+                        <div class="form-row social-margin">
+                            <a href="/" class="btn btn-link">Esqueceu Senha?</a>
+                            <a href="/" class="btn btn-success">Cadastrar</a>
+                        </div>
                     </div>
                 </div>
             </div>
