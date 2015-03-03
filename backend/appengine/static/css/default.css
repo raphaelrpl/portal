@@ -85,3 +85,17 @@
     /*background-color: red !important;*/
 }
 
+.pad-top {
+    padding-top: 15px;
+}
+
+.img-minimal {
+    width: 40px;
+    height: 40px;
+    border: 2px solid transparent;
+    border-radius: 50% !important;
+}
+
+.margin-icon {
+    margin-right: 5px;
+}
