@@ -40,18 +40,11 @@
 }
 
 .image-td-lesson {
-    width: 70px !important;
-    height: 70px !important;
-    max-width: 100px !important;
-    max-height: 100px !important;
+    width: 30px !important;
 }
 
 .small-box:hover {
     color: #333;
-}
-
-.row-fixed {
-    height: 87px !important;
 }
 
 .box-yourself-lessons {
@@ -99,10 +92,18 @@
     width: 30px;
 }
 
+.fixed-size {
+    width: 47px !important;
+}
+
 .margin-icon {
     margin-right: 5px;
 }
 
 .padding-bottom {
     padding-bottom: 5px !important;
+}
+
+.text-padded {
+    padding-top: 12px !important;
 }
