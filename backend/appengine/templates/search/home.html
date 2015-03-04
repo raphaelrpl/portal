@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/css/default.css"/>
+{% endblock %}
+
+{% block body %}
+    <div class="content-wrapper">
+        <!-- News Content -->
+        <section class="content-header">
+            <h1>
+                Procure por discussões e publicações
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Search</li>
+            </ol>
+        </section>
+
+        <section class="content content-min">
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="#" method="get" class="form-row">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" placeholder="Search anything" data-provide="typeahead"/>
+                            <span class="input-group-btn">
+                                <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div> <!-- div content-wrapper -->
+{% endblock %}
