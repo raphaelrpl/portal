@@ -32,6 +32,6 @@ def form():
     return TemplateResponse(dct)
 
 @permissions(ADMIN)
-def save( app_id, token):
+def save(app_id, token):
     facade.save_or_update_facebook_app_data(app_id, token).execute()
     return RedirectResponse(admin)
