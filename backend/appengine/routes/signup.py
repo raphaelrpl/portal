@@ -2,15 +2,13 @@
 from __future__ import absolute_import, unicode_literals
 from config.template_middleware import TemplateResponse
 from gaecookie.decorator import no_csrf
-from gaepermission.decorator import login_not_required, login_required
+from gaepermission.decorator import login_not_required
 from routes.login.home import prepare_login_services
-from tekton import router
 
 
 @login_not_required
 @no_csrf
-def index(_logged_user, ret_path="/"):
+def index(ret_path="/"):
     dct = prepare_login_services(ret_path)
     return TemplateResponse(dct)
-    # return TemplateResponse(template_path="/login/home.html")
 

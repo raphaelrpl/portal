@@ -51,12 +51,16 @@
     <link rel="stylesheet" href="/static/font-awesome-4.2.0/css/font-awesome.min.css"/>
     {% block css %}{% endblock %}
 </head>
-<body class="skin-blue">
+<body class="skin-blue {% block body_class %}{% endblock %}">
     <div class="wrapper">
         <!-- header logo: style can be found in header.less -->
+
         {% include 'base/header.html' %}
+
 {#        {% if _logged_user %}#}
+
         {% include 'base/aside.html' %}
+
 {#        {% endif %}#}
 
         <!-- Body Content-->

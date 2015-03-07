@@ -107,3 +107,7 @@
 .text-padded {
     padding-top: 12px !important;
 }
+
+.title-profile{
+    display: block;
+}
