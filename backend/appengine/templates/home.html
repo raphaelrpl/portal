@@ -4,39 +4,8 @@
     <link rel="stylesheet" href="/static/css/default.css"/>
 {% endblock %}
 
-{% block js %}
-<script>
-    $(document).ready(function() {
-        $("#publish-modal").modal({show: false});
-    });
-</script>
-{% endblock %}
-
 {% block body %}
     <div class="content-wrapper">
-        <div class="modal" id="publish-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title">Digite sua pergunta</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-md-12">
-                            <form action="/" method="post">
-                            <div class="form-group has-feedback">
-                                <textarea class="form-control" rows="3"></textarea>
-                            </div>
-                        </form>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Enviar</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div>
         <!-- News Content -->
         <section class="content-header">
             <h1>
@@ -240,7 +209,7 @@
                             <a href="#" class="btn btn-link">Python</a>
                             <a href="#" class="btn btn-link">Agile</a>
                             <a href="#" class="btn btn-link">BI</a>
-                            <a href="#" class="btn btn-link">Intelligence Artificial</a>
+                            <a href="#" class="btn btn-link">Artificial Intelligence</a>
                             <a href="#" class="btn btn-link">Geo Technology</a>
                             <a href="#" class="btn btn-link">MongoDB</a>
                             <a href="#" class="btn btn-link">SciDB</a>
