@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-from gaegraph.model import Node
 from google.appengine.ext import ndb
+from gaegraph.model import Node, Arc
 from gaepermission.model import MainUser
 from google.appengine.api import images
 
@@ -19,7 +19,7 @@ class User(MainUser):
 
 
 class BasePost(Node):
-    # user = ndb.
+    user = ndb.KeyProperty(User, required=True)
     updated_at = ndb.DateTimeProperty(auto_now_add=True)
     recommend = ndb.IntegerProperty()
 
@@ -28,9 +28,19 @@ class Question(BasePost):
     title = ndb.StringProperty(required=True)
 
 
+# class UserQuestionArc(Arc):
+#     origin = ndb.KeyProperty(User)
+#     destination = ndb.KeyProperty(Question)
+
+
 class Discuss(BasePost):
     title = ndb.StringProperty(required=True)
     content = ndb.TextProperty(required=True)
+
+
+# class UserDiscussArc(Arc):
+#     origin = ndb.KeyProperty(User)
+#     destination = ndb.KeyProperty(Discuss)
 
 
 class Comment(BasePost):

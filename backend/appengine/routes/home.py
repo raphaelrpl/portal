@@ -5,12 +5,14 @@ from gaecookie.decorator import no_csrf
 from gaepermission.decorator import login_not_required, login_required
 from datetime import datetime
 from discuss_app.utils import FriendlyDatetime
+from discuss_app.model import Discuss
 
 
 @login_not_required
 @no_csrf
 def index(_logged_user, ret_path="/"):
     formatter = FriendlyDatetime()
+    objects = Discuss.query()
     context = {"discusses": [
         {
             "title": "Quais os principais assuntos no tutorship portal?",
