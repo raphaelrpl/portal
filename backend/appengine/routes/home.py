@@ -10,7 +10,7 @@ from discuss_app.model import Discuss
 
 @login_not_required
 @no_csrf
-def index(_logged_user, ret_path="/"):
+def index():
     formatter = FriendlyDatetime()
     objects = Discuss.query()
     context = {"discusses": [

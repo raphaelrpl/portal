@@ -6,8 +6,8 @@ from gaepermission.model import MainUser
 from google.appengine.api import images
 
 
-class User(MainUser):
-    avatar = ndb.BlobProperty()
+class Avatar(MainUser):
+    avatar = ndb.BlobProperty(required=False)
 
     def before_put(self):
         if self.avatar is not None:
@@ -15,11 +15,11 @@ class User(MainUser):
 
     def put(self, **kwargs):
         self.before_put()
-        super(User, self).put(kwargs)
+        super(Avatar, self).put(kwargs)
 
 
 class BasePost(Node):
-    user = ndb.KeyProperty(User, required=True)
+    user = ndb.KeyProperty(MainUser, required=True)
     updated_at = ndb.DateTimeProperty(auto_now_add=True)
     recommend = ndb.IntegerProperty()
 
