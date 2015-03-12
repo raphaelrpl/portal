@@ -18,6 +18,10 @@ class Avatar(MainUser):
         super(Avatar, self).put(kwargs)
 
 
+class Category(Node):
+    name = ndb.StringProperty(required=True)
+
+
 class BasePost(Node):
     user = ndb.KeyProperty(MainUser, required=True)
     updated_at = ndb.DateTimeProperty(auto_now_add=True)
@@ -28,6 +32,11 @@ class Question(BasePost):
     title = ndb.StringProperty(required=True)
 
 
+class QuestionCategoryArc(Arc):
+    origin = Category
+    destination = Question
+
+
 # class UserQuestionArc(Arc):
 #     origin = ndb.KeyProperty(User)
 #     destination = ndb.KeyProperty(Question)
@@ -36,6 +45,11 @@ class Question(BasePost):
 class Discuss(BasePost):
     title = ndb.StringProperty(required=True)
     content = ndb.TextProperty(required=True)
+
+
+class DiscussCategoryArc(Arc):
+    origin = Category
+    destination = Discuss
 
 
 # class UserDiscussArc(Arc):
