@@ -9,6 +9,17 @@
         {% if error_msg %}<span class="help-block">{{ error_msg }}</span>{% endif %}
     </div>
 {% endmacro %}
+{% macro formalize_time(post_time) %}
+    {% if post_time.days > 0 %}
+        Há {{ post_time.days }} {% if post_time.days == 1 %}  dia  {% else %} dias {% endif %}
+    {% elif post_time.seconds / 1440 > 0 %}
+        Há {{ (post_time.seconds / 1440)|int }} {% if (post_time.seconds / 1440)|int ==1 %}  hora  {% else %} horas {% endif %}
+    {% elif post_time.seconds / 60 > 0 %}
+        Há {{ (post_time.seconds/60)|int }} {% if (post_time.seconds/60)|int == 1 %}  minuto  {% else %} minutos {% endif %}
+    {% else %}
+        Há {{ post_time.seconds }} segundos
+    {% endif %}
+{% endmacro %}
 <html>
 <head lang="en">
     <meta charset="UTF-8">
@@ -137,7 +148,7 @@
     <script>
         questionApp = angular.module('questionApp', ['questionModule']);
         function questionController($scope) {
-            $scope.question = {name: "Abacate é bom"};
+            $scope.questionList = {{ questions|safe }};
         }
     </script>
     {% block js %}{% endblock %}

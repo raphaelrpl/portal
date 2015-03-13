@@ -29,7 +29,7 @@ class BasePost(Node):
 
 
 class Question(BasePost):
-    title = ndb.StringProperty(required=True)
+    name = ndb.StringProperty(required=True)
 
 
 class QuestionCategoryArc(Arc):
