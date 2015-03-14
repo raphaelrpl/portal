@@ -6,10 +6,20 @@ from gaecookie.decorator import no_csrf
 from question_app import question_facade
 from routes.questions import new, edit
 from tekton.gae.middleware.redirect import RedirectResponse
+from gaepermission.model import MainUser
 
 
 @no_csrf
-def index():
+def index(question_id=""):
+    if question_id:
+        cmd = question_facade.get_question_cmd(question_id)
+        question = cmd()
+        form = question_facade.question_form()
+        question_dct = {}
+        # question_dct = form.fill_with_model(question)
+        # question_dct['publisher'] = MainUser.get_by_id(question_dct['user'])
+        context = {"question": question_dct}
+        return TemplateResponse(context=context, template_path='questions/question.html')
     cmd = question_facade.list_questions_cmd()
     questions = cmd()
     edit_path = router.to_path(edit)
@@ -18,14 +28,15 @@ def index():
 
     def localize_question(question):
         question_dct = question_form.fill_with_model(question)
+        question_dct['publisher'] = MainUser.get_by_id(question_dct['user'])
         question_dct['edit_path'] = router.to_path(edit_path, question_dct['id'])
         question_dct['delete_path'] = router.to_path(delete_path, question_dct['id'])
         return question_dct
 
-    localized_questions = [localize_question(question) for question in questions]
+    localized_questions = [localize_question(question) for question in questions][::-1]
     context = {'questions': localized_questions,
                'new_path': router.to_path(new)}
-    return TemplateResponse(context, 'questions/question_home.html')
+    return TemplateResponse(context, template_path='questions/home.html')
 
 
 def delete(question_id):
