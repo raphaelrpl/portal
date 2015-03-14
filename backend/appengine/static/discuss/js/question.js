@@ -33,8 +33,10 @@ questionModule.directive("questionform", function() {
                                 '</div>'+
                             '</div>'+
                         '</div>';
+                    alert("Cadastrou com sucesso");
                 }).error(function(errors) {
                     console.log(errors);
+                    alert("Erro ao publicar");
                 });
             }
         }

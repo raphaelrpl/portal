@@ -148,7 +148,7 @@
     <script>
         questionApp = angular.module('questionApp', ['questionModule']);
         function questionController($scope) {
-            $scope.questionList = {{ questions|safe }};
+            $scope.questionList = [];
         }
     </script>
     {% block js %}{% endblock %}

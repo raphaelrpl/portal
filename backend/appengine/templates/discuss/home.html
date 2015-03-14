@@ -4,6 +4,10 @@
     <link rel="stylesheet" href="/static/css/default.css"/>
 {% endblock %}
 
+{% block body_class %}
+sidebar-collapse sidebar-open
+{% endblock %}
+
 {% block body %}
     <div class="content-wrapper">
         <!-- News Content -->
@@ -20,185 +24,36 @@
         <section class="content content-min">
             <div class="row">
                 <section class="col-md-8 col-md-offset-2">
-                    <div class="nav-tabs-custom">
-                        <!-- Tabs within a box -->
-                        <ul class="nav nav-tabs pull-right ui-sortable-handle">
-                            <li class="pull-left header padding-bottom">What are the most viewed questions?</li>
-                        </ul>
-                        <div class="publisher">
-                            <img src="/static/dist/img/user2-160x160.jpg">
-                            <span style="padding-left: 10px;"><b>Fulano de tal</b></span>
-                            <span class="pull-right" style="padding-right: 20px;">Publicado a 12min</span>
+                    {% if discusses %}
+                        {% for discuss in discusses %}
+                        <div class="nav-tabs-custom">
+                            <!-- Tabs within a box -->
+                            <ul class="nav nav-tabs pull-right ui-sortable-handle">
+                                <li class="pull-left header padding-bottom">{{ discuss['title'] }}?</li>
+                            </ul>
+                            <div class="publisher">
+                                <img src="/static/dist/img/user2-160x160.jpg">
+                                <span style="padding-left: 10px;"><b>Fulano de tal</b></span>
+                                <span class="pull-right" style="padding-right: 20px;">{{ formalize_time(discuss['creation']) }}</span>
+                            </div>
+                            <div class="tab-content">
+                                {% if discuss.get('image') %}
+                                <div class="col-md-3 col-sm-3">
+                                    <img src="{{ discuss['image'] }}" style="width: 100%; max-height: 250px;">
+                                </div>
+                                <div class="col-md-9">
+                                {% else %}
+                                <div class="col-md-12">
+                                {% endif %}
+                                {{ discuss['content'] }}
+                                </div>
+                                <div class="box-footer clearfix no-border">
+                                    <a href="#" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Responder</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="tab-content">
-                            <div class="col-md-3">
-                                <img src="/static/img/test.jpg" style="width: 100%; max-height: 250px;">
-                            </div>
-                            <div class="col-md-9">
-                                "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque  Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat?..."
-                            </div>
-                            <div class="box-footer clearfix no-border">
-                                <a href="#" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Responder</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <h2 class="page-header">Comentários</h2>
-                        <section class="comment-list">
-                            <!-- First Comment -->
-                            <article class="row">
-                                <div class="col-md-2 col-sm-2 hidden-xs">
-                                    <figure class="thumbnail">
-                                        <img class="img-responsive" src="/static/dist/img/avatar2.png" />
-                                        <figcaption class="text-center">username</figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-md-10 col-sm-10">
-                                    <div class="panel panel-default arrow left">
-                                        <div class="panel-body">
-                                            <header class="text-left">
-                                                <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-                                                <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-                                            </header>
-                                            <div class="comment-post">
-                                                <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                                </p>
-                                            </div>
-                                            <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                            <!-- Second Comment Reply -->
-                            <article class="row">
-                                <div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-0 hidden-xs">
-                                    <figure class="thumbnail">
-                                        <img class="img-responsive" src="/static/dist/img/avatar.png" />
-                                        <figcaption class="text-center">username</figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-md-9 col-sm-9">
-                                    <div class="panel panel-default arrow left">
-                                        <div class="panel-heading right">Reply</div>
-                                        <div class="panel-body">
-                                            <header class="text-left">
-                                                <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-                                                <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-                                            </header>
-                                            <div class="comment-post">
-                                                <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                                </p>
-                                            </div>
-                                            <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                            <!-- Third Comment -->
-                            <article class="row">
-                                <div class="col-md-10 col-sm-10">
-                                    <div class="panel panel-default arrow right">
-                                        <div class="panel-body">
-                                            <header class="text-right">
-                                                <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-                                                <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-                                            </header>
-                                            <div class="comment-post">
-                                                <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                                </p>
-                                            </div>
-                                            <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 col-sm-2 hidden-xs">
-                                    <figure class="thumbnail">
-                                        <img class="img-responsive" src="/static/dist/img/avatar3.png" />
-                                        <figcaption class="text-center">username</figcaption>
-                                    </figure>
-                                </div>
-                            </article>
-                            <!-- Fourth Comment -->
-                            <article class="row">
-                                <div class="col-md-2 col-sm-2 hidden-xs">
-                                    <figure class="thumbnail">
-                                        <img class="img-responsive" src="/static/dist/img/avatar04.png" />
-                                        <figcaption class="text-center">username</figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-md-10 col-sm-10 col-xs-12">
-                                    <div class="panel panel-default arrow left">
-                                        <div class="panel-body">
-                                            <header class="text-left">
-                                                <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-                                                <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-                                            </header>
-                                            <div class="comment-post">
-                                                <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                                </p>
-                                            </div>
-                                            <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                            <!-- Fifth Comment -->
-                            <article class="row">
-                                <div class="col-md-10 col-sm-10">
-                                    <div class="panel panel-default arrow right">
-                                        <div class="panel-body">
-                                            <header class="text-right">
-                                                <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-                                                <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-                                            </header>
-                                            <div class="comment-post">
-                                                <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                                </p>
-                                            </div>
-                                            <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 col-sm-2 hidden-xs">
-                                    <figure class="thumbnail">
-                                        <img class="img-responsive" src="/static/dist/img/avatar5.png" />
-                                        <figcaption class="text-center">username</figcaption>
-                                    </figure>
-                                </div>
-                            </article>
-                            <!-- Sixth Comment Reply -->
-                            <article class="row">
-                                <div class="col-md-9 col-sm-9 col-md-offset-1 col-md-pull-1 col-sm-offset-0">
-                                    <div class="panel panel-default arrow right">
-                                        <div class="panel-heading">Reply</div>
-                                        <div class="panel-body">
-                                            <header class="text-right">
-                                                <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-                                                <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-                                            </header>
-                                            <div class="comment-post">
-                                                <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                                </p>
-                                            </div>
-                                            <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 col-sm-2 col-md-pull-1 hidden-xs">
-                                    <figure class="thumbnail">
-                                        <img class="img-responsive" src="/static/dist/img/avatar.png" />
-                                        <figcaption class="text-center">username</figcaption>
-                                    </figure>
-                                </div>
-                            </article>
-                        </section>
-                    </div>
+                        {% endfor %}
+                    {% endif %}
                 </section>
             </div>
         </section>
