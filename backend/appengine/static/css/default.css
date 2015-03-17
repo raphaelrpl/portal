@@ -111,3 +111,7 @@
 .title-profile{
     display: block;
 }
+
+.force-margin {
+    margin-top: 15px !important;
+}
