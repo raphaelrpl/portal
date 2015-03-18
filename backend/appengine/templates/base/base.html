@@ -53,7 +53,7 @@
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-social.css"/>
     {% block css %}{% endblock %}
 </head>
-<body class="skin-blue {% block body_class %}{% endblock %}">
+<body class="skin-blue {% block body_class %}{% endblock %}" ng-app="mainApp">
     <div class="wrapper">
         <!-- header logo: style can be found in header.less -->
 
@@ -66,7 +66,7 @@
 {#        {% endif %}#}
 
         <!-- Body Content-->
-        <div class="modal fade" ng-app="questionApp" ng-controller="questionController" id="question-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" ng-controller="questionController" id="question-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <questionform question="question"></questionform>
             </div><!-- /.modal-dialog -->
@@ -139,11 +139,29 @@
     <script src="/static/dist/js/app.min.js" type="text/javascript"></script>
     <script src="/static/angular/js/angular.min.js" type="text/javascript"></script>
     <script src="/static/discuss/js/question.js" type="text/javascript"></script>
+    <script src="/static/search/js/search.js" type="text/javascript"></script>
 
     <script>
-        questionApp = angular.module('questionApp', ['questionModule']);
+        var rest = angular.module('rest', []);
+        rest.factory('dataFactory', function($http) {
+            return {
+                get: function (url) {
+                    return $http.get(url);
+                }
+            }
+        });
+        var mainApp = angular.module('mainApp', ['questionModule', 'searchModule']);
+        mainApp.config(['$interpolateProvider', function($interpolateProvider) {
+          $interpolateProvider.startSymbol('{[');
+          $interpolateProvider.endSymbol(']}');
+        }]);
+
         function questionController($scope) {
             $scope.questionList = [];
+        }
+
+        function searchController($scope) {
+            $scope.items = [];
         }
     </script>
     {% block js %}{% endblock %}

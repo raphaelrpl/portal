@@ -115,3 +115,12 @@
 .force-margin {
     margin-top: 15px !important;
 }
+
+.recent-activity {
+    width: 40px !important;
+}
+
+#custom-templates .empty-message {
+  padding: 5px 10px;
+ text-align: center;
+}
