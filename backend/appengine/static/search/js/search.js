@@ -12,9 +12,14 @@ searchModule.directive('typeahead', function($timeout) {
             onSelect: '&'
         },
         controller: function($scope, dataFactory) { // DI in action
+            $scope.cleanField = function() {
+
+            };
+            $scope.dispatchSearch = function() {
+                console.log("DISPACHANDO");
+            };
             dataFactory.get('/static/json/states.json').success(function (data) {
                 $scope.items = data;
-                console.log(data);
             });
             $scope.name = ''; // This will hold the selected item
             $scope.onItemSelected = function () { // this gets executed when an item is selected

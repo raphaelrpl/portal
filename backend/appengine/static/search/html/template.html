@@ -1,4 +1,9 @@
-<input type="text" ng-model="model" placeholder="{[ prompt ]}" ng-keydown="selected=false" />
+<div class="input-group">
+    <input type="text" ng-model="model" ng-blur="cleanField()" class="form-control" placeholder="{[ prompt ]}" ng-keydown="selected=false" />
+    <span class="input-group-btn">#}
+        <button type='submit' name='search' id='search-btn' ng-click="dispatchSearch()" class="btn btn-flat"><i class="fa fa-search"></i></button>
+    </span>
+</div>
 <br/>
 
 <div class="items" ng-hide="!model.length || selected">
