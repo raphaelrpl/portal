@@ -128,3 +128,17 @@
   padding: 5px 10px;
  text-align: center;
 }
+
+.search-div {
+    width: 330px !important;
+    height: auto !important;
+}
+
+.search-div .slimScrollDiv {
+    height: auto !important;
+}
+
+.search-div .menu {
+    height: auto !important;
+    max-height: 400px !important;
+}
