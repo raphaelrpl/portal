@@ -5,6 +5,7 @@ searchModule.directive('typeahead', function($timeout) {
         restrict: 'AEC',
         scope: {
             items: '=',
+            urlreq: '@',
             prompt: '@',
             title: '@',
             subtitle: '@',
@@ -17,10 +18,10 @@ searchModule.directive('typeahead', function($timeout) {
             };
             $scope.dispatchSearch = function() {
                 console.log("DISPACHANDO");
-            };
-            dataFactory.get('/static/json/states.json').success(function (data) {
+                dataFactory.get($scope.urlreq).success(function (data) {
                 $scope.items = data;
             });
+            };
             $scope.name = ''; // This will hold the selected item
             $scope.onItemSelected = function () { // this gets executed when an item is selected
                 console.log('selected=' + $scope.name);

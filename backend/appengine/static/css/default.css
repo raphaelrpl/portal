@@ -120,6 +120,10 @@
     width: 40px !important;
 }
 
+.search-activity {
+    width: 80px !important;
+}
+
 #custom-templates .empty-message {
   padding: 5px 10px;
  text-align: center;
