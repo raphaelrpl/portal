@@ -15,7 +15,7 @@ def index(discuss=""):
     if discuss:
         query = Discuss.query().fetch()
         context['discuss'] = query
-        return TemplateResponse(template_path="discuss/discuss.html", context=context)
+        return TemplateResponse(template_path="discusses/discuss.html", context=context)
     # query = Discuss.query().order(Discuss.creation).fetch()[:10][::-1]
     query = [
         {

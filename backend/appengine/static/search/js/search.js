@@ -30,6 +30,7 @@ searchModule.directive('typeahead', function($timeout) {
         link: function(scope, elem, attrs) {
             scope.handleSelection = function(selectedItem) {
                 scope.model = selectedItem;
+                console.log(scope.model);
                 scope.current = 0;
                 scope.selected = true;
                 $timeout(function() {

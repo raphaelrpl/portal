@@ -1,0 +1,28 @@
+<div class="nav-tabs-custom">
+    <!-- Tabs within a box -->
+    <ul class="nav nav-tabs pull-right ui-sortable-handle">
+        <li class="pull-left header padding-bottom">{{ discuss['title'] }}</li>
+    </ul>
+    <div class="publisher">
+        <img src="/static/dist/img/user2-160x160.jpg">
+        <span style="padding-left: 10px;"><b>Fulano de tal</b></span>
+        <span class="pull-right" style="padding-right: 20px;">{{ discuss['creation'] }}</span>
+    </div>
+    <div class="tab-content">
+        {% if discuss.get('image') %}
+            <div class="col-md-3 col-sm-3">
+                <img src="{{ discuss['image'] }}" style="width: 100%; max-height: 250px;">
+            </div>
+            <div class="col-md-9">
+        {% else %}
+            <div class="col-md-12">
+        {% endif %}
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque  Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat?..."
+        </div>
+        <div class="box-footer clearfix no-border">
+            <a href="#" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Responder</a>
+            <a href="#" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver discussão</a>
+            <a href="#" class="btn btn-link pull-right"><i class="fa fa-fire margin-icon"></i>Recomendar</a>
+        </div>
+        </div>
+    </div>
