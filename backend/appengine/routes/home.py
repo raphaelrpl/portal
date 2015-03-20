@@ -2,19 +2,20 @@
 from __future__ import absolute_import, unicode_literals
 from config.template_middleware import TemplateResponse
 from gaecookie.decorator import no_csrf
-from gaepermission.decorator import login_not_required, login_required
-from datetime import datetime
+from gaepermission.decorator import login_not_required
 from discuss_app.utils import FriendlyDatetime
 from question_app.question_model import Question
 from datetime import datetime
-from question_app import question_facade
-from json import dumps
+
+allowed = "python business-intelligence geo-technology mongodb c++ agile artificial intelligence scidb".split()
 
 
 @login_not_required
 @no_csrf
 def index(category=""):
     if category:
+        if category not in allowed:
+            return TemplateResponse(template_path="base/404.html")
         topics = [
             {
                 "key": 54323122,
