@@ -2,8 +2,43 @@
 from __future__ import absolute_import, unicode_literals
 from gaecookie.decorator import no_csrf
 from config.template_middleware import TemplateResponse
+from datetime import datetime
+from tekton import router
 
 
 @no_csrf
-def index():
-    return TemplateResponse()
+def index(message_id=""):
+    if message_id:
+        context = {
+            "message": {
+                "key": "1235721",
+                "sender": "Fulano",
+                "content": "Lorem isu dore",
+                "creation": datetime.now()
+            }
+        }
+        return TemplateResponse(context=context, template_path="admin/messages/message.html")
+    context = {
+        "messages_path": router.to_path(index),
+        "messages": [
+            {
+                "key": "1235721",
+                "sender": "Fulano",
+                "content": "Lorem isu dore",
+                "creation": datetime.now()
+            },
+            {
+                "key": "1233436",
+                "sender": "Fulano",
+                "content": "Lorem isu dore",
+                "creation": datetime.now()
+            },
+            {
+                "key": "1237549",
+                "sender": "Fulano",
+                "content": "Lorem isu dore",
+                "creation": datetime.now()
+            }
+        ]
+    }
+    return TemplateResponse(context=context)

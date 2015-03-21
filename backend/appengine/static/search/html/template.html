@@ -7,7 +7,7 @@
 <div class="col-md-12" style="margin-left: -15px !important;">
     <div class="items box" style="background-color: #fff; position:relative; z-index: 1000;" ng-hide="!model.length || selected">
         <div class="item"  ng-repeat="item in items | filter:model  track by $index" ng-click="handleSelection(item[title])" style="cursor:pointer" ng-class="{active:isCurrent($index)}" ng-mouseenter="setCurrent($index)">
-            <div class="media">
+            <div class="media hover-show">
                 <a href="#" class="pull-left">
                     <img src="/static/dist/img/user2-160x160.jpg" class="media-object search-activity" alt="Sample Image">
                 </a>

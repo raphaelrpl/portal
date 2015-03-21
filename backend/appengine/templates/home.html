@@ -5,18 +5,6 @@
     <link rel="stylesheet" href="/static/css/animate.css"/>
 {% endblock %}
 
-{% block js %}
-    <script>
-        $("#recommend_btn").click(function() {
-            if (!$(this).hasClass('rubberBand animated')) {
-                $(this).addClass('rubberBand animated');
-            } else {
-                $(this).removeClass('rubberBand animated');
-            }
-        });
-    </script>
-{% endblock %}
-
 {% block body %}
     <div class="content-wrapper">
         <!-- News Content -->
