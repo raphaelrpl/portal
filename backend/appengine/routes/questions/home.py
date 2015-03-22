@@ -35,7 +35,8 @@ def index(question_id=""):
 
     localized_questions = [localize_question(question) for question in questions][::-1]
     context = {'questions': localized_questions,
-               'new_path': router.to_path(new)}
+               'new_path': router.to_path(new),
+               'question_path': router.to_path(index)}
     return TemplateResponse(context, template_path='questions/home.html')
 
 

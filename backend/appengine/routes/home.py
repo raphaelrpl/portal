@@ -6,6 +6,7 @@ from gaepermission.decorator import login_not_required
 from discuss_app.utils import FriendlyDatetime
 from question_app.question_model import Question
 from datetime import datetime
+from tekton import router
 
 allowed = "python business-intelligence geo-technology mongodb c++ agile artificial intelligence scidb".split()
 
@@ -23,6 +24,7 @@ def index(category=""):
                 "content": "",
                 "image": "/static/img/python.jpg",
                 "type": "questions",
+                "user": 1235875214
             },
             {
                 "key": 65432322,
@@ -30,6 +32,7 @@ def index(category=""):
                 "content": "",
                 "image": "/static/img/test.jpg",
                 "type": "discusses",
+                "user": 54389754354
             }
         ]
         context = {"category": category, "topics": topics}
@@ -41,6 +44,7 @@ def index(category=""):
         question.created_at = datetime.now() - question.creation
     context = {
         "questions": questions,
+        "users_path": router.to_path(index),
         "trends": [
             {
                 "key": 54323122,
@@ -48,6 +52,7 @@ def index(category=""):
                 "content": "",
                 "image": "/static/img/python.jpg",
                 "type": "questions",
+                "user": 54389754354,
                 "creation": formatter(datetime(day=10, month=3, year=2015, hour=8))
             },
             {
@@ -56,6 +61,7 @@ def index(category=""):
                 "content": "",
                 "image": "/static/img/test.jpg",
                 "type": "discusses",
+                "user": 1235875214,
                 "creation": formatter(datetime(day=9, month=3, year=2015, hour=8))
             }
         ],
