@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/static/css/default.css"/>
 {% endblock %}
 
-{% block body_class %} sidebar-collapse sidebar-open {% endblock %}
+{#{% block body_class %} sidebar-collapse sidebar-open {% endblock %}#}
 
 {% block body %}
     <div class="content-wrapper">
@@ -24,11 +24,12 @@
                                 <form class="form-inline" role="form">
                                     <div class="form-group">
                                         <label for="filter">Filtrar por:</label>
-                                        <select class="form-control" id="filter">
-                                            <option>Data</option>
-                                            <option>Postagem</option>
-                                            <option>Questão</option>
+                                        <select class="combobox">
+                                            <option value="PA">Filtrar por data</option>
+                                            <option value="CT">Filtrar por usuário</option>
+                                            <option value="NY">Apagar</option>
                                         </select>
+
                                     </div>
                                 </form>
                                 <hr/>

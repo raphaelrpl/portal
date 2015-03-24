@@ -4,9 +4,9 @@
     <link rel="stylesheet" href="/static/css/default.css"/>
 {% endblock %}
 
-{% block body_class %}
-sidebar-collapse sidebar-open
-{% endblock %}
+{#{% block body_class %}#}
+{#sidebar-collapse sidebar-open#}
+{#{% endblock %}#}
 
 {% block body %}
     <div class="content-wrapper">
@@ -16,10 +16,31 @@ sidebar-collapse sidebar-open
 
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Search</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> Página Inicial</a></li>
+                <li class="active">Questões</li>
             </ol>
         </section>
+
+    <!-- Modal Comment Question-->
+        <div class="modal fade" id="commentQuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Lorem ipsu?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12 panel">
+                            <textarea class="form-control" rows="3" placeholder="Deixa um comentário"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary">Comentar</button>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end question modal -->
 
         <section class="content content-min">
             <div class="row">
@@ -41,8 +62,9 @@ sidebar-collapse sidebar-open
                                 <div class="col-md-12">
                                 </div>
                                 <div class="box-footer clearfix no-border">
-                                    <a href="#" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Responder</a>
+                                    <a href="#" class="btn btn-link pull-right" data-toggle="modal" data-target="#commentQuestionModal"><i class="fa fa-comment margin-icon"></i>Responder</a>
                                     <a href="{{ question_path }}/{{ question['id'] }}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver mais</a>
+                                    <a href="#" id="recommend_btn" class="btn btn-link pull-right"><i class="fa fa-fire margin-icon"></i>Recomendar</a>
                                 </div>
                             </div>
                         </div>

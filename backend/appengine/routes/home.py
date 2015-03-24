@@ -8,7 +8,7 @@ from question_app.question_model import Question
 from datetime import datetime
 from tekton import router
 
-allowed = "python business-intelligence geo-technology mongodb c++ agile artificial intelligence scidb".split()
+allowed = "python business-intelligence geo-technology mongodb c++ agile artificial-intelligence scidb".split()
 
 
 @login_not_required

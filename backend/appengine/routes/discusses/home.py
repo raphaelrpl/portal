@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from config.template_middleware import TemplateResponse
 from gaecookie.decorator import no_csrf
 from gaepermission.decorator import login_not_required
-from routes.login.home import prepare_login_services
+from tekton import router
 from discuss_app.model import Discuss
 from datetime import datetime
 
@@ -11,7 +11,7 @@ from datetime import datetime
 @login_not_required
 @no_csrf
 def index(discuss=""):
-    context = {}
+    context = {"discusses_page": router.to_path(index)}
     if discuss:
         query = Discuss.query().fetch()
         context['discuss'] = query
@@ -19,12 +19,14 @@ def index(discuss=""):
     # query = Discuss.query().order(Discuss.creation).fetch()[:10][::-1]
     query = [
         {
+            "key": 54323122,
             "title": "Lorem Ipsum San Shi",
             "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam",
             "creation": datetime.now() - datetime.now(),
             "image": "/static/img/python.jpg"
         },
         {
+            "key": 54323154,
             "title": "Lorem Ipsum San Shi",
             "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam",
             "creation": datetime.now() - datetime.now(),
