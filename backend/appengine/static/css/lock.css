@@ -1,0 +1,7 @@
+@media (min-width: 0) and (max-width: 768px) {
+    .content-wrapper {
+        -webkit-transform: translate(0, 0) !important;
+        transform: translate(0, 0) !important;
+        margin-left: 0 !important;
+    }
+}

@@ -7,6 +7,7 @@ from question_app import question_facade
 from routes.questions import new, edit
 from tekton.gae.middleware.redirect import RedirectResponse
 from gaepermission.model import MainUser
+from datetime import datetime
 
 
 @no_csrf
@@ -34,7 +35,21 @@ def index(question_id=""):
         return question_dct
 
     localized_questions = [localize_question(question) for question in questions][::-1]
-    context = {'questions': localized_questions,
+    query = [
+        {
+            "id": 318463,
+            "name": "Lorem Ipsum San Shi",
+            "user": 8236478523,
+            "creation": datetime.now() - datetime.now(),
+        },
+        {
+            "id": 318433,
+            "name": "Lorem Ipsum San Shi",
+            "user": 8236423442,
+            "creation": datetime.now() - datetime.now(),
+        }
+    ]
+    context = {'questions': query,
                'new_path': router.to_path(new),
                'question_path': router.to_path(index)}
     return TemplateResponse(context, template_path='questions/home.html')

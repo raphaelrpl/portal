@@ -58,12 +58,14 @@
     <div class="wrapper">
         <!-- header logo: style can be found in header.less -->
 
+        {% block header %}
         {% include 'base/header.html' %}
-
+        {% endblock %}
 {#        {% if _logged_user %}#}
 
+        {% block aside %}
         {% include 'base/aside.html' %}
-
+        {% endblock %}
 {#        {% endif %}#}
 
         <!-- Body Content-->
