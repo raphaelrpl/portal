@@ -4,7 +4,7 @@ from config.template_middleware import TemplateResponse
 from gaecookie.decorator import no_csrf
 from gaepermission.decorator import login_not_required
 from routes.login.home import prepare_login_services
-from discuss_app.forms import UserForm
+from discusses_app.forms import UserForm
 from tekton import router
 from tekton.gae.middleware.redirect import RedirectResponse
 

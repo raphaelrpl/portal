@@ -4,7 +4,7 @@ from config.template_middleware import TemplateResponse
 from gaecookie.decorator import no_csrf
 from gaepermission.decorator import login_not_required
 from tekton import router
-from discuss_app.model import Discuss
+from discusses_app.model import Discuss
 from datetime import datetime
 
 
