@@ -3,9 +3,11 @@ from __future__ import absolute_import, unicode_literals
 from gaecookie.decorator import no_csrf
 from config.template_middleware import TemplateResponse
 from datetime import datetime
+from gaepermission.decorator import login_not_required
 from tekton import router
 
 
+@login_not_required
 @no_csrf
 def index(message_id=""):
     if message_id:

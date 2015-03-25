@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from config.template_middleware import TemplateResponse
+from gaepermission.decorator import login_not_required
 from tekton import router
 from gaecookie.decorator import no_csrf
 from question_app import question_facade
@@ -10,6 +11,7 @@ from gaepermission.model import MainUser
 from datetime import datetime
 
 
+@login_not_required
 @no_csrf
 def index(question_id=""):
     if question_id:
