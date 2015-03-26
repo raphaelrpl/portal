@@ -11,7 +11,6 @@ from tekton import router
 allowed = "python business-intelligence geo-technology mongodb c++ agile artificial-intelligence scidb".split()
 
 
-@login_not_required
 @no_csrf
 def index(category=""):
     if category:

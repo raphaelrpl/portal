@@ -27,7 +27,6 @@
                                     <form action="{{ save_path }}" method="post" role="form">
                                         {{ csrf_input() }}
                                         {{ form_input(_('Content'),'content',comment.content,errors.content) }}
-                                        {{ form_input(_('Updated At'),'updated_at',comment.updated_at,errors.updated_at) }}
                                         <button type="submit" class="btn btn-success">{% trans %}Save{% endtrans %}</button>
                                     </form>
                                 </div>

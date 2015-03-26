@@ -14,7 +14,8 @@ def index():
     return TemplateResponse({'save_path': router.to_path(save)}, 'comments/comment_form.html')
 
 
-def save(**comment_properties):
+def save(_logged_user, **comment_properties):
+    comment_properties['user'] = _logged_user.key.id()
     cmd = comment_facade.save_comment_cmd(**comment_properties)
     try:
         cmd()

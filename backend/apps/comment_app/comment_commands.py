@@ -12,9 +12,7 @@ class CommentSaveForm(ModelForm):
     Form used to save and update Comment
     """
     _model_class = Comment
-    _include = [Comment.content, 
-                Comment.updated_at]
-
+    _include = [Comment.content, Comment.user]
 
 class CommentForm(ModelForm):
     """

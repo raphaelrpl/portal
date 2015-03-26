@@ -5,9 +5,10 @@
     </div>
     <div class="modal-body">
         <div class="col-md-12">
-            <div class="form-group has-feedback">
+            <div class="form-group has-feedback" ng-class="{'has-error': errors.name}">
                 <textarea class="form-control" ng-model="question.name" rows="3" placeholder="O que deseja perguntar?"></textarea>
             </div>
+            <span class="help-inline" style="color: red;" >{[ errors.name ]}</span>
         </div>
     </div>
     <div class="modal-footer">

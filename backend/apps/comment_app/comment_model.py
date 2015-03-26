@@ -6,6 +6,6 @@ from base_app.model import BasePost, Base
 
 
 class Comment(Base):
-    post = ndb.KeyProperty(BasePost, required=True)
+    # post = ndb.KeyProperty(BasePost, required=True)
     user = ndb.KeyProperty(MainUser, required=True)
     content = ndb.StringProperty(required=True)

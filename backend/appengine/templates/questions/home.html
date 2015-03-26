@@ -47,21 +47,18 @@
                 <section class="col-md-8 col-md-offset-2">
                     {% if questions %}
                         {% for question in questions %}
-                        <div class="nav-tabs-custom">
-                            <!-- Tabs within a box -->
-                            <ul class="nav nav-tabs pull-right ui-sortable-handle">
-                                <li class="pull-left header padding-bottom">{{ question['name'] }}?</li>
-                            </ul>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{ question['name'] }}?</h3>
+                            </div>
                             <div class="publisher">
                                 <img src="/static/dist/img/user2-160x160.jpg">
                                 <span style="padding-left: 10px;"><b>Fulano</b></span>
 {#                                <span style="padding-left: 10px;"><b>{{ question['publisher']['name'] }}</b></span>#}
                                 <span class="pull-right" style="padding-right: 20px;">Ha x tempo</span>
                             </div>
-                            <div class="tab-content">
+                            <div class="panel-body">
                                 <div class="col-md-12">
-                                </div>
-                                <div class="box-footer clearfix no-border">
                                     <a href="#" class="btn btn-link pull-right" data-toggle="modal" data-target="#commentQuestionModal"><i class="fa fa-comment margin-icon"></i>Responder</a>
                                     <a href="{{ question_path }}/{{ question['id'] }}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver mais</a>
                                     <a href="#" id="recommend_btn" class="btn btn-link pull-right"><i class="fa fa-fire margin-icon"></i>Recomendar</a>
