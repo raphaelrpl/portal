@@ -3,13 +3,41 @@ from __future__ import absolute_import, unicode_literals
 from gaebusiness.gaeutil import SaveCommand, ModelSearchCommand
 from gaeforms.ndb.form import ModelForm
 from gaegraph.business_base import UpdateNode, NodeSearch, DeleteNode
-from comment_app.comment_model import Comment
+from comment_app.comment_model import Comment, ReplyComment
 
 
+class ReplyCommentSaveForm(ModelForm):
+    _model_class = ReplyComment
+    _include = [ReplyComment.comment, ReplyComment.user, ReplyComment.content]
+
+
+class ReplyCommentForm(ModelForm):
+    _model_class = ReplyComment
+
+
+class GetReplyCommentCommand(NodeSearch):
+    _model_class = ReplyComment
+
+
+class DeleteReplyCommentCommand(DeleteNode):
+    _model_class = ReplyComment
+
+
+class SaveReplyCommentCommand(SaveCommand):
+    _model_form_class = ReplyCommentSaveForm
+
+
+class UpdateReplyCommentCommand(UpdateNode):
+    _model_form_class = ReplyCommentSaveForm
+
+
+class ListReplyCommentCommand(ModelSearchCommand):
+    def __init__(self):
+        super(ListReplyCommentCommand, self).__init__(ReplyComment.query_by_creation())
+
+
+# ################### COMMENT AREA ###################
 class CommentSaveForm(ModelForm):
-    """
-    Form used to save and update Comment
-    """
     _model_class = Comment
     _include = [Comment.content, Comment.user, Comment.post]
 

@@ -1,8 +1,32 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-from gaegraph.business_base import NodeSearch, DeleteNode
 from comment_app.comment_commands import ListCommentCommand, SaveCommentCommand, UpdateCommentCommand, CommentForm,\
-    GetCommentCommand, DeleteCommentCommand
+    GetCommentCommand, DeleteCommentCommand, ListReplyCommentCommand, SaveReplyCommentCommand, UpdateReplyCommentCommand, \
+    ReplyComment, GetReplyCommentCommand, DeleteReplyCommentCommand
+
+
+def save_reply_comment_cmd(**reply_comment_properties):
+    return SaveReplyCommentCommand(**reply_comment_properties)
+
+
+def update_reply_comment_cmd(reply_comment_id, **reply_comment_properties):
+    return UpdateReplyCommentCommand(reply_comment_id, **reply_comment_properties)
+
+
+def list_reply_comments_cmd():
+    return ListReplyCommentCommand()
+
+
+def reply_comment_form(**kwargs):
+    return ReplyComment(**kwargs)
+
+
+def get_reply_comment_cmd(reply_comment_id):
+    return GetReplyCommentCommand(reply_comment_id)
+
+
+def delete_reply_comment_cmd(reply_comment_id):
+    return DeleteReplyCommentCommand(reply_comment_id)
 
 
 def save_comment_cmd(**comment_properties):

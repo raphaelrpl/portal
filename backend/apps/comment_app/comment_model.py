@@ -9,3 +9,9 @@ class Comment(Base):
     post = ndb.KeyProperty(BasePost, required=True)
     user = ndb.KeyProperty(MainUser, required=True)
     content = ndb.StringProperty(required=True)
+
+
+class ReplyComment(Base):
+    comment = ndb.KeyProperty(Comment, required=True)
+    user = ndb.KeyProperty(MainUser, required=True)
+    content = ndb.StringProperty(required=True)
