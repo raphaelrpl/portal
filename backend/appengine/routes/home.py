@@ -2,10 +2,10 @@
 from __future__ import absolute_import, unicode_literals
 from config.template_middleware import TemplateResponse
 from gaecookie.decorator import no_csrf
-from gaepermission.decorator import login_not_required
-from discusses_app.utils import FriendlyDatetime
-from question_app.question_model import Question
+from my_discusses_app.utils import FriendlyDatetime
+from question_app import question_facade
 from datetime import datetime
+from gaepermission.model import MainUser
 from tekton import router
 
 allowed = "python business-intelligence geo-technology mongodb c++ agile artificial-intelligence scidb".split()
@@ -37,9 +37,13 @@ def index(category=""):
         context = {"category": category, "topics": topics}
         return TemplateResponse(context=context, template_path="category/home.html")
     formatter = FriendlyDatetime()
-    questions = Question.query().order(Question.creation).fetch()[:10][::-1]
+    cmd = question_facade.list_questions_cmd()
+    questions = cmd()
+    # Question.query().order(Question.creation).fetch()[:10][::-1]
 
     for question in questions:
+        print question.user.id()
+        # question.user = MainUser.get_by_id(int(question.user.id()))
         question.created_at = datetime.now() - question.creation
     context = {
         "questions": questions,

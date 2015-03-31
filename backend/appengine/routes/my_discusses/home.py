@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from config.template_middleware import TemplateResponse
-from tekton import router
 from gaecookie.decorator import no_csrf
-from discuss_app import discuss_facade
-from routes.discusses import new, edit
-from tekton.gae.middleware.redirect import RedirectResponse
+from tekton import router
+from my_discusses_app.model import Discuss
 from datetime import datetime
 
 
@@ -13,9 +11,8 @@ from datetime import datetime
 def index(discuss=""):
     context = {"discusses_page": router.to_path(index)}
     if discuss:
-        cmd = discuss_facade.get_discuss_cmd(discuss)
-        query_discuss = cmd()
-        context['discuss'] = query_discuss
+        query = Discuss.query().fetch()
+        context['discuss'] = query
         return TemplateResponse(template_path="discusses/discuss.html", context=context)
     # query = Discuss.query().order(Discuss.creation).fetch()[:10][::-1]
     query = [
@@ -36,26 +33,3 @@ def index(discuss=""):
     ]
     context['discusses'] = query
     return TemplateResponse(context)
-
-    # cmd = discuss_facade.list_discusss_cmd()
-    # discusss = cmd()
-    # edit_path = router.to_path(edit)
-    # delete_path = router.to_path(delete)
-    # discuss_form = discuss_facade.discuss_form()
-    #
-    # def localize_discuss(discuss):
-    #     discuss_dct = discuss_form.fill_with_model(discuss)
-    #     discuss_dct['edit_path'] = router.to_path(edit_path, discuss_dct['id'])
-    #     discuss_dct['delete_path'] = router.to_path(delete_path, discuss_dct['id'])
-    #     return discuss_dct
-    #
-    # localized_discusss = [localize_discuss(discuss) for discuss in discusss]
-    # context = {'discusss': localized_discusss,
-    #            'new_path': router.to_path(new)}
-    # return TemplateResponse(context, 'discusss/discuss_home.html')
-
-
-def delete(discuss_id):
-    discuss_facade.delete_discuss_cmd(discuss_id)()
-    return RedirectResponse(router.to_path(index))
-

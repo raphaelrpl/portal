@@ -22,7 +22,7 @@ questionModule.directive("questionform", function() {
                     $scope.errors = errors;
                 });
             }
-        },
+        }
     }
 });
 
