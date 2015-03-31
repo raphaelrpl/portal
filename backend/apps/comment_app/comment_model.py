@@ -10,6 +10,10 @@ class Comment(Base):
     user = ndb.KeyProperty(MainUser, required=True)
     content = ndb.StringProperty(required=True)
 
+    @classmethod
+    def filter_by_question_key(cls, question_id):
+        return cls.query(Comment.post == question_id)
+
 
 class ReplyComment(Base):
     comment = ndb.KeyProperty(Comment, required=True)
