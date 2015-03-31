@@ -13,7 +13,7 @@ def index():
     return JsonResponse(discuss_dcts)
 
 
-def new(_resp, **discuss_properties):
+def new(_handler, _resp, **discuss_properties):
     print "DISCUSSS --> "
     print discuss_properties
     cmd = discuss_facade.save_discuss_cmd(**discuss_properties)

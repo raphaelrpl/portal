@@ -8,6 +8,7 @@ from routes.questions import new, edit
 from tekton.gae.middleware.redirect import RedirectResponse
 from gaepermission.model import MainUser
 from datetime import datetime
+from routes.comments.rest import new as comment_new
 
 
 @no_csrf
@@ -17,9 +18,9 @@ def index(question_id=""):
         question = cmd()
         form = question_facade.question_form()
         question_dct = {}
-        # question_dct = form.fill_with_model(question)
-        # question_dct['publisher'] = MainUser.get_by_id(question_dct['user'])
-        context = {"question": question_dct}
+        question_dct = form.fill_with_model(question)
+        question_dct['publisher'] = MainUser.get_by_id(question_dct['user'])
+        context = {"question": question_dct, "comment_url": router.to_path(comment_new)}
         return TemplateResponse(context=context, template_path='questions/question.html')
     cmd = question_facade.list_questions_cmd()
     questions = cmd()
@@ -49,7 +50,7 @@ def index(question_id=""):
             "creation": datetime.now() - datetime.now(),
         }
     ]
-    context = {'questions': query,
+    context = {'questions': localized_questions,
                'new_path': router.to_path(new),
                'question_path': router.to_path(index)}
     return TemplateResponse(context, template_path='questions/home.html')

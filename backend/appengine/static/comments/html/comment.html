@@ -1,0 +1,10 @@
+<div ng-class="{'has-error': errors.name}">
+    <h3>Deixe um comentário</h3>
+    <div class="form-group has-feedback" ng-class="{'has-error': errors.content}">
+        <textarea class="form-control" ng-model="comment.content" rows="3" placeholder=""></textarea>
+    </div>
+    <span class="help-inline" style="color: red;" >{[ errors.content ]}</span>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="sendComment()">Enviar</button>
+    </div>
+</div>

@@ -39,14 +39,18 @@ def index(category=""):
     formatter = FriendlyDatetime()
     cmd = question_facade.list_questions_cmd()
     questions = cmd()
-    # Question.query().order(Question.creation).fetch()[:10][::-1]
+    qform = question_facade.question_form()
 
-    for question in questions:
-        print question.user.id()
-        # question.user = MainUser.get_by_id(int(question.user.id()))
+    def localize_user(question):
+        question_dct = qform.fill_with_model(question)
+        question_dct['user'] = MainUser.get_by_id(int(question.user.id()))
         question.created_at = datetime.now() - question.creation
+        print question_dct
+        return question_dct
+    questions_output = [localize_user(q) for q in questions]
+
     context = {
-        "questions": questions,
+        "questions": questions_output,
         "users_path": router.to_path(index),
         "trends": [
             {

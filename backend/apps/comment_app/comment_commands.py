@@ -6,13 +6,13 @@ from gaegraph.business_base import UpdateNode, NodeSearch, DeleteNode
 from comment_app.comment_model import Comment
 
 
-
 class CommentSaveForm(ModelForm):
     """
     Form used to save and update Comment
     """
     _model_class = Comment
-    _include = [Comment.content, Comment.user]
+    _include = [Comment.content, Comment.user, Comment.post]
+
 
 class CommentForm(ModelForm):
     """
