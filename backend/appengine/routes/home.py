@@ -7,6 +7,7 @@ from question_app import question_facade
 from datetime import datetime
 from gaepermission.model import MainUser
 from tekton import router
+from routes.comments.rest import new as comment_path
 
 allowed = "python business-intelligence geo-technology mongodb c++ agile artificial-intelligence scidb".split()
 
@@ -51,6 +52,8 @@ def index(category=""):
 
     context = {
         "questions": questions_output,
+        "question_comment_path": router.to_path(comment_path),
+        "discuss_comment_path": router.to_path(comment_path),
         "users_path": router.to_path(index),
         "trends": [
             {

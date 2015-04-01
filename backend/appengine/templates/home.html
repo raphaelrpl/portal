@@ -5,6 +5,14 @@
     <link rel="stylesheet" href="/static/css/animate.css"/>
 {% endblock %}
 
+{% block js %}
+    <script>
+        function questionCommentController($scope) {
+            $scope.comment = {postUrl: "{{ question_comment_path }}"};
+        }
+    </script>
+{% endblock %}
+
 {% block body %}
     <div class="content-wrapper">
         <!-- News Content -->
@@ -18,7 +26,7 @@
         </section>
 
         <!-- Modal Comment Question-->
-        <div class="modal fade" id="commentQuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" ng-controller="questionCommentController" id="commentQuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -26,14 +34,12 @@
                         <h4 class="modal-title" id="myModalLabel">Lorem ipsu?</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="col-md-12 panel">
-                            <textarea class="form-control" rows="3" placeholder="Deixa um comentário"></textarea>
-                        </div>
+                        <docomment comment="comment" post-url="{{ question_comment_path }}"></docomment>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary">Comentar</button>
-                    </div>
+{#                    <div class="modal-footer">#}
+{#                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>#}
+{#                        <button type="button" class="btn btn-primary">Comentar</button>#}
+{#                    </div>#}
                 </div>
             </div>
         </div> <!-- end question modal -->

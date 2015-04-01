@@ -18,6 +18,7 @@ commentModule.directive("docomment", function() {
                     //window.location = "/";
                 }).error(function(errors) {
                     $scope.errors = errors;
+                    console.log($scope.errors);
                 });
             }
         }
