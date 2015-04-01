@@ -135,21 +135,6 @@
             }
         });
 
-{#        var flowApp = angular.module('flowApp', ['flow']);#}
-{##}
-{#        flowApp.config(['flowFactoryProvider', function (flowFactoryProvider) {#}
-{#            flowFactoryProvider.defaults = {#}
-{#                target: "/discusses/rest/new",#}
-{#                permanentErrors: [404, 500, 501],#}
-{#                maxChunkRetries: 1,#}
-{#                chunkRetryInterval: 5000,#}
-{#                simultaneousUploads: 4#}
-{#            };#}
-{#            flowFactoryProvider.on('catchAll', function (event) {#}
-{#                console.log('catchAll', arguments);#}
-{#            });#}
-{#        }]);#}
-
         var mainApp = angular.module('mainApp', ['questionModule', 'discussModule', 'searchModule', 'commentModule']);
         mainApp.config(['$interpolateProvider', function($interpolateProvider) {
           $interpolateProvider.startSymbol('{[');

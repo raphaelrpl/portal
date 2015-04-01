@@ -12,7 +12,7 @@
                 <textarea class="form-control" rows="3" ng-model="discuss.content" name="content" placeholder="Conteúdo"></textarea>
             </div>
             <div class="form-group has-feedback">
-                <input type="file" class="filestyle" file-model="{[ fileModel ]}" accept="image/*" data-buttonText="Procurar" data-disabled="false">
+                <input type="file" class="filestyle" onchange="angular.element(this).scope().filesChanged(this)" accept="image/*" data-buttonText="Procurar" data-disabled="false">
             </div>
         </form>
     </div>

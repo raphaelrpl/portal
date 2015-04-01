@@ -10,31 +10,23 @@ discussModule.directive("discussform", function() {
         replace: true,
         templateUrl: '/static/discuss/html/discuss_form.html',
         scope: {
-            discuss: '=',
-            fileModel: '&'
+            discuss: '='
         },
         controller: function($scope, $http) {
             $scope.errors = {};
-            var formData = new FormData();
-            $scope.prepareField = function(files) {
-                formData.append("file", files[0]);
-                //$scope.discuss.image = files[0];
+            $scope.filesChanged = function (elm) {
+                console.log(elm);
+                $scope.discuss.file = elm.files[0];
+                $scope.$apply();
             };
             $scope.publish = function() {
-                var fd = new FormData();
-                fd.append('file', $scope.myFile);
-
-                //$http.post('/discusses/rest/new', formData, { withCredentials: true,
-                //    headers: {'Content-Type': undefined },
-                //    transformRequest: angular.identity
-                //})
-                $http.post('/discusses/rest/new', fd, {
-                    transformRequest: angular.identity,
-                    headers: {'Content-Type': undefined}
-                }).success(function(discuss) {
-                    console.log(discuss);
+                $http.post("/discusses/rest/new", $scope.discuss).success(function(question) {
+                    console.log(question);
+                    alert("FOI");
+                    //window.location = "/";
                 }).error(function(errors) {
                     $scope.errors = errors;
+                    console.log($scope.errors);
                 });
             }
         }
