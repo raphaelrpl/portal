@@ -4,7 +4,7 @@
         <h4 class="modal-title">Compartilhe ideias, conhecimentos e opniões sobre um assunto</h4>
     </div>
     <div class="modal-body">
-        <form action="/" method="post" enctype="multipart/form-data">
+        <form action="{[ uploadUrl.url ]}" method="post" enctype="multipart/form-data">
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" placeholder="Título" ng-model="discuss.title" name="title">
             </div>
@@ -14,12 +14,13 @@
             <div class="form-group has-feedback">
                 <input type="file" class="filestyle" onchange="angular.element(this).scope().filesChanged(this)" accept="image/*" data-buttonText="Procurar" data-disabled="false">
             </div>
+            <button type="submit" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <input type="submit" class="btn btn-primary" value="Enviar"/>
         </form>
     </div>
     <div class="modal-footer">
         <div class="col-md-12">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            <button type="button" class="btn btn-primary" ng-click="publish();">Enviar</button>
+
         </div>
     </div>
 </div>

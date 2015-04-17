@@ -10,7 +10,8 @@ discussModule.directive("discussform", function() {
         replace: true,
         templateUrl: '/static/discuss/html/discuss_form.html',
         scope: {
-            discuss: '='
+            discuss: '=',
+            uploadUrl: '='
         },
         controller: function($scope, $http) {
             $scope.errors = {};
@@ -20,7 +21,8 @@ discussModule.directive("discussform", function() {
                 $scope.$apply();
             };
             $scope.publish = function() {
-                $http.post("/discusses/rest/new", $scope.discuss).success(function(question) {
+                console.log($scope.uploadUrl);
+                $http.post($scope.uploadUrl.url, $scope.discuss, {headers: {'Content-Type': 'multipart/form-data'}}).success(function(question) {
                     console.log(question);
                     alert("FOI");
                     //window.location = "/";

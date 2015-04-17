@@ -21,6 +21,8 @@ def index(question_id=""):
         cmd = question_facade.get_question_cmd(question_id)
         question = cmd()
         form = question_facade.question_form()
+        if not question:
+            return RedirectResponse(index)
         question_dct = form.fill_with_model(question)
         question_dct['publisher'] = MainUser.get_by_id(question_dct['user'])
 
@@ -35,7 +37,10 @@ def index(question_id=""):
         comments = [fill_comment_model(c) for c in comments_on_question]
 
 
-        context = {"question": question_dct, "comments": dumps(comments), "comment_url": router.to_path(comment_new)}
+        context = {
+            "question": question_dct,
+            "comments": dumps(comments),
+            "comment_url": router.to_path(comment_new)}
         return TemplateResponse(context=context, template_path='questions/question.html')
     cmd = question_facade.list_questions_cmd()
     questions = cmd()
