@@ -35,28 +35,45 @@ commentModule.directive("usercomment", function() {
         templateUrl: '/static/comments/html/user_comment.html',
         scope: {
             comment: '=',
-            loggedUser: '=',
+            loggedUser: '='
         },
         controller: function($scope, $http) {
-            editting = false;
-            submit = function() {
-                alert('oi');
+            $scope.editting = false;
+            $scope.errors = {};
+
+            $scope.submitEdit = function(comment) {
+                $http.post("/comments/rest/edit", comment).success(function(data) {
+                    alert("Alterado");
+                    console.log(data);
+                }).error(function(e) {
+                    $scope.errors = e;
+                    console.log("ERROU");
+                    console.log($scope.errors);
+                });
             };
 
-            removeComment = function() {
-                alert("oi");
-            };
-
-            updateFn = function($event, identifier) {
-                console.log(identifier);
-                editting = false;
-            };
+            $scope.submitDelete = function(comment) {
+                console.log(comment);
+                var form = new FormData();
+                form.append("id", comment.id);
+                form.append("user", comment.user);
+                $http.post(comment.delete_path, form).success(function(data) {
+                    console.log(data);
+                }).error(function(e){
+                    console.log(e);
+                });
+            }
         },
         link: function(scope, element, attr){
-            scope.updateFn = function (identifier) {
-                console.log(identifier);
+            scope.updateFn = function (comment) {
+                console.log(comment);
+                scope.submitEdit(comment);
             };
 
+            scope.deleteFn = function (comment) {
+                console.log(comment);
+                scope.submitDelete(comment);
+            }
         }
     }
 });

@@ -8,7 +8,7 @@ from routes.questions import new, edit
 from tekton.gae.middleware.redirect import RedirectResponse
 from gaepermission.model import MainUser
 from datetime import datetime
-from routes.comments.rest import new as comment_new, index as comment_list
+from routes.comments.rest import new as comment_new, index as comment_list, delete as comment_delete
 from comment_app import comment_facade
 from comment_app.comment_model import Comment
 from permission_app.permission_facade import main_user_form
@@ -31,6 +31,7 @@ def index(question_id=""):
 
         def fill_comment_model(comment):
             comment_dct = comment_form.fill_with_model(comment)
+            comment_dct['delete_path'] = router.to_path(router.to_path(comment_delete), comment_dct['id'])
             comment_dct['publisher'] = main_user_form().fill_with_model(MainUser.get_by_id(int(question_dct['user'])))
             return comment_dct
 

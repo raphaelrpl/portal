@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+from google.appengine.ext import ndb
+from gaecookie.decorator import no_csrf
 from question_app import question_facade
 from gaebusiness.business import CommandExecutionException
 from gaepermission.model import MainUser
@@ -45,18 +47,37 @@ def new(_resp, _logged_user, **comment_properties):
     return _save_or_update_json_response(cmd, _resp)
 
 
-def edit(_resp, id, **comment_properties):
-    cmd = comment_facade.update_comment_cmd(id, **comment_properties)
-    return _save_or_update_json_response(cmd, _resp)
-
-
-def delete(_resp, id):
-    cmd = comment_facade.delete_comment_cmd(id)
+def delete(_resp, identifier):
+    print(identifier)
+    k = ndb.Key('Comment', identifier)
+    cmd = comment_facade.delete_comment_cmd(k)
     try:
         cmd()
     except CommandExecutionException:
-        _resp.status_code = 500
+        # _resp.status_code = 500
         return JsonResponse(cmd.errors)
+
+def edit(_resp, _logged_user, **comment_properties):
+    comment_id = int(comment_properties.get('id'))
+    k = ndb.Key('Comment', comment_id)
+    if int(_logged_user.key.id()) != int(comment_properties.get('publisher', {}).get('id', 0)) and comment_id != None:
+        _resp.status_code = 400
+        return JsonResponse({"content": "This post don't belong to you!"})
+    comment = Comment.get_by_id(k.id())
+
+    try:
+        if comment_properties.get('content') is None or comment_properties.get('content') == "":
+            raise ValueError()
+        comment.content = comment_properties.get('content')
+        form = comment_facade.comment_form()
+        form_data = form.fill_with_model(comment)
+        comment.put()
+    except Exception as e:
+        _resp.status_code = 400
+        return JsonResponse({"content": "Required field"})
+    return JsonResponse(form_data)
+    # cmd = comment_facade.update_comment_cmd(k, **comment_properties)
+    # return _save_or_update_json_response(cmd, _resp)
 
 
 def _save_or_update_json_response(cmd, _resp):

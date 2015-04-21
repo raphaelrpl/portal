@@ -22,7 +22,7 @@
                                 <a role="menuitem" tabindex="-1" ng-click="editing=true;">Editar</a>
                             </li>
                             <li role="presentation">
-                                <a role="menuitem" tabindex="-1" ng-click="$parent.removeComment();">Remover</a>
+                                <a role="menuitem" tabindex="-1" ng-click="deleteFn(comment);">Remover</a>
                             </li>
                         </ul>
                     </div>
@@ -30,12 +30,15 @@
                     <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> {[ comment.creation ]}</time>
                 </header>
                 <div class="comment-post">
-                    <p ng-show="!editing">{[ comment.content ]}</p>
-                    <textarea ng-show="editing" style="width: 100% !important;" rows="3">{[ comment.content ]}</textarea>
+                    <div class="has-feedback" ng-class="{'has-error': errors.content}">
+                        <p ng-show="editing == false;">{[ comment.content ]}</p>
+                        <textarea class="form-control" ng-model="comment.content" ng-show="editing" style="width: 100% !important;" rows="3">{[ comment.content ]}</textarea>
+                    </div>
                 </div>
                 <p class="text-right">
+                    <span class="pull-left" style="color: red;" ng-show="editing;">{[ errors.content ]}</span>
                     <button class="btn btn-default btn-sm" ng-show="editing;" ng-click="editing=false;"><i class="fa fa-reply"></i> Cancelar</button>
-                    <button class="btn btn-default btn-sm" ng-click="updateFn(comment.id);" ng-show="editing;"><i class="fa fa-reply"></i> Confirmar</button>
+                    <button class="btn btn-default btn-sm" ng-click="updateFn(comment);" ng-show="editing;"><i class="fa fa-reply"></i> Confirmar</button>
                 </p>
             </div>
         </div>
