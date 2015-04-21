@@ -48,14 +48,19 @@ def new(_resp, _logged_user, **comment_properties):
 
 
 def delete(_resp, identifier):
-    print(identifier)
-    k = ndb.Key('Comment', identifier)
-    cmd = comment_facade.delete_comment_cmd(k)
+    k = ndb.Key('Comment', int(identifier))
+    # cmd = comment_facade.delete_comment_cmd(identifier)
+    comment = Comment.get_by_id(int(identifier))
+    # out = comment
     try:
-        cmd()
-    except CommandExecutionException:
-        # _resp.status_code = 500
-        return JsonResponse(cmd.errors)
+        comment.key.delete()
+        # k.delete()
+        print("DELETOU")
+    except Exception as e:
+        _resp.status_code = 400
+        return JsonResponse({"content": "Cannot delete"})
+    return JsonResponse({"status": True})
+
 
 def edit(_resp, _logged_user, **comment_properties):
     comment_id = int(comment_properties.get('id'))

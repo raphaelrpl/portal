@@ -31,7 +31,7 @@
                 </header>
                 <div class="comment-post">
                     <div class="has-feedback" ng-class="{'has-error': errors.content}">
-                        <p ng-show="editing == false;">{[ comment.content ]}</p>
+                        <p ng-show="!editing;">{[ comment.content ]}</p>
                         <textarea class="form-control" ng-model="comment.content" ng-show="editing" style="width: 100% !important;" rows="3">{[ comment.content ]}</textarea>
                     </div>
                 </div>
