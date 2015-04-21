@@ -7,14 +7,34 @@
 {% block js %}
     <script src="/static/comments/js/comment.js"></script>
     <script>
-        function commentController($scope) {
+        function commentController($scope, $window, $http) {
             $scope.comment = {post: {{ question['id'] }}, type: "Q"};
             $scope.commentList = {{ comments|safe }};
+            $scope.loggedUser = {
+                id: {{ _logged_user.key.id() }},
+                email: "{{ _logged_user.email }}"
+            };
+            console.log($scope.loggedUser);
+            angular.element($window).bind("scroll", function() {
+                var windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+                var body = document.body, html = document.documentElement;
+                var docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
+                windowBottom = windowHeight + window.pageYOffset;
+                if (windowBottom >= docHeight) {
+                    console.log("baixando");
+{#                    $http.post("{{ comment_list }}", {}).success(function(data){#}
+{#                        console.log(data);#}
+{#                        $scope.commentList = data;#}
+{#                        $scope.$apply('usercomment');#}
+{#                    });#}
+                }
+            });
         }
     </script>
 {% endblock %}
 
 {% block body %}
+
     <div class="content-wrapper">
         <!-- News Content -->
         <section class="content-header">
@@ -48,13 +68,13 @@
                     </div>
 
                     <div class="col-md-12 panel">
-                        <docomment comment="comment" post-url="{{ comment_url }}"></docomment>
+                        <docomment comment="comment" post-url="{{ comment_url }}" comment-list="commentList"></docomment>
                     </div>
 
                     <div class="col-md-12">
                         <h2 class="page-header">Comentários</h2>
                         <section class="comment-list">
-                            <usercomment ng-repeat="c in commentList" comment="c"></usercomment>
+                            <usercomment ng-repeat="c in commentList" comment="c" logged-user="loggedUser"></usercomment>
                         </section>
                     </div>
                 </section>

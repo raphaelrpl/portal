@@ -15,6 +15,9 @@ def index():
 
 
 def new(_resp, _logged_user, **question_properties):
+    if _logged_user is None:
+        _resp.status_code = 400
+        return JsonResponse({"name": "Login required!"})
     question_properties['user'] = _logged_user
     cmd = question_facade.save_question_cmd(**question_properties)
     return _save_or_update_json_response(_logged_user, cmd, _resp)

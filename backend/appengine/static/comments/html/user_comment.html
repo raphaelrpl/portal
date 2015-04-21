@@ -9,15 +9,34 @@
         <div class="panel panel-default arrow left">
             <div class="panel-body">
                 <header class="text-left">
-                    <div class="comment-user"><i class="fa fa-user"></i> {[ comment.publisher.name ]}</div>
+
+                    <div class="comment-user pull-left"><i class="fa fa-user"></i> {[ comment.publisher.name ]}</div>
+                    <div class="dropdown pull-right" ng-show="{[ comment.publisher.id == loggedUser.id && comment.publisher.email == loggedUser.email ]}">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" style="padding: 0 !important;"
+                                data-toggle="dropdown" aria-expanded="true">
+                            Opções
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" ng-click="editing=true">Editar</a>
+                            </li>
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" href="#">Remover</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
                     <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> {[ comment.creation ]}</time>
                 </header>
                 <div class="comment-post">
-                    <p>
-                        {[ comment.content ]}
-                    </p>
+                    <p ng-show="!editing">{[ comment.content ]}</p>
+                    <textarea ng-show="editing" style="width: 100% !important;" rows="3">{[ comment.content ]}</textarea>
                 </div>
-                <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
+                <p class="text-right">
+                    <button class="btn btn-default btn-sm" ng-show="editing;" ng-click="editing=false"><i class="fa fa-reply"></i> Cancelar</button>
+                    <button class="btn btn-default btn-sm" ng-show="editing;" ng-click="editing=false"><i class="fa fa-reply"></i> Confirmar</button>
+                </p>
             </div>
         </div>
     </div>

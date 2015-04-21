@@ -8,7 +8,7 @@ from routes.questions import new, edit
 from tekton.gae.middleware.redirect import RedirectResponse
 from gaepermission.model import MainUser
 from datetime import datetime
-from routes.comments.rest import new as comment_new
+from routes.comments.rest import new as comment_new, index as comment_list
 from comment_app import comment_facade
 from comment_app.comment_model import Comment
 from permission_app.permission_facade import main_user_form
@@ -36,11 +36,11 @@ def index(question_id=""):
 
         comments = [fill_comment_model(c) for c in comments_on_question]
 
-
         context = {
             "question": question_dct,
             "comments": dumps(comments),
-            "comment_url": router.to_path(comment_new)}
+            "comment_url": router.to_path(comment_new),
+            "comment_list": router.to_path(comment_list)}
         return TemplateResponse(context=context, template_path='questions/question.html')
     cmd = question_facade.list_questions_cmd()
     questions = cmd()
