@@ -19,10 +19,10 @@
                         </button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                             <li role="presentation">
-                                <a role="menuitem" tabindex="-1" ng-click="editing=true">Editar</a>
+                                <a role="menuitem" tabindex="-1" ng-click="editing=true;">Editar</a>
                             </li>
                             <li role="presentation">
-                                <a role="menuitem" tabindex="-1" href="#">Remover</a>
+                                <a role="menuitem" tabindex="-1" ng-click="$parent.removeComment();">Remover</a>
                             </li>
                         </ul>
                     </div>
@@ -34,8 +34,8 @@
                     <textarea ng-show="editing" style="width: 100% !important;" rows="3">{[ comment.content ]}</textarea>
                 </div>
                 <p class="text-right">
-                    <button class="btn btn-default btn-sm" ng-show="editing;" ng-click="editing=false"><i class="fa fa-reply"></i> Cancelar</button>
-                    <button class="btn btn-default btn-sm" ng-show="editing;" ng-click="editing=false"><i class="fa fa-reply"></i> Confirmar</button>
+                    <button class="btn btn-default btn-sm" ng-show="editing;" ng-click="editing=false;"><i class="fa fa-reply"></i> Cancelar</button>
+                    <button class="btn btn-default btn-sm" ng-click="updateFn(comment.id);" ng-show="editing;"><i class="fa fa-reply"></i> Confirmar</button>
                 </p>
             </div>
         </div>

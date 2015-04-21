@@ -35,10 +35,28 @@ commentModule.directive("usercomment", function() {
         templateUrl: '/static/comments/html/user_comment.html',
         scope: {
             comment: '=',
-            loggedUser: '='
+            loggedUser: '=',
         },
         controller: function($scope, $http) {
             editting = false;
+            submit = function() {
+                alert('oi');
+            };
+
+            removeComment = function() {
+                alert("oi");
+            };
+
+            updateFn = function($event, identifier) {
+                console.log(identifier);
+                editting = false;
+            };
+        },
+        link: function(scope, element, attr){
+            scope.updateFn = function (identifier) {
+                console.log(identifier);
+            };
+
         }
     }
 });
