@@ -23,10 +23,14 @@ def index(_handler, _logged_user, **discuss_properties):
     discuss_properties["image"] = avatar
     discuss_properties.pop("files", None)
     discuss_properties["user"] = _logged_user.key
-    cmd = discuss_facade.save_discuss_cmd(**discuss_properties)
+    discuss = Discuss(**discuss_properties)
+
     try:
-        cmd()
+        discuss.put()
+        out = Discuss.get_by_id(discuss.key.id())
+        out.image = avatar
+        out.put()
         print("foi")
-    except CommandExecutionException as e:
+    except Exception as e:
         return TemplateResponse(template_path="discusses/home.html")
     return RedirectResponse(router.to_path(home))

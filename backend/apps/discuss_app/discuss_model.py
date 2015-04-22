@@ -7,5 +7,5 @@ from base_app.model import BasePost
 class Discuss(BasePost):
     title = ndb.StringProperty(required=True)
     content = ndb.StringProperty(required=True)
-    image = ndb.StringProperty(required=False)
+    image = ndb.TextProperty(required=False)
 
