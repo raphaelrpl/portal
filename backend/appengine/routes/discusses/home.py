@@ -4,7 +4,6 @@ from config.template_middleware import TemplateResponse
 from tekton import router
 from gaecookie.decorator import no_csrf
 from discuss_app import discuss_facade
-from routes.discusses import new, edit
 from tekton.gae.middleware.redirect import RedirectResponse
 from datetime import datetime
 
@@ -18,6 +17,8 @@ def index(discuss=""):
         context['discuss'] = query_discuss
         return TemplateResponse(template_path="discusses/discuss.html", context=context)
     # query = Discuss.query().order(Discuss.creation).fetch()[:10][::-1]
+    cmd = discuss_facade.ListDiscussCommand()
+    discusses = cmd()
     query = [
         {
             "key": 54323122,
@@ -34,8 +35,8 @@ def index(discuss=""):
             "image": "/static/img/python.jpg"
         }
     ]
-    context['discusses'] = query
-    return TemplateResponse(context)
+    context['discusses'] = discusses
+    return TemplateResponse(context, template_path="discusses/home.html")
 
     # cmd = discuss_facade.list_discusss_cmd()
     # discusss = cmd()

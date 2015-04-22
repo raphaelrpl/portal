@@ -51,15 +51,15 @@ def delete(_resp, identifier):
     k = ndb.Key('Comment', int(identifier))
     # cmd = comment_facade.delete_comment_cmd(identifier)
     comment = Comment.get_by_id(int(identifier))
+    form = comment_facade.comment_form()
+
     # out = comment
     try:
         comment.key.delete()
-        # k.delete()
-        print("DELETOU")
     except Exception as e:
         _resp.status_code = 400
         return JsonResponse({"content": "Cannot delete"})
-    return JsonResponse({"status": True})
+    return JsonResponse(form.fill_with_model(comment))
 
 
 def edit(_resp, _logged_user, **comment_properties):

@@ -8,12 +8,20 @@ from datetime import datetime
 from gaepermission.model import MainUser
 from tekton import router
 from routes.comments.rest import new as comment_path
+from discuss_app.discuss_model import Discuss
 
 allowed = "python business-intelligence geo-technology mongodb c++ agile artificial-intelligence scidb".split()
+from google.appengine.api import blobstore
+from google.appengine.api.app_identity.app_identity import get_default_gcs_bucket_name
+from routes.discusses.upload import index as my_upload
 
 
 @no_csrf
 def index(category=""):
+    success_url = router.to_path(my_upload)
+    bucket = get_default_gcs_bucket_name()
+    url = blobstore.create_upload_url(success_url, gs_bucket_name=bucket)
+
     if category:
         if category not in allowed:
             return TemplateResponse(template_path="base/404.html")
@@ -55,6 +63,7 @@ def index(category=""):
         "question_comment_path": router.to_path(comment_path),
         "discuss_comment_path": router.to_path(comment_path),
         "users_path": router.to_path(index),
+        "upload_path": url,
         "trends": [
             {
                 "key": 54323122,

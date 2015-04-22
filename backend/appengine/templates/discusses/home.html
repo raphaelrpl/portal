@@ -1,3 +1,4 @@
+
 {% extends 'base/base.html' %}
 
 {% block css %}
@@ -53,27 +54,27 @@
                         {% for discuss in discusses %}
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">{{ discuss['title'] }}?</h3>
+                                <h3 class="panel-title">{{ discuss.title }}?</h3>
                             </div>
                             <div class="publisher">
                                 <img src="/static/dist/img/user2-160x160.jpg">
                                 <span style="padding-left: 10px;"><b>Fulano</b></span>
-                                <span class="pull-right" style="padding-right: 20px;">Publicado a 12min</span>
+                                <span class="pull-right" style="padding-right: 20px;">{{ discuss.creation }}</span>
                             </div>
                             <div class="panel-body">
-                                {% if discuss.get('image') %}
+                                {% if not discuss.image %}
                                 <div class="col-md-3 col-sm-3">
-                                    <img src="{{ discuss['image'] }}" style="width: 100%; max-height: 250px;">
+                                    <img src="{{ discuss.image }}" style="width: 100%; max-height: 250px;">
                                 </div>
                                 <div class="col-md-9">
                                 {% else %}
                                 <div class="col-md-12">
                                 {% endif %}
-                                {{ discuss['content'] }}
+                                {{ discuss.content }}
                                 </div>
                                 <div class="col-md-12">
                                     <a href="#" class="btn btn-link pull-right" data-toggle="modal" data-target="#commentDiscussModal"><i class="fa fa-comment margin-icon"></i>Responder</a>
-                                    <a href="{{ discusses_page }}/{{ discuss['key'] }}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver mais</a>
+                                    <a href="{{ discusses_page }}/{{ discuss.key.id() }}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver mais</a>
                                     <a href="#" id="recommend_btn" class="btn btn-link pull-right"><i class="fa fa-fire margin-icon"></i>Recomendar</a>
                                 </div>
                             </div>

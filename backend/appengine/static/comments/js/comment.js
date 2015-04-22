@@ -35,7 +35,8 @@ commentModule.directive("usercomment", function() {
         templateUrl: '/static/comments/html/user_comment.html',
         scope: {
             comment: '=',
-            loggedUser: '='
+            loggedUser: '=',
+            commentList: '='
         },
         controller: function($scope, $http) {
             $scope.editting = false;
@@ -59,6 +60,12 @@ commentModule.directive("usercomment", function() {
                 form.append("user", comment.user);
                 $http.post(comment.delete_path, form).success(function(data) {
                     console.log(data);
+                    angular.forEach($scope.commentList, function(key, value) {
+                        if (value.id == data.id) {
+                            $scope.commentList.splice(key, 1);
+                            console.log("REMOVeU");
+                        }
+                    });
                 }).error(function(e){
                     console.log(e);
                 });

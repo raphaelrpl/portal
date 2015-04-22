@@ -9,7 +9,14 @@
     <script>
         function questionCommentController($scope) {
             $scope.comment = {postUrl: "{{ question_comment_path }}"};
+            $scope.question = {};
         }
+
+        $(document).ready(function(){
+            $("#myModalLabel").html("OIIII");
+            console.log($(this).parent());
+
+        });
     </script>
 {% endblock %}
 
@@ -31,7 +38,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Lorem ipsu?</h4>
+                        <h4 class="modal-title" id="myModalLabel">{[ question.name ]}</h4>
                     </div>
                     <div class="modal-body">
                         <docomment comment="comment" post-url="{{ question_comment_path }}"></docomment>
@@ -85,7 +92,7 @@
                                 </div>
                                 <div class="panel-body">
                                     <div class="col-md-12">
-                                        <a href="#" class="btn btn-link pull-right" data-toggle="modal" data-target="#commentQuestionModal"><i class="fa fa-comment margin-icon"></i>Responder</a>
+                                        <a href="#" id="answer_btn" data-answer-id="{{ question['id'] }}" class="btn btn-link pull-right" data-toggle="modal" data-target="#commentQuestionModal"><i class="fa fa-comment margin-icon"></i>Responder</a>
                                         <a href="/questions/{{ question['id'] }}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver mais</a>
                                         <a href="#" id="recommend_btn" class="btn btn-link pull-right"><i class="fa fa-fire margin-icon"></i>Recomendar</a>
                                     </div>
