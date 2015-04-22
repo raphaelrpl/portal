@@ -12,7 +12,7 @@ commentModule.directive("docomment", function() {
         },
         controller: function($scope, $http) {
             $scope.errors = {};
-            console.log($scope.commentList);
+            console.log($scope.comment);
             $scope.sendComment = function() {
                 $http.post($scope.postUrl, $scope.comment).success(function(question) {
 
