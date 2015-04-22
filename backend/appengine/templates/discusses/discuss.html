@@ -27,20 +27,24 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">What are the most viewed questions?</h3>
+                            <h3 class="panel-title">{{ discuss['title'] }}?</h3>
                         </div>
                         <div class="publisher">
                             <img src="/static/dist/img/user2-160x160.jpg">
-                            <span style="padding-left: 10px;"><b>Fulano</b></span>
-                            <span class="pull-right" style="padding-right: 20px;">Publicado a 12min</span>
+                            <span style="padding-left: 10px;"><b>{{ discuss['publisher']['name'] }}</b></span>
+                            <span class="pull-right" style="padding-right: 20px;">{{ discuss['creation'] }}</span>
                         </div>
                         <div class="panel-body">
-                            <div class="col-md-3">
-                                <img src="/static/img/test.jpg" style="width: 100%; max-height: 250px;">
-                            </div>
-                            <div class="col-md-9">
-                                "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque  Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat?..."
-                            </div>
+                            {% if discuss['image'] %}
+                                <div class="col-md-3 col-sm-3">
+                                    <img src="{{ discuss['image'] }}" style="width: 100%; max-height: 250px;">
+                                </div>
+                                <div class="col-md-9">
+                                {% else %}
+                                <div class="col-md-12">
+                                {% endif %}
+                                {{ discuss['content'] }}
+                                </div>
                             <div class="col-md-12">
                                 <a href="#" id="recommend_btn" class="btn btn-link pull-right"><i class="fa fa-fire margin-icon"></i>Recomendar</a>
                             </div>
