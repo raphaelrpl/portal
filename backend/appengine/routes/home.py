@@ -9,6 +9,7 @@ from gaepermission.model import MainUser
 from tekton import router
 from routes.comments.rest import new as comment_path
 from discuss_app.discuss_model import Discuss
+from discuss_app import discuss_facade
 
 allowed = "python business-intelligence geo-technology mongodb c++ agile artificial-intelligence scidb".split()
 from google.appengine.api import blobstore
@@ -50,13 +51,19 @@ def index(category=""):
     questions = cmd()
     qform = question_facade.question_form()
 
-    def localize_user(question):
-        question_dct = qform.fill_with_model(question)
-        question_dct['user'] = MainUser.get_by_id(int(question.user.id()))
-        question.created_at = datetime.now() - question.creation
-        print question_dct
-        return question_dct
-    questions_output = [localize_user(q) for q in questions]
+    def localize_user(model, facade_form):
+        model_dct = facade_form.fill_with_model(model)
+        model_dct['user'] = MainUser.get_by_id(int(model.user.id()))
+        model.created_at = datetime.now() - model.creation
+        return model_dct
+
+    questions_output = [localize_user(q, qform) for q in questions]
+
+    cmd_discuss = discuss_facade.list_discusss_cmd()
+    discusses = cmd_discuss()
+    dform = discuss_facade.discuss_form()
+
+    discusses_output = [localize_user(d, dform) for d in discusses]
 
     context = {
         "questions": questions_output,
@@ -84,22 +91,7 @@ def index(category=""):
                 "creation": formatter(datetime(day=9, month=3, year=2015, hour=8))
             }
         ],
-        "discusses": [
-            {
-                "key": 50903412,
-                "title": "Quais os principais assuntos no tutorship portal?",
-                "content": "",
-                "image": "/static/img/python.jpg",
-                "creation": formatter(datetime(day=10, month=3, year=2015, hour=8))
-            },
-            {
-                "key": 50903417,
-                "title": "Quais os principais assuntos no tutorship portal?",
-                "content": "",
-                "image": "/static/img/test.jpg",
-                "creation": formatter(datetime(day=9, month=3, year=2015, hour=8))
-            }
-        ]
+        "discusses": discusses_output
     }
     return TemplateResponse(context=context)
 

@@ -7,3 +7,7 @@ from base_app.model import BasePost
 class Question(BasePost):
     name = ndb.StringProperty(required=True)
 
+    @classmethod
+    def count_questions_by_user(cls, user):
+        return cls.query(Question.user == user).count()
+

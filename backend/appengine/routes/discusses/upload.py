@@ -21,15 +21,14 @@ def index(_handler, _logged_user, **discuss_properties):
     avatar = router.to_path(download, blob_key)
     print(blob_key)
     discuss_properties["image"] = avatar
-    discuss_properties.pop("files", None)
     discuss_properties["user"] = _logged_user.key
     discuss = Discuss(**discuss_properties)
 
     try:
         discuss.put()
-        out = Discuss.get_by_id(discuss.key.id())
-        out.image = avatar
-        out.put()
+        # out = Discuss.get_by_id(discuss.key.id())
+        # out.image = avatar
+        # out.put()
         print("foi")
     except Exception as e:
         return TemplateResponse(template_path="discusses/home.html")
