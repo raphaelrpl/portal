@@ -44,7 +44,7 @@ def new(_resp, _logged_user, **comment_properties):
         comment_properties['post'] = post
     comment_properties['user'] = _logged_user
     cmd = comment_facade.save_comment_cmd(**comment_properties)
-    return _save_or_update_json_response(cmd, _resp)
+    return _save_or_update_json_response(_logged_user, cmd, _resp)
 
 
 def delete(_resp, identifier):
@@ -85,12 +85,15 @@ def edit(_resp, _logged_user, **comment_properties):
     # return _save_or_update_json_response(cmd, _resp)
 
 
-def _save_or_update_json_response(cmd, _resp):
+def _save_or_update_json_response(_logged_user, cmd, _resp):
     try:
         comment = cmd()
     except CommandExecutionException:
         _resp.status_code = 500
         return JsonResponse(cmd.errors)
     comment_form = comment_facade.comment_form()
-    return JsonResponse(comment_form.fill_with_model(comment))
+    user_form = main_user_form().fill_with_model(_logged_user)
+    comment_dc = comment_form.fill_with_model(comment)
+    comment_dc['publisher'] = user_form
+    return JsonResponse(comment_dc)
 

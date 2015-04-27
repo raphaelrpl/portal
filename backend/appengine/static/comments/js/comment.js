@@ -42,10 +42,12 @@ commentModule.directive("usercomment", function() {
             $scope.editting = false;
             $scope.errors = {};
 
+
             $scope.submitEdit = function(comment) {
                 $http.post("/comments/rest/edit", comment).success(function(data) {
-                    alert("Alterado");
-                    console.log(data);
+                    alert("Comentario alterado com sucesso");
+                editting = false;
+                    // console.log(data);
                 }).error(function(e) {
                     $scope.errors = e;
                     console.log("ERROU");
@@ -73,8 +75,8 @@ commentModule.directive("usercomment", function() {
         },
         link: function(scope, element, attr){
             scope.updateFn = function (comment) {
-                console.log(comment);
                 scope.submitEdit(comment);
+                scope.editting = false;
             };
 
             scope.deleteFn = function (comment) {

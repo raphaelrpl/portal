@@ -16,11 +16,12 @@ from routes.discusses import home
 @login_not_required
 @no_csrf
 def index(_handler, _logged_user, **discuss_properties):
-    blob_infos = _handler.get_uploads("image[]")
-    blob_key = blob_infos[0].key()
-    avatar = router.to_path(download, blob_key)
-    print(blob_key)
-    discuss_properties["image"] = avatar
+    if discuss_properties.get("image[]"):
+        blob_infos = _handler.get_uploads("image[]")
+        blob_key = blob_infos[0].key()
+        avatar = router.to_path(download, blob_key)
+        print(blob_key)
+        discuss_properties["image"] = avatar
     discuss_properties["user"] = _logged_user.key
     discuss = Discuss(**discuss_properties)
 
