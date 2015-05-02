@@ -1,0 +1,118 @@
+
+{% extends 'base/base.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/css/default.css"/>
+{% endblock %}
+
+{#{% block body_class %}#}
+{#sidebar-collapse sidebar-open#}
+{#{% endblock %}#}
+
+{% block js %}
+    <script>
+        $(document).ready(function(){
+            var slugify = function(str) {
+                str = str.replace(/^\s+|\s+$/g, ''); // trim
+                str = str.toLowerCase();
+
+                // remove accents, swap ñ for n, etc
+                var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;";
+                var to   = "aaaaaeeeeeiiiiooooouuuunc------";
+                for (var i=0, l=from.length ; i<l ; i++) {
+                    str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+                }
+
+                str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+                        .replace(/\s+/g, '-') // collapse whitespace and replace by -
+                        .replace(/-+/g, '-'); // collapse dashes
+
+                return str;
+            };
+
+            $("#nameInput").on('input', function() {
+                $("#slugInput").val(slugify($(this).val()));
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="content-wrapper">
+        <!-- News Content -->
+        <section class="content-header">
+            <h1>
+                Categorias
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Página Inicial</a></li>
+                <li class="active">Categorias</li>
+            </ol>
+        </section>
+
+        <section class="content content-min">
+            <div class="row">
+                <div class="hidden-xs hidden-sm" style="height: 20px !important;"></div>
+                <section class="col-md-8 col-md-offset-2">
+                    <div class="col-md-12">
+                        <div class="well">
+                            <h4 class="text-center">Nova categoria</h4>
+                            <form class="form-inline" action="{{ save_path }}" method="post" id="categoryForm">
+                                {{ csrf_input() }}
+                                <div class="form-group {{ 'has-error' if errors.name }}">
+                                    <label for="nameInput">Categoria</label>
+                                    <input type="text" class="form-control" id="nameInput" placeholder="Categoria" name="name">
+                                    {% if errors %}<span class="help-block">{{ errors.name }}</span>{% endif %}
+                                </div>
+                                <div class="form-group {{ 'has-error' if errors.slug }}">
+                                    <label for="slugInput">Slug</label>
+                                    <input type="text" class="form-control" id="slugInput" name="slug" readonly>
+                                    {% if errors %}<span class="help-block">{{ errors.name }}</span>{% endif %}
+                                </div>
+                                <button type="submit" class="btn btn-success">Salvar</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <table id="example2" class="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+                        <thead>
+                        <tr role="row">
+                            <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Categoria
+                            </th>
+                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                aria-label="Browser: activate to sort column ascending">Slug
+                            </th>
+                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                aria-label="CSS grade: activate to sort column ascending">Data
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody role="alert" aria-live="polite" aria-relevant="all">
+                            {% for c in categorys %}
+                            <tr class="odd">
+                                <td class="col-md-4">{{ c.name }}</td>
+                                <td class="col-md-4">
+                                    {{ c.slug }}
+                                </td>
+                                <td class="col-md-4">
+                                    {{ c.creation }}
+                                    <form action="{{ c.delete_path }}" method="post">
+                                        {{ csrf_input() }}
+                                        <button class="btn btn-danger btn-sm"><i
+                                            class="glyphicon glyphicon-trash"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr class="odd">
+                                <td class="col-md-12" colspan="3">Nenhuma categoria cadastrada</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </section>
+    </div> <!-- div content-wrapper -->
+{% endblock %}
