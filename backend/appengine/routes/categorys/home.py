@@ -49,9 +49,8 @@ def save(**category_properties):
 
 
 def delete(category_id):
-    # key = ndb.Key(Category, int(category_id))
-    # key.delete()
-    print(category_id)
-    category_facade.delete_category_cmd(category_id)
+    # category = Category.get_by_id(int(category_id))
+    # category.key.delete()
+    category_facade.delete_category_cmd(int(category_id))
     return RedirectResponse(router.to_path(index))
 

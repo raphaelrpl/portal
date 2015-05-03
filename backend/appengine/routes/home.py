@@ -16,6 +16,8 @@ from google.appengine.api import blobstore
 from google.appengine.api.app_identity.app_identity import get_default_gcs_bucket_name
 from routes.discusses.upload import index as my_upload
 
+from category_app.category_model import Category
+
 
 @no_csrf
 def index(category=""):
@@ -23,30 +25,33 @@ def index(category=""):
     bucket = get_default_gcs_bucket_name()
     url = blobstore.create_upload_url(success_url, gs_bucket_name=bucket)
 
+    topics = [
+        {
+            "key": 54323122,
+            "title": "Who Invented the Computer Virus?",
+            "content": "",
+            "image": "/static/img/python.jpg",
+            "type": "questions",
+            "user": 1235875214
+        },
+        {
+            "key": 65432322,
+            "title": "How to Google Something You Don't Know How to Describe?",
+            "content": "",
+            "image": "/static/img/test.jpg",
+            "type": "discusses",
+            "user": 54389754354
+        }
+    ]
+
     if category:
-        if category not in allowed:
+        categ = Category.query(Category.slug == category).fetch()
+        # if category not in allowed:
+        if not categ:
             return TemplateResponse(template_path="base/404.html")
-        topics = [
-            {
-                "key": 54323122,
-                "title": "Who Invented the Computer Virus?",
-                "content": "",
-                "image": "/static/img/python.jpg",
-                "type": "questions",
-                "user": 1235875214
-            },
-            {
-                "key": 65432322,
-                "title": "How to Google Something You Don't Know How to Describe?",
-                "content": "",
-                "image": "/static/img/test.jpg",
-                "type": "discusses",
-                "user": 54389754354
-            }
-        ]
-        context = {"category": category, "topics": topics}
+
+        context = {"category": categ[0].name, "topics": topics}
         return TemplateResponse(context=context, template_path="category/home.html")
-    formatter = FriendlyDatetime()
     cmd = question_facade.list_questions_cmd()
     questions = cmd()
     qform = question_facade.question_form()
@@ -71,26 +76,7 @@ def index(category=""):
         "discuss_comment_path": router.to_path(comment_path),
         "users_path": router.to_path(index),
         "upload_path": url,
-        "trends": [
-            {
-                "key": 54323122,
-                "title": "Who Invented the Computer Virus?",
-                "content": "",
-                "image": "/static/img/python.jpg",
-                "type": "questions",
-                "user": 54389754354,
-                "creation": formatter(datetime(day=10, month=3, year=2015, hour=8))
-            },
-            {
-                "key": 65432322,
-                "title": "How to Google Something You Don't Know How to Describe?",
-                "content": "",
-                "image": "/static/img/test.jpg",
-                "type": "discusses",
-                "user": 1235875214,
-                "creation": formatter(datetime(day=9, month=3, year=2015, hour=8))
-            }
-        ],
+        "trends": topics,
         "discusses": discusses_output
     }
     return TemplateResponse(context=context)
