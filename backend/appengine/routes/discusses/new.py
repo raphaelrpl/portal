@@ -22,7 +22,7 @@ def get_bucket_url():
 @no_csrf
 def index():
     upload_path = get_bucket_url()
-    return TemplateResponse({'save_path': router.to_path(save), 'upload_url': upload_path}, 'discusss/discuss_form.html')
+    return TemplateResponse({'upload_url': upload_path}, 'discusses/discuss_form.html')
 
 
 def save(**discuss_properties):
