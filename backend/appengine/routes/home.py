@@ -2,7 +2,6 @@
 from __future__ import absolute_import, unicode_literals
 from config.template_middleware import TemplateResponse
 from gaecookie.decorator import no_csrf
-from my_discusses_app.utils import FriendlyDatetime
 from question_app import question_facade
 from datetime import datetime
 from gaepermission.model import MainUser
