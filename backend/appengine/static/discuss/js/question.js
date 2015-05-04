@@ -10,12 +10,17 @@ questionModule.directive("questionform", function() {
         replace: true,
         templateUrl: '/static/discuss/html/form.html',
         scope: {
-            question: '='
+            question: '=',
+            categorysSelected: '='
         },
         controller: function($scope, $http) {
             $scope.errors = {};
+
             $scope.publish = function() {
-                $http.post('/questions/rest/new', $scope.question).success(function(question) {
+                var cat = $scope.categorysSelected[0];
+                if (!cat)
+                    alert("Selecione ao menos uma categoria");
+                $http.post('/questions/rest/new', {question: $scope.question, categorys: cat}).success(function(question) {
                     console.log(question);
                     window.location = "/";
                 }).error(function(errors) {

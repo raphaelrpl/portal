@@ -5,6 +5,8 @@ from gaebusiness.business import CommandExecutionException
 from tekton.gae.middleware.json_middleware import JsonResponse
 from question_app import question_facade
 from gaepermission.decorator import login_required
+from question_app.question_model import CategoryQuestion
+from category_app.category_model import Category
 
 
 @login_required
@@ -21,9 +23,27 @@ def new(_resp, _logged_user, **question_properties):
     if _logged_user is None:
         _resp.status_code = 400
         return JsonResponse({"name": "Login required!"})
-    question_properties['user'] = _logged_user
-    cmd = question_facade.save_question_cmd(**question_properties)
-    return _save_or_update_json_response(_logged_user, cmd, _resp)
+    question_properties['question']['user'] = _logged_user
+    cmd = question_facade.save_question_cmd(**question_properties.get('question', {}))
+
+    try:
+        question = cmd()
+    except CommandExecutionException:
+        _resp.status_code = 500
+        return JsonResponse(cmd.errors)
+
+    for c in question_properties.get("categorys"):
+        cat = Category.query(Category.name == c).fetch()
+        if cat:
+            category = CategoryQuestion(origin=cat[0], destination=question)
+            category.put()
+
+    question_form = question_facade.question_form()
+    data = question_form.fill_with_model(question)
+    data['user'] = _logged_user.name
+
+    return JsonResponse(data)
+    # return _save_or_update_json_response(_logged_user, cmd, _resp)
 
 
 @login_required

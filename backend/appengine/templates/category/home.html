@@ -23,7 +23,7 @@
                     {% for topic in topics %}
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">{{ topic['title'] }}</h3>
+                                <h3 class="panel-title">{{ topic['title'] or topic['name'] }}</h3>
                             </div>
                             <div class="publisher">
                                 <img src="/static/dist/img/user2-160x160.jpg">
@@ -45,6 +45,30 @@
                                     </div>
                                     {% endif %}
                                 {% endif %}
+                                <div class="col-md-12">
+                                    <a href="#" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Responder</a>
+                                    <a href="/discuss/{{ topic.get('key') }}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver discussão</a>
+                                    <a href="#" id="recommend_btn" class="btn btn-link pull-right"><i class="fa fa-fire margin-icon"></i>Recomendar</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Who Invented the Computer Virus?</h3>
+                            </div>
+                            <div class="publisher">
+                                <img src="/static/dist/img/user2-160x160.jpg">
+                                <span style="padding-left: 10px;"><b>Fulano de tal</b></span>
+                                <span class="pull-right" style="padding-right: 20px;">{{ topic['creation'] }}</span>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-3 col-sm-3">
+                                    <img src="/static/img/python.jpg" style="width: 100%; max-height: 250px;">
+                                </div>
+                                <div class="col-md-9">
+                                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque  Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat?..."
+                                </div>
                                 <div class="col-md-12">
                                     <a href="#" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Responder</a>
                                     <a href="/discuss/{{ topic.get('key') }}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver discussão</a>

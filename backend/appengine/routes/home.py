@@ -16,6 +16,14 @@ from google.appengine.api.app_identity.app_identity import get_default_gcs_bucke
 from routes.discusses.upload import index as my_upload
 
 from category_app.category_model import Category
+from question_app.question_model import CategoryQuestion
+
+
+def get_the_user(model, facade_form):
+    model_dct = facade_form.fill_with_model(model)
+    model_dct['user'] = MainUser.get_by_id(int(model.user.id()))
+    model.created_at = datetime.now() - model.creation
+    return model_dct
 
 
 @login_required
@@ -46,11 +54,20 @@ def index(category=""):
 
     if category:
         categ = Category.query(Category.slug == category).fetch()
+
+        qs = CategoryQuestion.query().fetch()
         # if category not in allowed:
+        qform = question_facade.question_form()
+
+        qoutput = []
+        for q in qs:
+            question = q.destination.get()
+            qoutput.append(get_the_user(question, qform))
+
         if not categ:
             return TemplateResponse(template_path="base/404.html")
-
-        context = {"category": categ[0].name, "topics": topics}
+        # "topics": topics,
+        context = {"category": categ[0].name,  "topics": qoutput}
         return TemplateResponse(context=context, template_path="category/home.html")
     cmd = question_facade.list_questions_cmd()
     questions = cmd()
