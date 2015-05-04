@@ -9,6 +9,7 @@ from tekton import router
 from routes.comments.rest import new as comment_path
 from discuss_app.discuss_model import Discuss
 from discuss_app import discuss_facade
+from gaepermission.decorator import login_required
 
 allowed = "python business-intelligence geo-technology mongodb c++ agile artificial-intelligence scidb".split()
 from google.appengine.api import blobstore
@@ -18,6 +19,7 @@ from routes.discusses.upload import index as my_upload
 from category_app.category_model import Category
 
 
+@login_required
 @no_csrf
 def index(category=""):
     success_url = router.to_path(my_upload)

@@ -10,9 +10,11 @@ from gaecookie.decorator import no_csrf
 from discuss_app import discuss_facade
 from tekton.gae.middleware.redirect import RedirectResponse
 from routes.comments.rest import delete as comment_delete, new as comment_new
+from gaepermission.decorator import login_required
 import json
 
 
+@login_required
 @no_csrf
 def index(discuss=""):
     context = {"discusses_page": router.to_path(index)}
@@ -46,6 +48,7 @@ def index(discuss=""):
     return TemplateResponse(context, template_path="discusses/home.html")
 
 
+@login_required
 def delete(discuss_id):
     discuss_facade.delete_discuss_cmd(discuss_id)()
     return RedirectResponse(router.to_path(index))

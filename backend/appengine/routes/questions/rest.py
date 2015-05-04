@@ -4,8 +4,10 @@ from google.appengine.api.users import get_current_user
 from gaebusiness.business import CommandExecutionException
 from tekton.gae.middleware.json_middleware import JsonResponse
 from question_app import question_facade
+from gaepermission.decorator import login_required
 
 
+@login_required
 def index():
     cmd = question_facade.list_questions_cmd()
     question_list = cmd()
@@ -14,6 +16,7 @@ def index():
     return JsonResponse(question_dcts)
 
 
+@login_required
 def new(_resp, _logged_user, **question_properties):
     if _logged_user is None:
         _resp.status_code = 400
@@ -23,11 +26,13 @@ def new(_resp, _logged_user, **question_properties):
     return _save_or_update_json_response(_logged_user, cmd, _resp)
 
 
-def edit(_resp,_logged_user, id, **question_properties):
+@login_required
+def edit(_resp, _logged_user, id, **question_properties):
     cmd = question_facade.update_question_cmd(id, **question_properties)
     return _save_or_update_json_response(_logged_user, cmd, _resp)
 
 
+@login_required
 def delete(_resp, id):
     cmd = question_facade.delete_question_cmd(id)
     try:

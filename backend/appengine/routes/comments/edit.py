@@ -7,8 +7,10 @@ from gaecookie.decorator import no_csrf
 from comment_app import comment_facade
 from routes import comments
 from tekton.gae.middleware.redirect import RedirectResponse
+from gaepermission.decorator import login_required
 
 
+@login_required
 @no_csrf
 def index(comment_id):
     comment = comment_facade.get_comment_cmd(comment_id)()
@@ -17,6 +19,7 @@ def index(comment_id):
     return TemplateResponse(context, 'comments/comment_form.html')
 
 
+@login_required
 def save(comment_id, **comment_properties):
     cmd = comment_facade.update_comment_cmd(comment_id, **comment_properties)
     try:

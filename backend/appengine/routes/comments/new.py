@@ -7,13 +7,16 @@ from gaecookie.decorator import no_csrf
 from comment_app import comment_facade
 from routes import comments
 from tekton.gae.middleware.redirect import RedirectResponse
+from gaepermission.decorator import login_required
 
 
+@login_required
 @no_csrf
 def index():
     return TemplateResponse({'save_path': router.to_path(save)}, 'comments/comment_form.html')
 
 
+@login_required
 def save(_logged_user, **comment_properties):
     comment_properties['user'] = _logged_user.key.id()
     cmd = comment_facade.save_comment_cmd(**comment_properties)

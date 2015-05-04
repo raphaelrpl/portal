@@ -7,8 +7,10 @@ from gaecookie.decorator import no_csrf
 from question_app import question_facade
 from routes import questions
 from tekton.gae.middleware.redirect import RedirectResponse
+from gaepermission.decorator import login_required
 
 
+@login_required
 @no_csrf
 def index(question_id):
     question = question_facade.get_question_cmd(question_id)()
@@ -17,6 +19,7 @@ def index(question_id):
     return TemplateResponse(context, 'questions/question_form.html')
 
 
+@login_required
 def save(question_id, **question_properties):
     cmd = question_facade.update_question_cmd(question_id, **question_properties)
     try:

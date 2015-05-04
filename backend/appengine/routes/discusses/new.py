@@ -9,6 +9,7 @@ from discuss_app import discuss_facade
 from routes import discusses
 from tekton.gae.middleware.redirect import RedirectResponse
 from google.appengine.api import blobstore
+from gaepermission.decorator import login_required
 
 
 def get_bucket_url():
@@ -19,12 +20,14 @@ def get_bucket_url():
     return url
 
 
+@login_required
 @no_csrf
 def index():
     upload_path = get_bucket_url()
     return TemplateResponse({'upload_url': upload_path}, 'discusses/discuss_form.html')
 
 
+@login_required
 def save(**discuss_properties):
     cmd = discuss_facade.save_discuss_cmd(**discuss_properties)
     try:

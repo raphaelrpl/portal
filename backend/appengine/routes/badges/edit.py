@@ -7,8 +7,10 @@ from gaecookie.decorator import no_csrf
 from badge_app import badge_facade
 from routes import badges
 from tekton.gae.middleware.redirect import RedirectResponse
+from gaepermission.decorator import login_required
 
 
+@login_required
 @no_csrf
 def index(badge_id):
     badge = badge_facade.get_badge_cmd(badge_id)()
@@ -17,6 +19,7 @@ def index(badge_id):
     return TemplateResponse(context, 'badges/badge_form.html')
 
 
+@login_required
 def save(badge_id, **badge_properties):
     cmd = badge_facade.update_badge_cmd(badge_id, **badge_properties)
     try:

@@ -73,9 +73,10 @@
                                 {{ discuss.content }}
                                 </div>
                                 <div class="col-md-12">
-                                    <a href="#" class="btn btn-link pull-right" data-toggle="modal" data-target="#commentDiscussModal"><i class="fa fa-comment margin-icon"></i>Responder</a>
+{#                                    <a href="#" class="btn btn-link pull-right" data-toggle="modal" data-target="#commentDiscussModal"><i class="fa fa-comment margin-icon"></i>Responder</a>#}
                                     <a href="{{ discusses_page }}/{{ discuss.key.id() }}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver mais</a>
-                                    <a href="#" id="recommend_btn" class="btn btn-link pull-right"><i class="fa fa-fire margin-icon"></i>Recomendar</a>
+                                    <recommend-button post="{{ discuss.key.id() }}"></recommend-button>
+{#                                    <a href="#" id="recommend_btn" class="btn btn-link pull-right"><i class="fa fa-fire margin-icon"></i>Recomendar</a>#}
                                 </div>
                             </div>
                         </div>

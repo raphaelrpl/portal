@@ -4,8 +4,10 @@ from recommendation_app.model import Recommendation
 from google.appengine.ext import ndb
 from question_app.question_model import Question
 from discuss_app.discuss_model import Discuss
+from gaepermission.decorator import login_required
 
 
+@login_required
 @no_csrf
 def index(_logged_user, post_id):
     if _logged_user is None:

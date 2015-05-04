@@ -9,8 +9,10 @@ from tekton.gae.middleware.redirect import RedirectResponse
 from gaebusiness.business import CommandExecutionException
 from category_app.category_model import Category
 from google.appengine.ext import ndb
+from gaepermission.decorator import login_required
 
 
+@login_required
 @no_csrf
 def index():
     cmd = category_facade.list_categorys_cmd()
@@ -32,6 +34,7 @@ def index():
     return TemplateResponse(context, 'categorys/category_home.html')
 
 
+@login_required
 @no_csrf
 def save(**category_properties):
     if Category.is_available_slug(category_properties.get('slug')) != 0:

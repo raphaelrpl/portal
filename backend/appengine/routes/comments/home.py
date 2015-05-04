@@ -6,8 +6,10 @@ from gaecookie.decorator import no_csrf
 from comment_app import comment_facade
 from routes.comments import new, edit
 from tekton.gae.middleware.redirect import RedirectResponse
+from gaepermission.decorator import login_required
 
 
+@login_required
 @no_csrf
 def index():
     cmd = comment_facade.list_comments_cmd()
@@ -28,6 +30,7 @@ def index():
     return TemplateResponse(context, 'comments/comment_home.html')
 
 
+@login_required
 def delete(comment_id):
     comment_facade.delete_comment_cmd(comment_id)()
     return RedirectResponse(router.to_path(index))

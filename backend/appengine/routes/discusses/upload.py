@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from config.template_middleware import TemplateResponse
 from gaebusiness.business import CommandExecutionException
 from gaecookie.decorator import no_csrf
-from gaepermission.decorator import login_not_required
+from gaepermission.decorator import login_required
 from tekton import router
 from routes.discusses import download
 from discuss_app import discuss_facade
@@ -12,8 +12,7 @@ from tekton.gae.middleware.redirect import RedirectResponse
 from routes.discusses import home
 
 
-
-@login_not_required
+@login_required
 @no_csrf
 def index(_handler, _logged_user, **discuss_properties):
     print(100000000)

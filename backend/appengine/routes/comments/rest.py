@@ -11,8 +11,10 @@ from comment_app import comment_facade
 from comment_app.comment_model import Comment
 from question_app.question_model import Question
 from discuss_app.discuss_model import Discuss
+from gaepermission.decorator import login_required
 
 
+@login_required
 def index(question_id):
     # cmd_question = question_facade.get_question_cmd(question_id)
     # question = cmd_question()
@@ -33,6 +35,7 @@ def index(question_id):
     return JsonResponse(comment_dcts)
 
 
+@login_required
 def new(_resp, _logged_user, **comment_properties):
     post = None
     if comment_properties.get('type', '').lower() == 'q':
@@ -47,6 +50,7 @@ def new(_resp, _logged_user, **comment_properties):
     return _save_or_update_json_response(_logged_user, cmd, _resp)
 
 
+@login_required
 def delete(_resp, identifier):
     k = ndb.Key('Comment', int(identifier))
     # cmd = comment_facade.delete_comment_cmd(identifier)
@@ -62,6 +66,7 @@ def delete(_resp, identifier):
     return JsonResponse(form.fill_with_model(comment))
 
 
+@login_required
 def edit(_resp, _logged_user, **comment_properties):
     comment_id = int(comment_properties.get('id'))
     k = ndb.Key('Comment', comment_id)

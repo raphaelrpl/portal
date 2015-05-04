@@ -4,6 +4,7 @@ from gaebusiness.business import CommandExecutionException
 from gaecookie.decorator import no_csrf
 from tekton.gae.middleware.json_middleware import JsonResponse
 from discuss_app import discuss_facade
+from gaepermission.decorator import login_required
 
 
 from google.appengine.api import blobstore
@@ -11,6 +12,7 @@ from google.appengine.api.app_identity.app_identity import get_default_gcs_bucke
 from tekton import router
 
 
+@login_required
 def index():
     cmd = discuss_facade.list_discusss_cmd()
     discuss_list = cmd()
@@ -27,6 +29,7 @@ def get_bucket_url():
     return url
 
 
+@login_required
 @no_csrf
 def getter():
     output = {"url": get_bucket_url()}
@@ -34,6 +37,7 @@ def getter():
     return JsonResponse(output, secure_prefix="")
 
 
+@login_required
 @no_csrf
 def new(_handler, _resp, **discuss_properties):
     print "DISCUSSS --> "
@@ -42,12 +46,14 @@ def new(_handler, _resp, **discuss_properties):
     return _save_or_update_json_response(cmd, _resp)
 
 
+@login_required
 def edit(_resp, id, **discuss_properties):
     print("EDITANO")
     cmd = discuss_facade.update_discuss_cmd(id, **discuss_properties)
     return _save_or_update_json_response(cmd, _resp)
 
 
+@login_required
 def delete(_resp, id):
     cmd = discuss_facade.delete_discuss_cmd(id)
     try:
