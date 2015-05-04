@@ -55,7 +55,10 @@ def index(category=""):
     if category:
         categ = Category.query(Category.slug == category).fetch()
 
-        qs = CategoryQuestion.query().fetch()
+        if not categ:
+            return TemplateResponse(template_path="base/404.html")
+
+        qs = CategoryQuestion.query(CategoryQuestion.origin == categ[0].key).fetch()
         # if category not in allowed:
         qform = question_facade.question_form()
 
@@ -63,9 +66,6 @@ def index(category=""):
         for q in qs:
             question = q.destination.get()
             qoutput.append(get_the_user(question, qform))
-
-        if not categ:
-            return TemplateResponse(template_path="base/404.html")
         # "topics": topics,
         context = {"category": categ[0].name,  "topics": qoutput}
         return TemplateResponse(context=context, template_path="category/home.html")

@@ -14,7 +14,7 @@ def index():
     category_list = cmd()
     category_form = category_facade.category_form()
     category_dcts = [category_form.fill_with_model(m) for m in category_list]
-    return JsonResponse(category_dcts)
+    return JsonResponse(category_dcts, secure_prefix="")
 
 
 @login_required

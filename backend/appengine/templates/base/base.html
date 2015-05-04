@@ -75,14 +75,14 @@
                         <h4 class="modal-title">Digite sua pergunta</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group has-feedback">
-                            <label for="categorysId">Categorias</label>
-                            <select id="categorysId" name="selecteds[]" multiple="multiple">
-                                {% for category in categorys %}
-                                <option value="{{ category.name }}">{{ category.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
+{#                        <div class="form-group has-feedback">#}
+{#                            <label for="categorysId">Categorias</label>#}
+{#                            <select id="categorysId" name="selecteds[]" multiple="multiple">#}
+{#                                {% for category in categorys %}#}
+{#                                <option value="{{ category.name }}">{{ category.name }}</option>#}
+{#                                {% endfor %}#}
+{#                            </select>#}
+{#                        </div>#}
 
                         <questionform question="question" categorys-selected="categorysSelected"></questionform>
 
@@ -247,6 +247,21 @@
         $(document).ready(function(){
             $("#categorysId").multiselect();
 
+{#            $.ajax({#}
+{#                type: "POST",#}
+{#                url: "/categorys/rest/",#}
+{#                dataType: "json",#}
+{#                success: function(data) {#}
+{#                    alert("oi");#}
+{#                    var output = "";#}
+{#                    console.log(data);#}
+{#                    $.each(data, function(k, v) {#}
+{#                        output += "<option value='"+ v.name + "'>" + v.name + "</option>";#}
+{#                    });#}
+{#                    $("#categorysId").html(output);#}
+{#                    $("#categorysId").refresh();#}
+{#                }#}
+{#            });#}
         });
     </script>
     {% endblock %}
