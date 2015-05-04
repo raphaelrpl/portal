@@ -62,10 +62,11 @@ commentModule.directive("usercomment", function() {
                 form.append("user", comment.user);
                 $http.post(comment.delete_path, form).success(function(data) {
                     console.log(data);
+                    alert("Comentario removido com sucesso");
                     angular.forEach($scope.commentList, function(key, value) {
-                        if (value.id == data.id) {
+                        if (key.id == data.id) {
                             $scope.commentList.splice(key, 1);
-                            console.log("REMOVeU");
+                            console.log("Removeu");
                         }
                     });
                 }).error(function(e){
