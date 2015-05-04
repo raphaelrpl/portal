@@ -7,7 +7,6 @@ from datetime import datetime
 from gaepermission.model import MainUser
 from tekton import router
 from routes.comments.rest import new as comment_path
-from discuss_app.discuss_model import Discuss
 from discuss_app import discuss_facade
 from gaepermission.decorator import login_required
 
@@ -71,6 +70,8 @@ def index(category=""):
 
     discusses_output = [localize_user(d, dform) for d in discusses]
 
+    categorys = Category.query().fetch()
+
     context = {
         "questions": questions_output,
         "question_comment_path": router.to_path(comment_path),
@@ -78,7 +79,8 @@ def index(category=""):
         "users_path": router.to_path(index),
         "upload_path": url,
         "trends": topics,
-        "discusses": discusses_output
+        "discusses": discusses_output,
+        "categorys": categorys
     }
     return TemplateResponse(context=context)
 

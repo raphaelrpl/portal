@@ -161,17 +161,20 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Categorias</h3>
+                            <h3 class="panel-title"><a href="/categorys/" style="color: #3c8dbc !important;">Categorias</a></h3>
                         </div>
                         <div class="panel-body">
-                            <a href="/c++" class="btn btn-link">C++</a>
-                            <a href="/python" class="btn btn-link">Python</a>
-                            <a href="/agile" class="btn btn-link">Agile</a>
-                            <a href="/business-intelligence" class="btn btn-link">BI</a>
-                            <a href="/artificial-intelligence" class="btn btn-link">Artificial Intelligence</a>
-                            <a href="/geo-technology" class="btn btn-link">Geo Technology</a>
-                            <a href="/mongodb" class="btn btn-link">MongoDB</a>
-                            <a href="/scidb" class="btn btn-link">SciDB</a>
+                            {% for c in categorys %}
+                                <a href="/{{ c.slug }}" class="btn btn-link">{{ c.name }}</a>
+                            {% endfor %}
+{#                            <a href="/c++" class="btn btn-link">C++</a>#}
+{#                            <a href="/python" class="btn btn-link">Python</a>#}
+{#                            <a href="/agile" class="btn btn-link">Agile</a>#}
+{#                            <a href="/business-intelligence" class="btn btn-link">BI</a>#}
+{#                            <a href="/artificial-intelligence" class="btn btn-link">Artificial Intelligence</a>#}
+{#                            <a href="/geo-technology" class="btn btn-link">Geo Technology</a>#}
+{#                            <a href="/mongodb" class="btn btn-link">MongoDB</a>#}
+{#                            <a href="/scidb" class="btn btn-link">SciDB</a>#}
                         </div>
                     </div>
                 </section>

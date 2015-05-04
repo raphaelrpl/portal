@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from gaebusiness.business import CommandExecutionException
+from gaecookie.decorator import no_csrf
 from tekton.gae.middleware.json_middleware import JsonResponse
 from category_app import category_facade
 from gaepermission.decorator import login_required
 
 
 @login_required
+@no_csrf
 def index():
     cmd = category_facade.list_categorys_cmd()
     category_list = cmd()

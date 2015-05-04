@@ -51,9 +51,15 @@ def save(**category_properties):
     return RedirectResponse(router.to_path(index))
 
 
+@no_csrf
 def delete(category_id):
     # category = Category.get_by_id(int(category_id))
     # category.key.delete()
-    category_facade.delete_category_cmd(int(category_id))
-    return RedirectResponse(router.to_path(index))
+    cmd = category_facade.delete_category_cmd(int(category_id))
+    try:
+        cmd()
+    except:
+        pass
+    return RedirectResponse("/")
+    # return RedirectResponse(router.to_path(index))
 
