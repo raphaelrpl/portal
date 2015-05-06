@@ -47,8 +47,9 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-social.css"/>
-    <link rel="stylesheet" href="/static/bmultiselect/css/bootstrap-multiselect.css" />
+{#    <link rel="stylesheet" href="/static/bmultiselect/css/bootstrap-multiselect.css" />#}
 
+    <link rel="stylesheet" href="/static/css/chosen.css"/>
 
     {% block css %}{% endblock %}
 </head>
@@ -75,14 +76,14 @@
                         <h4 class="modal-title">Digite sua pergunta</h4>
                     </div>
                     <div class="modal-body">
-{#                        <div class="form-group has-feedback">#}
-{#                            <label for="categorysId">Categorias</label>#}
-{#                            <select id="categorysId" name="selecteds[]" multiple="multiple">#}
-{#                                {% for category in categorys %}#}
-{#                                <option value="{{ category.name }}">{{ category.name }}</option>#}
-{#                                {% endfor %}#}
-{#                            </select>#}
-{#                        </div>#}
+                        <div class="form-group has-feedback">
+                            <label for="categorysId">Categorias</label>
+                            <select id="categorysId" name="selecteds[]" multiple="multiple" class="chosen-select">
+                                {% for category in categorys %}
+                                <option value="{{ category.name }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
 
                         <questionform question="question" categorys-selected="categorysSelected"></questionform>
 
@@ -136,7 +137,7 @@
     <script src="/static/jquery/js/jquery-ui.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="/static/bootstrap/js/bootstrap-filestyle.min.js"> </script>
 
-    <script src="/static/bmultiselect/js/bootstrap-multiselect.js"></script>
+{#    <script src="/static/bmultiselect/js/bootstrap-multiselect.js"></script>#}
     <script>
         $(document).ready(function(){
             $('.user-description').popover({
@@ -179,6 +180,7 @@
     <script src="/static/search/js/search.js" type="text/javascript"></script>
     <script src="/static/comments/js/comment.js"></script>
     <script src="/static/recommendation/js/recommendation.js"></script>
+    <script src="/static/js/chosen.min.js"></script>
 
     {% block angular_app %}
 
@@ -245,23 +247,27 @@
         }
 
         $(document).ready(function(){
-            $("#categorysId").multiselect();
+{#            $("#categorysId").multiselect();#}
 
-{#            $.ajax({#}
-{#                type: "POST",#}
-{#                url: "/categorys/rest/",#}
-{#                dataType: "json",#}
-{#                success: function(data) {#}
-{#                    alert("oi");#}
-{#                    var output = "";#}
-{#                    console.log(data);#}
-{#                    $.each(data, function(k, v) {#}
-{#                        output += "<option value='"+ v.name + "'>" + v.name + "</option>";#}
-{#                    });#}
-{#                    $("#categorysId").html(output);#}
-{#                    $("#categorysId").refresh();#}
-{#                }#}
-{#            });#}
+{#            $("#categorysId").chosen('.chosen-select');#}
+
+            {#$.ajax({
+                type: "POST",
+                url: "/categorys/rest/",
+                dataType: "json",
+                success: function(data) {
+                    var output = "";
+                    var element = $("#categorysId");
+                    element.empty();
+                    console.log(data);
+                    $.each(data, function(k, v) {
+                        element.append("<option value='"+ v.name + "'>" + v.name + "</option>");
+                    });
+
+#}{#                    .html(output);#}{#
+                    $("#categorysId").chosen('.chosen-select');
+                }
+            });#}
         });
     </script>
     {% endblock %}
