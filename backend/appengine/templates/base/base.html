@@ -245,7 +245,7 @@
 {#            $("#categorysId").multiselect();#}
 
 {#            $("#categorysId").chosen('.chosen-select');#}
-
+            var optionData = null;
             $.ajax({
                 type: "POST",
                 url: "/categorys/rest/",
@@ -253,19 +253,15 @@
                 success: function(data) {
                     var output = "";
                     var element = $("#categorysId");
+                    optionData = data;
                     element.empty();
                     console.log(data);
                     $.each(data, function(k, v) {
                         element.append("<option value='"+ v.name + "'>" + v.name + "</option>");
                     });
 
-                    $("#categorysId").chosen('.chosen-select');
+                    element.chosen('.chosen-select');
                 }
-            });
-
-            $("input[class=default]").on('blur', function() {
-                alert("sem foco");
-                $(".chosen-drop").css("visibility", "hidden");
             });
         });
     </script>

@@ -3,7 +3,9 @@ from __future__ import absolute_import, unicode_literals
 from google.appengine.ext import ndb
 from base_app.model import BasePost
 from badge_app.badge_model import UserBase, Badge
+from gaegraph.model import Arc
 from question_app.question_model import Question
+from category_app.category_model import Category
 
 
 class Discuss(BasePost):
@@ -31,3 +33,8 @@ class Discuss(BasePost):
                 pass
 
         super(Discuss, self)._post_put_hook(future)
+
+
+class CategoryDiscuss(Arc):
+    origin = ndb.KeyProperty(Category, required=True)
+    destination = ndb.KeyProperty(Discuss, required=True)

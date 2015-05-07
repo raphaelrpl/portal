@@ -10,7 +10,21 @@
 
 {% block js %}
     <script charset="UTF-8">
+        $.ajax({
+            type: "POST",
+            url: "/categorys/rest/",
+            dataType: "json",
+            success: function(data) {
+                var element = $("#categorysIdForm");
+                element.empty();
+                console.log(data);
+                $.each(data, function(k, v) {
+                    element.append("<option value='"+ v.name + "'>" + v.name + "</option>");
+                });
 
+                element.chosen('.chosen-select');
+            }
+        });
     </script>
 {% endblock %}
 
@@ -37,6 +51,12 @@
                         <div class="panel-body">
                             <div class="col-md-12">
                                 <form action="{{ upload_url }}" method="post" enctype="multipart/form-data" id="form-discuss">
+                                    <div class="form-group has-feedback">
+                                        <label for="categorysId">Categorias</label>
+                                        <select id="categorysIdForm" name="categorys[]" multiple="multiple" class="chosen-select">
+
+                                        </select>
+                                    </div>
                                     <div class="form-group has-feedback">
                                         <input type="text" class="form-control" placeholder="Título" name="title">
                                     </div>

@@ -8,7 +8,6 @@ from routes.categorys import edit
 from tekton.gae.middleware.redirect import RedirectResponse
 from gaebusiness.business import CommandExecutionException
 from category_app.category_model import Category
-from google.appengine.ext import ndb
 from gaepermission.decorator import login_required
 
 
