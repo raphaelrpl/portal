@@ -79,9 +79,9 @@
                         <div class="form-group has-feedback">
                             <label for="categorysId">Categorias</label>
                             <select id="categorysId" name="selecteds[]" multiple="multiple" class="chosen-select">
-                                {% for category in categorys %}
-                                <option value="{{ category.name }}">{{ category.name }}</option>
-                                {% endfor %}
+{#                                {% for category in categorys %}#}
+{#                                <option value="{{ category.name }}">{{ category.name }}</option>#}
+{#                                {% endfor %}#}
                             </select>
                         </div>
 
@@ -251,7 +251,7 @@
 
 {#            $("#categorysId").chosen('.chosen-select');#}
 
-            {#$.ajax({
+            $.ajax({
                 type: "POST",
                 url: "/categorys/rest/",
                 dataType: "json",
@@ -264,10 +264,9 @@
                         element.append("<option value='"+ v.name + "'>" + v.name + "</option>");
                     });
 
-#}{#                    .html(output);#}{#
                     $("#categorysId").chosen('.chosen-select');
                 }
-            });#}
+            });
         });
     </script>
     {% endblock %}

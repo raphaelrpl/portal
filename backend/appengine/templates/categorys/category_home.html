@@ -33,12 +33,80 @@
             $("#nameInput").on('input', function() {
                 $("#slugInput").val(slugify($(this).val()));
             });
+
+            var $modalInputName = $("#modal-input-name");
+            var $modalInputSlug = $("#modal-input-slug");
+            var $categoryForm = $("#category-form");
+            var $inputHidd = $("#input-hidd");
+
+            $($modalInputName).on('input', function() {
+                $($modalInputSlug).val(slugify($(this).val()));
+            });
+
+            $(".edit-btn-class").click(function() {
+                var $row = $(this).closest("tr");    // Find the row
+                var $tds = $row.find("td");
+                $.each($tds, function() {
+                    console.log($(this).text());
+                });
+                console.log($($tds[0]));
+                $modalInputName.val($.trim($($tds[0]).text()));
+                $modalInputSlug.val($.trim($($tds[1]).text()));
+                var $hidd = $($tds[1]).find("input[type=hidden]").val();
+                $($inputHidd).val($hidd);
+
+            });
+
+            $($categoryForm).submit(function(e){
+                e.preventDefault();
+                console.log("Submeteu - " + "/categorys/rest/edit/" + $($inputHidd).val());
+                console.log($($categoryForm).serialize());
+                $.ajax({
+                    url: "/categorys/rest/edit/" + $($inputHidd).val(),
+                    method: "POST",
+                    data: {name: $($modalInputName).val(), slug: $($modalInputSlug).val()},
+                    dataType: "JSON",
+                    success: function(data) {
+                        alert("Foi");
+                        console.log(data);
+                    },
+                    error: function(e) {
+                        alert("Error");
+                        console.log(e);
+                    }
+                });
+            });
         });
     </script>
 {% endblock %}
 
 {% block body %}
     <div class="content-wrapper">
+
+        <div class="modal fade" id="category-modal" tabindex="-1" role="dialog" aria-labelledby="category-modal-label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title">Alteração de Categoria</h4>
+                    </div>
+                    <div class="modal-body" id="bod">
+                        <form method="post" id="category-form">
+                            <input type="hidden" id="input-hidd" name="id" />
+                            <div class="form-group has-feedback">
+                                <input type="text" class="form-control" id="modal-input-name" placeholder="Nome da categoria" name="name">
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input type="text" class="form-control" id="modal-input-slug" placeholder="Slug" name="slug" readonly>
+                            </div>
+                            <input type="submit" class="btn btn-primary" value="Enviar"/>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- /.modal-dialog -->
+        </div>
+
         <!-- News Content -->
         <section class="content-header">
             <h1>
@@ -57,13 +125,6 @@
                     <div class="col-md-12">
                         <div class="well">
                             <h4 class="text-center">Nova categoria</h4>
-{#                            <select class="selectpicker" multiple>#}
-{#                                <option value="1">Valor 1</option>#}
-{#                                <option value="2">Valor 2</option>#}
-{#                                <option value="3">Valor 3</option>#}
-{#                                <option value="4">Valor 4</option>#}
-{#                                <option value="5">Valor 5</option>#}
-{#                            </select>#}
                             <form class="form-inline" action="{{ save_path }}" method="post" id="categoryForm">
                                 {{ csrf_input() }}
                                 <div class="form-group {{ 'has-error' if errors.name }}">
@@ -104,16 +165,22 @@
                                 <td class="col-md-3">{{ c.name }}</td>
                                 <td class="col-md-3">
                                     {{ c.slug }}
+                                    <input type="hidden" value="{{ c.id }}"/>
                                 </td>
                                 <td class="col-md-3">
                                     {{ c.creation }}
                                 </td>
                                 <td class="col-md-3">
-                                    <form action="{{ c.delete_path }}" method="post">
+                                    <form action="{{ c.delete_path }}" method="post" style="display: inline !important;">
                                         {{ csrf_input() }}
                                         <button class="btn btn-danger btn-sm"><i
                                             class="glyphicon glyphicon-trash"></i></button>
                                     </form>
+                                    <a href="#" class="dropdown-toggle edit-btn-class" data-toggle="modal" data-target="#category-modal">
+                                        <button class="btn btn-success btn-sm">
+                                            <i class="glyphicon glyphicon-edit"></i>
+                                        </button>
+                                    </a>
                                 </td>
                             </tr>
                             {% else %}

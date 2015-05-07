@@ -21,6 +21,7 @@ def index(category_id):
 
 @login_required
 def save(category_id, **category_properties):
+    print(category_properties)
     cmd = category_facade.update_category_cmd(category_id, **category_properties)
     try:
         cmd()
