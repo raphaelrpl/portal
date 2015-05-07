@@ -72,12 +72,16 @@ def index(category=""):
         qoutput = []
         for q in qs:
             question = q.destination.get()
-            qoutput.append(get_the_user(question, qform))
+            dct = get_the_user(question, qform)
+            dct["type"] = "Q"
+            qoutput.append(dct)
 
         for d in ds:
             discuss = d.destination.get()
             # doutput.append(get_the_user(discuss, dform))
-            qoutput.append(get_the_user(discuss, dform))
+            dct = get_the_user(discuss, dform)
+            dct["type"] = "D"
+            qoutput.append(dct)
         # "topics": topics,
         context = {"category": categ[0].name,  "topics": qoutput}
         return TemplateResponse(context=context, template_path="category/home.html")

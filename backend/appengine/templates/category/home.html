@@ -45,7 +45,11 @@
                                     {% endif %}
 {#                                {% endif %}#}
                                 <div class="col-md-12">
-                                    <a href="/discuss/{{ topic.get('key') }}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver discussão</a>
+                                    {% if topic.get('type') == 'D' %}
+                                        <a href="/discusses/{{ topic.get('key') or topic.get('id') }}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver discussão</a>
+                                    {% else %}
+                                        <a href="/questions/{{ topic.get('key') or topic.get('id') }}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver discussão</a>
+                                    {% endif %}
                                     <a href="#" id="recommend_btn" class="btn btn-link pull-right"><i class="fa fa-fire margin-icon"></i>Recomendar</a>
                                 </div>
                             </div>
