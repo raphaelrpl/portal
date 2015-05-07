@@ -38,14 +38,20 @@
             var $modalInputSlug = $("#modal-input-slug");
             var $categoryForm = $("#category-form");
             var $inputHidd = $("#input-hidd");
+{#            var $tableElement = $("#categoryTable");#}
+            var $row = null;
+            var $tds = null;
+
+            var $ajaxCategory = $("#ajax-category");
+            $($ajaxCategory).hide();
 
             $($modalInputName).on('input', function() {
                 $($modalInputSlug).val(slugify($(this).val()));
             });
 
             $(".edit-btn-class").click(function() {
-                var $row = $(this).closest("tr");    // Find the row
-                var $tds = $row.find("td");
+                $row = $(this).closest("tr");    // Find the row
+                $tds = $row.find("td");
                 $.each($tds, function() {
                     console.log($(this).text());
                 });
@@ -59,20 +65,23 @@
 
             $($categoryForm).submit(function(e){
                 e.preventDefault();
-                console.log("Submeteu - " + "/categorys/rest/edit/" + $($inputHidd).val());
-                console.log($($categoryForm).serialize());
+                $($ajaxCategory).show();
                 $.ajax({
                     url: "/categorys/rest/edit/" + $($inputHidd).val(),
                     method: "POST",
                     data: {name: $($modalInputName).val(), slug: $($modalInputSlug).val()},
                     dataType: "JSON",
                     success: function(data) {
-                        alert("Foi");
                         console.log(data);
+                        $($ajaxCategory).hide();
+                        $($tds[0]).text(data.name);
+                        $($tds[1]).text(data.name);
+                        $("#btn-category-close").click();
                     },
                     error: function(e) {
                         alert("Error");
                         console.log(e);
+                        $($ajaxCategory).hide();
                     }
                 });
             });
@@ -100,7 +109,9 @@
                             <div class="form-group has-feedback">
                                 <input type="text" class="form-control" id="modal-input-slug" placeholder="Slug" name="slug" readonly>
                             </div>
+                            <button type="button" id="btn-category-close" class="btn btn-default" data-dismiss="modal">Fechar</button>
                             <input type="submit" class="btn btn-primary" value="Enviar"/>
+                            <img src="/static/img/ajax.gif" id="ajax-category"/>
                         </form>
                     </div>
                 </div>
@@ -142,7 +153,7 @@
                         </div>
                     </div>
 
-                    <table id="example2" class="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+                    <table id="categoryTable" class="table table-bordered table-hover dataTable" aria-describedby="example2_info">
                         <thead>
                         <tr role="row">
                             <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
