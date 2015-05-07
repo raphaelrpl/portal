@@ -43,13 +43,15 @@ def edit(_resp, id, **category_properties):
 
 
 @login_required
+@no_csrf
 def delete(_resp, id):
     cmd = category_facade.delete_category_cmd(id)
     try:
         cmd()
     except CommandExecutionException:
         _resp.status_code = 500
-        return JsonResponse(cmd.errors)
+        return JsonResponse(cmd.errors, secure_prefix="")
+    return JsonResponse({"status": 1}, secure_prefix="")
 
 
 def _save_or_update_json_response(cmd, _resp):

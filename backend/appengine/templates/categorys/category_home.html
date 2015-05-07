@@ -38,9 +38,10 @@
             var $modalInputSlug = $("#modal-input-slug");
             var $categoryForm = $("#category-form");
             var $inputHidd = $("#input-hidd");
-{#            var $tableElement = $("#categoryTable");#}
             var $row = null;
             var $tds = null;
+
+            var $deleteForm = $("#form-category-delete");
 
             var $ajaxCategory = $("#ajax-category");
             $($ajaxCategory).hide();
@@ -52,15 +53,28 @@
             $(".edit-btn-class").click(function() {
                 $row = $(this).closest("tr");    // Find the row
                 $tds = $row.find("td");
-                $.each($tds, function() {
-                    console.log($(this).text());
-                });
-                console.log($($tds[0]));
                 $modalInputName.val($.trim($($tds[0]).text()));
                 $modalInputSlug.val($.trim($($tds[1]).text()));
                 var $hidd = $($tds[1]).find("input[type=hidden]").val();
                 $($inputHidd).val($hidd);
 
+            });
+
+            $(".call-to-delete").click(function(){
+                $row = $(this).closest("tr");    // Find the row
+                $tds = $row.find("td");
+                var $hidd = $($tds[1]).find("input[type=hidden]").val();
+                $.ajax({
+                    url: "/categorys/rest/delete/" + $hidd,
+                    method: "POST",
+                    dataType: "JSON",
+                    success: function (data) {
+                        console.log(data);
+                        $row.fadeOut(400, function(){
+                            $row.remove();
+                        });
+                    }
+                });
             });
 
             $($categoryForm).submit(function(e){
@@ -182,11 +196,11 @@
                                     {{ c.creation }}
                                 </td>
                                 <td class="col-md-3">
-                                    <form action="{{ c.delete_path }}" method="post" style="display: inline !important;">
-                                        {{ csrf_input() }}
-                                        <button class="btn btn-danger btn-sm"><i
+{#                                    <form action="{{ c.delete_path }}" method="post" style="display: inline !important;">#}
+{#                                        {{ csrf_input() }}#}
+                                        <button class="btn btn-danger btn-sm call-to-delete"><i
                                             class="glyphicon glyphicon-trash"></i></button>
-                                    </form>
+{#                                    </form>#}
                                     <a href="#" class="dropdown-toggle edit-btn-class" data-toggle="modal" data-target="#category-modal">
                                         <button class="btn btn-success btn-sm">
                                             <i class="glyphicon glyphicon-edit"></i>
