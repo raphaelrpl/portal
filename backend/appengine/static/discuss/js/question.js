@@ -17,10 +17,11 @@ questionModule.directive("questionform", function() {
             $scope.errors = {};
 
             $scope.publish = function() {
-                //var cat = $scope.categorysSelected[0];
-                //if (!cat)
-                //    alert("Selecione ao menos uma categoria");
-                $http.post('/questions/rest/new', $scope.question).success(function(question) {
+                var cat = $scope.categorysSelected[0];
+                if (!cat)
+                    alert("Selecione ao menos uma categoria");
+                $http.post('/questions/rest/new', {categorys: cat, question: $scope.question}).success(function(question) {
+                //$http.post('/questions/rest/new', $scope.question).success(function(question) {
                     console.log(question);
                     window.location = "/";
                 }).error(function(errors) {

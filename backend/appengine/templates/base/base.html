@@ -233,13 +233,8 @@
             $scope.categorysSelected = [];
             $("#categorysId").change(function() {
                 $scope.categorysSelected.unshift($(this).val());
-{#                console.log($scope.categorysSelected);#}
+                console.log($scope.categorysSelected);
             });
-{#            // GET CATEGORYS#}
-{#            $http.get("/categorys/rest/", {}).success(function(data){#}
-{#                console.log(data);#}
-{#                $scope.categorys = data;#}
-{#            });#}
         }
 
         function searchController($scope) {
@@ -266,6 +261,11 @@
 
                     $("#categorysId").chosen('.chosen-select');
                 }
+            });
+
+            $("input[class=default]").on('blur', function() {
+                alert("sem foco");
+                $(".chosen-drop").css("visibility", "hidden");
             });
         });
     </script>
