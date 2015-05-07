@@ -19,6 +19,7 @@ def index():
 
 
 @login_required
+@no_csrf
 def new(_resp, **category_properties):
     cmd = category_facade.save_category_cmd(**category_properties)
     return _save_or_update_json_response(cmd, _resp)
@@ -61,5 +62,5 @@ def _save_or_update_json_response(cmd, _resp):
         _resp.status_code = 500
         return JsonResponse(cmd.errors)
     category_form = category_facade.category_form()
-    return JsonResponse(category_form.fill_with_model(category))
+    return JsonResponse(category_form.fill_with_model(category), secure_prefix="")
 

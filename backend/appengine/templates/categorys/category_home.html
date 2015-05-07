@@ -37,11 +37,14 @@
             var $modalInputName = $("#modal-input-name");
             var $modalInputSlug = $("#modal-input-slug");
             var $categoryForm = $("#category-form");
+
+            var $categoryFormNew = $("#categoryForm");
             var $inputHidd = $("#input-hidd");
             var $row = null;
             var $tds = null;
+            var $ajaxNew = $("#ajax-save-new");
 
-            var $deleteForm = $("#form-category-delete");
+            $ajaxNew.hide();
 
             var $ajaxCategory = $("#ajax-category");
             $($ajaxCategory).hide();
@@ -98,6 +101,49 @@
                         $($ajaxCategory).hide();
                     }
                 });
+            });
+
+            $($categoryFormNew).submit(function(e) {
+                var nameInput = $("#nameInput");
+                var slugInput = $("#slugInput");
+                var saveButton = $("#submit-new");
+                e.preventDefault();
+                $ajaxNew.show();
+                $(saveButton).prop("disabled", true);
+                nameInput.parent().removeClass("has-error");
+                $.ajax({
+                    url: "/categorys/rest/new",
+                    method: "POST",
+                    data: {name: nameInput.val(), slug: slugInput.val()},
+                    dataType: "JSON",
+                    success: function(data) {
+                        console.log(data);
+                        $ajaxNew.hide();
+                        $(saveButton).prop("disabled", false);
+                        if (data.id) {
+                            var table = $("#categoryTable").find('tbody');
+                            var line = $('<tr>');
+                            $(line).append($('<td>').text(data.name));
+                            var col = $('<td>');
+                            col.text(data.slug);
+                            col.append("<input type='hidden' value='"+ data.id +"'>");
+                            $(line).append(col);
+                            $(line).append($("<td>").text(data.creation));
+                            $(line).append($("<td>").append('<button class="btn btn-danger btn-sm call-to-delete"><i class="glyphicon glyphicon-trash"></i></button> <a href="#" class="dropdown-toggle edit-btn-class" data-toggle="modal" data-target="#category-modal"><button class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i></button></a>'));
+                            $(table).append(line);
+                        }
+                    },
+                    error: function(e) {
+{#                        alert("Error");#}
+                        $ajaxNew.hide();
+                        nameInput.val("");
+                        slugInput.val("");
+                        nameInput.parent().addClass("has-error");
+                        $(saveButton).prop("disabled", false);
+                        console.log(e);
+                    }
+                });
+{#                return false;#}
             });
         });
     </script>
@@ -162,7 +208,8 @@
                                     <input type="text" class="form-control" id="slugInput" name="slug" readonly>
                                     {% if errors %}<span class="help-block">{{ errors.name }}</span>{% endif %}
                                 </div>
-                                <button type="submit" class="btn btn-success">Salvar</button>
+                                <button type="submit" class="btn btn-success" id="submit-new">Salvar</button>
+                                <img src="/static/img/ajax.gif" id="ajax-save-new"/>
                             </form>
                         </div>
                     </div>
