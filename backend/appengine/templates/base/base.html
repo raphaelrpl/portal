@@ -253,14 +253,18 @@
                 success: function(data) {
                     var output = "";
                     var element = $("#categorysId");
+                    var e2 = $("#categorysIdForm");
                     optionData = data;
                     element.empty();
                     console.log(data);
                     $.each(data, function(k, v) {
                         element.append("<option value='"+ v.name + "'>" + v.name + "</option>");
+                        e2.append("<option value='"+ v.name + "'>" + v.name + "</option>");
                     });
 
                     element.chosen('.chosen-select');
+                    e2.chosen('.chosen-select');
+
                 }
             });
         });
