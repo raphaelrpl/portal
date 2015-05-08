@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from google.appengine.ext import ndb
 from gaepermission.model import MainUser
 from base_app.model import BasePost, Base
+from notification_app.notification_model import Notification
 
 
 class Comment(Base):
@@ -15,7 +16,11 @@ class Comment(Base):
         return cls.query(Comment.post == question_id)
 
     def _post_put_hook(self, future):
-        # Save notification
+        post = self.post.get()
+        notification = Notification(sender=self.user, message="comentou sua publicação", user=post.user)
+        notification.notification_type = post.class_[-1]
+        notification.put()
+
         super(Comment, self)._post_put_hook(future)
 
 

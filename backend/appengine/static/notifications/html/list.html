@@ -1,0 +1,20 @@
+<div class="col-md-12 box">
+    <h4>Notificações</h4>
+    <form class="form-inline" role="form">
+        <div class="form-group">
+            <label for="filter">Filtrar por:</label>
+            <select class="combobox">
+                <option value="creation">Filtrar por data</option>
+                <option value="sender">Filtrar por usuário</option>
+            </select>
+        </div>
+    </form>
+    <hr/>
+    <div class="media" ng-repeat="n in notifications">
+        <div class="media-body">
+            <h4 class="media-heading">
+                {[ n.sender.email ]} <small><i>{[ n.message ]} em {[ n.creation ]}</i></small>
+            </h4>
+        </div>
+    </div>
+</div>

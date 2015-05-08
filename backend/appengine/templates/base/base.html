@@ -180,6 +180,7 @@
     <script src="/static/search/js/search.js" type="text/javascript"></script>
     <script src="/static/comments/js/comment.js"></script>
     <script src="/static/recommendation/js/recommendation.js"></script>
+    <script src="/static/notifications/js/notification.js"></script>
     <script src="/static/js/chosen.min.js"></script>
 
     {% block angular_app %}
@@ -194,7 +195,7 @@
             }
         });
 
-        var mainApp = angular.module('mainApp', ['questionModule', 'searchModule', 'commentModule', 'recommendationModule']);
+        var mainApp = angular.module('mainApp', ['questionModule', 'searchModule', 'commentModule', 'recommendationModule', 'notificationModule']);
         mainApp.config(['$interpolateProvider', function($interpolateProvider) {
           $interpolateProvider.startSymbol('{[');
           $interpolateProvider.endSymbol(']}');

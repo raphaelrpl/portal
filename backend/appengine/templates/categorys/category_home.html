@@ -92,7 +92,7 @@
                         console.log(data);
                         $($ajaxCategory).hide();
                         $($tds[0]).text(data.name);
-                        $($tds[1]).text(data.name);
+                        $($tds[1]).text(data.slug);
                         $("#btn-category-close").click();
                     },
                     error: function(e) {
