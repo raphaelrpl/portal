@@ -23,6 +23,8 @@ def index(discuss=""):
         form = discuss_facade.discuss_form()
 
         query_discuss = cmd()
+        if not query_discuss:
+            return RedirectResponse(index)
         discuss = form.fill_with_model(query_discuss)
 
         comment_form = comment_facade.comment_form()
