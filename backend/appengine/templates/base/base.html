@@ -223,8 +223,8 @@
 
         var mainApp = angular.module('mainApp', ['questionModule', 'searchModule', 'commentModule', 'recommendationModule', 'notificationModule']);
         mainApp.config(['$interpolateProvider', function($interpolateProvider) {
-          $interpolateProvider.startSymbol('{[');
-          $interpolateProvider.endSymbol(']}');
+            $interpolateProvider.startSymbol('{[');
+            $interpolateProvider.endSymbol(']}');
         }]);
 
         angular.module('ng').filter('cut', function () {

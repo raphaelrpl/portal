@@ -2,9 +2,8 @@
 from __future__ import absolute_import, unicode_literals
 from google.appengine.ext import ndb
 from gaecookie.decorator import no_csrf
-from question_app import question_facade
 from gaebusiness.business import CommandExecutionException
-from gaepermission.model import MainUser
+from tekton import router
 from permission_app.permission_facade import main_user_form
 from tekton.gae.middleware.json_middleware import JsonResponse
 from comment_app import comment_facade
@@ -100,5 +99,7 @@ def _save_or_update_json_response(_logged_user, cmd, _resp):
     user_form = main_user_form().fill_with_model(_logged_user)
     comment_dc = comment_form.fill_with_model(comment)
     comment_dc['publisher'] = user_form
+    comment_dc['delete_path'] = router.to_path(delete, comment_dc['id'])
+
     return JsonResponse(comment_dc)
 

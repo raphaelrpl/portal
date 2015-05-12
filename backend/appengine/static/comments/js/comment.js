@@ -12,16 +12,20 @@ commentModule.directive("docomment", function() {
         },
         controller: function($scope, $http) {
             $scope.errors = {};
-            console.log($scope.comment);
-            $scope.sendComment = function() {
-                $http.post($scope.postUrl, $scope.comment).success(function(question) {
+            $scope.submitting = false;
 
+            $scope.sendComment = function() {
+                $scope.submitting = true;
+                $http.post($scope.postUrl, $scope.comment).success(function(question) {
+                    $scope.comment.content = "";
                     console.log(question);
                     $scope.commentList.unshift(question);
 
                 }).error(function(errors) {
                     $scope.errors = errors;
                     console.log($scope.errors);
+                }).then(function(done){
+                    $scope.submitting = false;
                 });
             }
         }
@@ -42,13 +46,11 @@ commentModule.directive("usercomment", function() {
             $scope.editting = false;
             $scope.errors = {};
 
-
             $scope.submitEdit = function(comment) {
                 $http.post("/comments/rest/edit", comment).success(function(data) {
-                    alert("Comentario alterado com sucesso");
-                editting = false;
-                    // console.log(data);
+                    $scope.editing = false;
                 }).error(function(e) {
+                    $scope.editing = true;
                     $scope.errors = e;
                     console.log("ERROU");
                     console.log($scope.errors);
@@ -62,7 +64,6 @@ commentModule.directive("usercomment", function() {
                 form.append("user", comment.user);
                 $http.post(comment.delete_path, form).success(function(data) {
                     console.log(data);
-                    alert("Comentario removido com sucesso");
                     angular.forEach($scope.commentList, function(key, value) {
                         if (key.id == data.id) {
                             $scope.commentList.splice(key, 1);
@@ -77,7 +78,6 @@ commentModule.directive("usercomment", function() {
         link: function(scope, element, attr){
             scope.updateFn = function (comment) {
                 scope.submitEdit(comment);
-                scope.editting = false;
             };
 
             scope.deleteFn = function (comment) {
