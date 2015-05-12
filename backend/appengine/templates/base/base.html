@@ -32,9 +32,11 @@
     <!-- FontAwesome 4.2.0 -->
     <link href="/static/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="/static/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link href="/static/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+
     <!-- iCheck -->
     <link href="/static/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
 
@@ -50,6 +52,30 @@
 {#    <link rel="stylesheet" href="/static/bmultiselect/css/bootstrap-multiselect.css" />#}
 
     <link rel="stylesheet" href="/static/css/chosen.css"/>
+    <style>
+        @media (min-width: 768px) {
+            .navbar-nav > li {
+                float: none !important;
+            }
+        }
+
+        .nav li {
+            display: inline-block !important;
+        }
+
+        .navbar-nav > .user-menu > .dropdown-menu {
+            border-radius: 0 !important;
+            padding: 1px 0 0 0 !important;
+            border-top-width: 0 !important;
+            width: 190px !important;
+        }
+
+        .user-footer {
+            background-color: #f9f9f9 !important;
+            padding: 10px !important;
+            width: 100% !important;
+        }
+    </style>
 
     {% block css %}{% endblock %}
 </head>

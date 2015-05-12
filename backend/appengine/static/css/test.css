@@ -1,0 +1,9 @@
+@media (min-width: 768px) {
+    .navbar-nav > li {
+        /* float: left; */
+    }
+}
+
+.nav li {
+    display: inline-block !important;
+}
