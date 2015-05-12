@@ -44,7 +44,7 @@ def index(discuss=""):
         return TemplateResponse(template_path="discusses/discuss.html", context=context)
     cmd = discuss_facade.ListDiscussCommand()
     discusses = cmd()
-    context['discusses'] = discusses
+    context['discusses'] = discusses[::-1]
     return TemplateResponse(context, template_path="discusses/home.html")
 
 

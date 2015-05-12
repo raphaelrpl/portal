@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+from time import sleep
 from config.template_middleware import TemplateResponse
 
 from gaecookie.decorator import no_csrf
@@ -45,4 +46,5 @@ def index(_handler, _logged_user, **discuss_properties):
         print("foi")
     except Exception as e:
         return TemplateResponse(template_path="discusses/home.html")
+    sleep(0.5)
     return RedirectResponse(router.to_path(home))

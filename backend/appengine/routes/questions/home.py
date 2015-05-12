@@ -59,20 +59,7 @@ def index(question_id=""):
         return question_dct
 
     localized_questions = [localize_question(question) for question in questions][::-1]
-    query = [
-        {
-            "id": 318463,
-            "name": "Lorem Ipsum San Shi",
-            "user": 8236478523,
-            "creation": datetime.now() - datetime.now(),
-        },
-        {
-            "id": 318433,
-            "name": "Lorem Ipsum San Shi",
-            "user": 8236423442,
-            "creation": datetime.now() - datetime.now(),
-        }
-    ]
+
     context = {'questions': localized_questions,
                'new_path': router.to_path(new),
                'question_path': router.to_path(index)}

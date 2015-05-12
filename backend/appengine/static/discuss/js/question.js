@@ -23,7 +23,7 @@ questionModule.directive("questionform", function() {
                 $http.post('/questions/rest/new', {categorys: cat, question: $scope.question}).success(function(question) {
                 //$http.post('/questions/rest/new', $scope.question).success(function(question) {
                     console.log(question);
-                    window.location = "/";
+                    window.location = "/questions";
                 }).error(function(errors) {
                     $scope.errors = errors;
                 });

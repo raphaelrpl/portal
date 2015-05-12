@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+from time import sleep
 from google.appengine.api.users import get_current_user
 from gaebusiness.business import CommandExecutionException
 from tekton.gae.middleware.json_middleware import JsonResponse
@@ -43,9 +44,9 @@ def new(_resp, _logged_user, **question_properties):
     question_form = question_facade.question_form()
     data = question_form.fill_with_model(question)
     data['user'] = _logged_user.name
+    sleep(0.5)
 
     return JsonResponse(data)
-    # return _save_or_update_json_response(_logged_user, cmd, _resp)
 
 
 @login_required
