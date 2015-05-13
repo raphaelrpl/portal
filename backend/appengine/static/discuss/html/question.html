@@ -1,0 +1,39 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 ng-hide="editing" class="panel-title" style="display: inline-block !important;">{[ question.name ]}</h3>
+
+        <input type="text" ng-model="question.name" ng-show="editing" placeholder="Put the question title here"/>
+
+        <button ng-show="editing" class="btn btn-primary" ng-click="updateFn(question);">Salvar</button>
+        <button ng-show="editing" class="btn btn-default" id="cancel-btn-edit" ng-click="editing=false;">Cancelar</button>
+
+        <img src="/static/img/ajax.gif" ng-show="submitting"/>
+
+        <div style="display: inline-block;" class="pull-right">
+            <div class="dropdown pull-right" ng-show="{[ question.user.id == loggedUser.id && question.user.email == loggedUser.email ]}">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" style="padding: 0 !important;" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-gear"></i>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation">
+                        <a role="menuitem" tabindex="-1" ng-click="editing=true;">Editar</a>
+                    </li>
+                    <li role="presentation">
+                        <a role="menuitem" tabindex="-1" ng-click="deleteFn(question);">Remover</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="publisher">
+        <img src="/static/dist/img/user2-160x160.jpg">
+        <span style="padding-left: 10px;"><b>{[ question.user.name ]}</b></span>
+        <span class="pull-right" style="padding-right: 20px;">Há 2 dias</span>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <a href="/questions/{{ question.id }}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver mais</a>
+            <recommend-button post="{{ question.id }}"></recommend-button>
+        </div>
+    </div>
+</div>

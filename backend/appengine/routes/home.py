@@ -2,6 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 from config.template_middleware import TemplateResponse
 from gaecookie.decorator import no_csrf
+from permission_app.permission_facade import main_user_form
 from question_app import question_facade
 from datetime import datetime
 from gaepermission.model import MainUser
@@ -18,6 +19,7 @@ from routes.discusses.upload import index as my_upload
 from category_app.category_model import Category
 from question_app.question_model import CategoryQuestion
 from discuss_app.discuss_model import CategoryDiscuss
+from json import dumps as json_dumps
 
 
 def get_the_user(model, facade_form):
@@ -88,10 +90,11 @@ def index(category=""):
     cmd = question_facade.list_questions_cmd()
     questions = cmd()
     qform = question_facade.question_form()
+    main_uform = main_user_form()
 
     def localize_user(model, facade_form):
         model_dct = facade_form.fill_with_model(model)
-        model_dct['user'] = MainUser.get_by_id(int(model.user.id()))
+        model_dct['user'] = main_uform.fill_with_model(MainUser.get_by_id(int(model.user.id())))
         model.created_at = datetime.now() - model.creation
         return model_dct
 
@@ -101,12 +104,12 @@ def index(category=""):
     discusses = cmd_discuss()
     dform = discuss_facade.discuss_form()
 
-    discusses_output = [localize_user(d, dform) for d in discusses]
+    discusses_output = [get_the_user(d, dform) for d in discusses]
 
     categorys = Category.query().fetch()
 
     context = {
-        "questions": questions_output,
+        "questions": json_dumps(questions_output),
         "question_comment_path": router.to_path(comment_path),
         "discuss_comment_path": router.to_path(comment_path),
         "users_path": router.to_path(index),

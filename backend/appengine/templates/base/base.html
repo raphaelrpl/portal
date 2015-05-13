@@ -228,7 +228,7 @@
             }
         });
 
-        var mainApp = angular.module('mainApp', ['questionModule', 'searchModule', 'commentModule', 'recommendationModule', 'notificationModule']);
+        var mainApp = angular.module('mainApp', ['questionModule', 'searchModule', 'commentModule', 'notificationModule']);
         mainApp.config(['$interpolateProvider', function($interpolateProvider) {
             $interpolateProvider.startSymbol('{[');
             $interpolateProvider.endSymbol(']}');
@@ -274,6 +274,8 @@
         function searchController($scope) {
             $scope.items = [];
         }
+
+
 
         $(document).ready(function(){
 {#            $("#categorysId").multiselect();#}
