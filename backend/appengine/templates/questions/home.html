@@ -4,9 +4,17 @@
     <link rel="stylesheet" href="/static/css/default.css"/>
 {% endblock %}
 
-{#{% block body_class %}#}
-{#sidebar-collapse sidebar-open#}
-{#{% endblock %}#}
+{% block js %}
+    <script>
+        function listQuestionController($scope) {
+            $scope.questions = {{ questions|safe or [] }};
+            $scope.loggedUser = {
+                id: {{ _logged_user.key.id() or "" }},
+                email: "{{ _logged_user.email or '' }}"
+            };
+        }
+    </script>
+{% endblock %}
 
 {% block body %}
     <div class="content-wrapper">
@@ -21,54 +29,13 @@
             </ol>
         </section>
 
-    <!-- Modal Comment Question-->
-        <div class="modal fade" id="commentQuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Lorem ipsu?</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-md-12 panel">
-                            <textarea class="form-control" rows="3" placeholder="Deixa um comentário"></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary">Comentar</button>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- end question modal -->
-
         <section class="content content-min">
             <div class="row">
                 <div class="hidden-xs hidden-sm" style="height: 20px !important;"></div>
                 <section class="col-md-8 col-md-offset-2">
-                    {% if questions %}
-                        {% for question in questions %}
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">{{ question['name'] }}?</h3>
-                            </div>
-                            <div class="publisher">
-                                <img src="/static/dist/img/user2-160x160.jpg">
-                                <span style="padding-left: 10px;"><b>{{ question['publisher'].name }}</b></span>
-{#                                <span style="padding-left: 10px;"><b>{{ question['publisher']['name'] }}</b></span>#}
-                                <span class="pull-right" style="padding-right: 20px;">Ha x tempo</span>
-                            </div>
-                            <div class="panel-body">
-                                <div class="col-md-12">
-{#                                    <a href="#" class="btn btn-link pull-right" data-toggle="modal" data-target="#commentQuestionModal"><i class="fa fa-comment margin-icon"></i>Responder</a>#}
-                                    <a href="{{ question_path }}/{{ question['id'] }}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver mais</a>
-{#                                    <a href="#" id="recommend_btn" class="btn btn-link pull-right"><i class="fa fa-fire margin-icon"></i>Recomendar</a>#}
-                                    <recommend-button post="{{ question['id'] }}"></recommend-button>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    {% endif %}
+                    <div ng-controller="listQuestionController">
+                        <question ng-repeat="q in questions" question="q" logged-user="loggedUser" questions="questions"></question>
+                    </div>
                 </section>
             </div>
         </section>

@@ -19,6 +19,7 @@ from gaepermission.decorator import login_required
 @login_required
 @no_csrf
 def index(question_id=""):
+    main_uform = main_user_form()
     if question_id:
         cmd = question_facade.get_question_cmd(question_id)
         question = cmd()
@@ -26,7 +27,7 @@ def index(question_id=""):
         if not question:
             return RedirectResponse(index)
         question_dct = form.fill_with_model(question)
-        question_dct['publisher'] = MainUser.get_by_id(question_dct['user'])
+        question_dct['user'] = main_uform.fill_with_model(MainUser.get_by_id(question_dct['user']))
 
         comment_form = comment_facade.comment_form()
         comments_on_question = Comment.filter_by_question_key(question.key).fetch()
@@ -41,28 +42,23 @@ def index(question_id=""):
 
         context = {
             "question": question_dct,
+            "questions": dumps([question_dct]),
             "comments": dumps(comments),
             "comment_url": router.to_path(comment_new),
             "comment_list": router.to_path(comment_list)}
         return TemplateResponse(context=context, template_path='questions/question.html')
     cmd = question_facade.list_questions_cmd()
     questions = cmd()
-    edit_path = router.to_path(edit)
-    delete_path = router.to_path(delete)
     question_form = question_facade.question_form()
 
     def localize_question(question):
         question_dct = question_form.fill_with_model(question)
-        question_dct['publisher'] = MainUser.get_by_id(question_dct['user'])
-        question_dct['edit_path'] = router.to_path(edit_path, question_dct['id'])
-        question_dct['delete_path'] = router.to_path(delete_path, question_dct['id'])
+        question_dct['user'] = main_uform.fill_with_model(MainUser.get_by_id(question_dct['user']))
         return question_dct
 
     localized_questions = [localize_question(question) for question in questions][::-1]
 
-    context = {'questions': localized_questions,
-               'new_path': router.to_path(new),
-               'question_path': router.to_path(index)}
+    context = {'questions': dumps(localized_questions)}
     return TemplateResponse(context, template_path='questions/home.html')
 
 

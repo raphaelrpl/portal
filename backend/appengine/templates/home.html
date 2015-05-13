@@ -47,6 +47,7 @@
         <section class="content content-min">
             <div class="row">
                 <section class="col-md-8">
+                    {% if not questions and not discusses %}<h1>Nenhum post cadastrado</h1>{% endif %}
                     <div ng-controller="listQuestionController">
                         <question ng-repeat="q in questions" question="q" logged-user="loggedUser" questions="questions"></question>
                     </div>
@@ -83,14 +84,6 @@
                             {% for c in categorys %}
                                 <a href="/{{ c.slug }}" class="btn btn-link">{{ c.name }}</a>
                             {% endfor %}
-{#                            <a href="/c++" class="btn btn-link">C++</a>#}
-{#                            <a href="/python" class="btn btn-link">Python</a>#}
-{#                            <a href="/agile" class="btn btn-link">Agile</a>#}
-{#                            <a href="/business-intelligence" class="btn btn-link">BI</a>#}
-{#                            <a href="/artificial-intelligence" class="btn btn-link">Artificial Intelligence</a>#}
-{#                            <a href="/geo-technology" class="btn btn-link">Geo Technology</a>#}
-{#                            <a href="/mongodb" class="btn btn-link">MongoDB</a>#}
-{#                            <a href="/scidb" class="btn btn-link">SciDB</a>#}
                         </div>
                     </div>
                 </section>
