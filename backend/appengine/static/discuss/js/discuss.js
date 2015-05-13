@@ -81,20 +81,15 @@ discussModule.directive("discuss", function() {
                 });
             };
 
-            $scope.deleteFn = function(question) {
+            $scope.deleteFn = function(discuss) {
                 console.log("Deletando");
                 $scope.submitting = true;
-                $http.post("/questions/rest/delete/" + question.id, {}).success(function(data){
-                    console.log("Question Deletada");
+                $http.post("/discusses/rest/delete/" + discuss.id, {}).success(function(data){
+                    console.log("Discuss Deletada");
                     $scope.editing = false;
-                    angular.forEach($scope.questions, function(key, value) {
-                        if (key.id == data.id) {
-                            $scope.questions.splice(key, 1);
-                            console.log("Removeu");
-                        }
-                    });
+                    $scope.discusses.splice($scope.discusses.indexOf(discuss), 1);
                 }).error(function(e){
-                    console.log("Erro Deletar Question");
+                    console.log("Erro Deletar Discuss");
                 }).finally(function(d) {
                     $scope.submitting = false;
                 });

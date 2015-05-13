@@ -4,12 +4,16 @@
     <link rel="stylesheet" href="/static/css/default.css"/>
 {% endblock %}
 
-{#{% block body_class %}#}
-{#sidebar-collapse sidebar-open#}
-{#{% endblock %}#}
-
 {% block js %}
     <script charset="UTF-8">
+        function listDiscussController($scope) {
+            $scope.discusses = {{ discusses|safe or [] }};
+            $scope.loggedUser = {
+                id: {{ _logged_user.key.id() or "" }},
+                email: "{{ _logged_user.email or '' }}"
+            };
+        }
+
         function commentController($scope, $window, $http) {
             $scope.comment = {post: {{ discuss['id'] }}, type: "D"};
             $scope.commentList = {{ comments|safe }};
@@ -17,8 +21,6 @@
                 id: {{ _logged_user.key.id() }},
                 email: "{{ _logged_user.email }}"
             };
-            console.log("{{ comment_url }}");
-            console.log($scope.loggedUser);
             angular.element($window).bind("scroll", function() {
                 var windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
                 var body = document.body, html = document.documentElement;
@@ -57,32 +59,10 @@
         <section class="content content-min">
             <div class="row">
                 <section class="col-md-8 col-md-offset-2" ng-controller="commentController">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">{{ discuss['title'] }}?</h3>
-                        </div>
-                        <div class="publisher">
-                            <img src="/static/dist/img/user2-160x160.jpg">
-                            <span style="padding-left: 10px;"><b>{{ discuss['publisher']['name'] }}</b></span>
-                            <span class="pull-right" style="padding-right: 20px;">{{ discuss['creation'] }}</span>
-                        </div>
-                        <div class="panel-body">
-                            {% if discuss['image'] %}
-                                <div class="col-md-3 col-sm-3">
-                                    <img src="{{ discuss['image'] }}" style="width: 100%; max-height: 250px;">
-                                </div>
-                                <div class="col-md-9">
-                                {% else %}
-                                <div class="col-md-12">
-                                {% endif %}
-                                {{ discuss['content'] }}
-                                </div>
-                            <div class="col-md-12">
-                                <recommend-button post="{{ discuss['id'] }}"></recommend-button>
-{#                                <a href="#" id="recommend_btn" class="btn btn-link pull-right"><i class="fa fa-fire margin-icon"></i>Recomendar</a>#}
-                            </div>
-                        </div>
+                    <div ng-controller="listDiscussController">
+                        <discuss ng-repeat="d in discusses" discuss="d" logged-user="loggedUser" discusses="discusses"></discuss>
                     </div>
+
                     <div class="col-md-12 panel">
                         <docomment comment="comment" post-url="{{ comment_url }}" comment-list="commentList"></docomment>
                     </div>

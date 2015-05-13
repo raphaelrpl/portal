@@ -9,6 +9,18 @@
 {#sidebar-collapse sidebar-open#}
 {#{% endblock %}#}
 
+{% block js %}
+    <script>
+        function listDiscussController($scope) {
+            $scope.discusses = {{ discusses|safe or [] }};
+            $scope.loggedUser = {
+                id: {{ _logged_user.key.id() or "" }},
+                email: "{{ _logged_user.email or '' }}"
+            };
+        }
+    </script>
+{% endblock %}
+
 {% block body %}
     <div class="content-wrapper">
         <!-- News Content -->
@@ -22,66 +34,13 @@
             </ol>
         </section>
 
-    <!-- Modal Comment Discuss-->
-        <div class="modal fade" id="commentDiscussModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Lorem ipsu?</h4>
-                    </div>
-                    <div class="modal-body">
-                        <h4></h4>
-{#                        <div class="col-md-12">#}
-{#                            <img src="/static/img/python.jpg" style="width: 100%; max-height: 250px;">#}
-{#                        </div>#}
-                        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-                        <textarea class="form-control" style="margin-top: 15px !important;" rows="3" placeholder="Deixa um comentário"></textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary">Comentar</button>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- end discuss modal -->
-
         <section class="content content-min">
             <div class="row">
                 <div class="hidden-xs hidden-sm" style="height: 20px !important;"></div>
                 <section class="col-md-8 col-md-offset-2">
-                    {% if discusses %}
-                        {% for discuss in discusses %}
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">{{ discuss.title }}?</h3>
-                            </div>
-                            <div class="publisher">
-                                <img src="/static/dist/img/user2-160x160.jpg">
-                                <span style="padding-left: 10px;"><b>Fulano</b></span>
-                                <span class="pull-right" style="padding-right: 20px;">{{ discuss.creation }}</span>
-                            </div>
-                            <div class="panel-body">
-                                {% if discuss.image %}
-                                <div class="col-md-3 col-sm-3">
-                                    <img src="{{ discuss.image }}" style="width: 100%; max-height: 250px;">
-                                </div>
-                                <div class="col-md-9">
-                                {% else %}
-                                <div class="col-md-12">
-                                {% endif %}
-                                {{ discuss.content }}
-                                </div>
-                                <div class="col-md-12">
-{#                                    <a href="#" class="btn btn-link pull-right" data-toggle="modal" data-target="#commentDiscussModal"><i class="fa fa-comment margin-icon"></i>Responder</a>#}
-                                    <a href="{{ discusses_page }}/{{ discuss.key.id() }}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver mais</a>
-                                    <recommend-button post="{{ discuss.key.id() }}"></recommend-button>
-{#                                    <a href="#" id="recommend_btn" class="btn btn-link pull-right"><i class="fa fa-fire margin-icon"></i>Recomendar</a>#}
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    {% endif %}
+                    <div ng-controller="listDiscussController">
+                        <discuss ng-repeat="d in discusses" discuss="d" logged-user="loggedUser" discusses="discusses"></discuss>
+                    </div>
                 </section>
             </div>
         </section>
