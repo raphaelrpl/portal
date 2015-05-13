@@ -2,7 +2,7 @@
  * Created by raphael on 3/11/15.
  */
 
-var discussModule = angular.module("discussModule", []);
+var discussModule = angular.module("discussModule", ['recommendationModule']);
 
 discussModule.directive("discussform", function() {
     return {
@@ -50,15 +50,55 @@ discussModule.directive('fileModel', ['$parse', function ($parse) {
         }
     };
 }]);
-//
-//discussModule.directive("inputImage", ['$parse', function($parse){
-//    return {
-//        restrict: 'A',
-//        link: function(scope, elm, attrs) {
-//            elm.bind('change', function () {
-//                $parse(attrs.inputImage).assign(scope, elm[0].files);
-//                scope.$apply();
-//            })
-//        }
-//    }
-//}]);
+
+discussModule.directive("discuss", function() {
+    return {
+        restrict: 'E',
+        replace: true,
+        templateUrl: '/static/discuss/html/discuss.html',
+        scope: {
+            discuss: '=',
+            loggedUser: '=',
+            discusses: '='
+        },
+        controller: function($scope, $http) {
+            $scope.editing = false;
+            $scope.submitting = false;
+            $scope.errors = null;
+
+            $scope.updateFn = function(discuss) {
+                $scope.submitting = true;
+                $http.post("/discusses/rest/edit", discuss).success(function(data){
+                    console.log("Discuss Alterada");
+                    $scope.editing = false;
+                    $scope.errors = null;
+                }).error(function(e){
+                    $scope.errors = e;
+                    console.log("Erro Discuss Question");
+
+                }).finally(function(d) {
+                    $scope.submitting = false;
+                });
+            };
+
+            $scope.deleteFn = function(question) {
+                console.log("Deletando");
+                $scope.submitting = true;
+                $http.post("/questions/rest/delete/" + question.id, {}).success(function(data){
+                    console.log("Question Deletada");
+                    $scope.editing = false;
+                    angular.forEach($scope.questions, function(key, value) {
+                        if (key.id == data.id) {
+                            $scope.questions.splice(key, 1);
+                            console.log("Removeu");
+                        }
+                    });
+                }).error(function(e){
+                    console.log("Erro Deletar Question");
+                }).finally(function(d) {
+                    $scope.submitting = false;
+                });
+            }
+        }
+    }
+});

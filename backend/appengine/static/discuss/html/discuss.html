@@ -1,0 +1,49 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 ng-hide="editing" class="panel-title" style="display: inline-block !important;">{[ discuss.title ]}</h3>
+        <br ng-show="editing"/>
+
+        <input type="text" ng-model="discuss.title" ng-show="editing" placeholder="Put the question title here"/>
+
+        <img src="/static/img/ajax.gif" ng-show="submitting"/>
+
+        <div style="display: inline-block;" class="pull-right">
+            <div class="dropdown pull-right" ng-show="{[ discuss.user.id == loggedUser.id && discuss.user.email == loggedUser.email ]}">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" style="padding: 0 !important;" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-gear"></i>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation">
+                        <a role="menuitem" tabindex="-1" ng-click="editing=true;">Editar</a>
+                    </li>
+                    <li role="presentation">
+                        <a role="menuitem" tabindex="-1" ng-click="deleteFn(discuss);">Remover</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="publisher">
+        <img src="/static/dist/img/user2-160x160.jpg">
+        <span style="padding-left: 10px;"><b>{[ discuss.user.name ]}</b></span>
+        <span class="pull-right" style="padding-right: 20px;">{[ discuss.creation ]}</span>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-3 col-sm-3" ng-show="discuss.image">
+            <img src="{[ discuss.image ]}" style="width: 100%; max-height: 250px;">
+        </div>
+        <div ng-class="discuss.image ? 'col-md-9' : 'col-md-12'">
+            {[ !editing ? discuss.content : "" ]}
+            <textarea ng-class="{'error-border': errors}" ng-show="editing" ng-model="discuss.content" style="width: 100% !important; margin-bottom: 10px !important;" rows="5"></textarea>
+        </div>
+        <div class="col-md-12" ng-show="editing">
+            <button class="btn btn-default pull-right" id="cancel-btn-edit" ng-click="editing=false;">Cancelar</button>
+            <button class="btn btn-primary pull-right" ng-click="updateFn(discuss);" style="margin-right: 10px !important;">Salvar</button>
+        </div>
+        <div class="col-md-12">
+            <a href="/discusses/{[ discuss.id ]}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver mais</a>
+
+            <recommend-button post="{[ discuss.id ]}"></recommend-button>
+        </div>
+    </div>
+</div>

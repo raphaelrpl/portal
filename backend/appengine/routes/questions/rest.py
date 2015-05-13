@@ -25,17 +25,22 @@ def new(_resp, _logged_user, **question_properties):
     if _logged_user is None:
         _resp.status_code = 400
         return JsonResponse({"name": "Login required!"})
-    question_properties['question']['user'] = _logged_user
-    # question_properties['user'] = _logged_user
-    cmd = question_facade.save_question_cmd(**question_properties.get('question', {}))
-    # cmd = question_facade.save_question_cmd(**question_properties)
-    try:
-        question = cmd()
-    except CommandExecutionException:
-        _resp.status_code = 500
-        return JsonResponse(cmd.errors)
+    quest = question_properties.get('question', {})
+    if not quest:
+        _resp.status_code = 400
+        return JsonResponse({"name": "Required Field"})
+    question = Question(**quest)
+    question.user = _logged_user.key
 
-    for c in question_properties.get("categorys"):
+    try:
+        question.put()
+    except CommandExecutionException:
+        _resp.status_code = 400
+        if not question.name:
+            return JsonResponse({"name": "Required field"})
+        return JsonResponse({"name": "Put a valid post"})
+
+    for c in question_properties.get("categorys", {}):
         cat = Category.query(Category.name == c).fetch()
         if cat:
             category = CategoryQuestion(origin=cat[0], destination=question)

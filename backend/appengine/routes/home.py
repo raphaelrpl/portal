@@ -104,7 +104,7 @@ def index(category=""):
     discusses = cmd_discuss()
     dform = discuss_facade.discuss_form()
 
-    discusses_output = [get_the_user(d, dform) for d in discusses]
+    discusses_output = [localize_user(d, dform) for d in discusses]
 
     categorys = Category.query().fetch()
 
@@ -115,7 +115,7 @@ def index(category=""):
         "users_path": router.to_path(index),
         "upload_path": url,
         "trends": topics,
-        "discusses": discusses_output,
+        "discusses": json_dumps(discusses_output),
         "categorys": categorys
     }
     return TemplateResponse(context=context)

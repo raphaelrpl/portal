@@ -3,6 +3,13 @@
 {% block css %}
     <link rel="stylesheet" href="/static/css/default.css"/>
     <link rel="stylesheet" href="/static/css/animate.css"/>
+    <style>
+        .error-border {
+            outline:none;
+            border-color: #ed2c0e;
+            box-shadow:0 0 10px #ed2c0e;
+        }
+    </style>
 {% endblock %}
 
 {% block js %}
@@ -14,11 +21,14 @@
                 email: "{{ _logged_user.email or '' }}"
             };
         }
-        $(document).ready(function(){
-            $("#myModalLabel").html("OIIII");
-            console.log($(this).parent());
 
-        });
+        function listDiscussController($scope) {
+            $scope.discusses = {{ discusses|safe or [] }};
+            $scope.loggedUser = {
+                id: {{ _logged_user.key.id() or "" }},
+                email: "{{ _logged_user.email or '' }}"
+            };
+        }
     </script>
 {% endblock %}
 
@@ -41,43 +51,9 @@
                         <question ng-repeat="q in questions" question="q" logged-user="loggedUser" questions="questions"></question>
                     </div>
 
-                    {% if discusses %}
-                        <div>
-                        {% for discuss in discusses %}
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">{{ discuss['title'] }}</h3>
-                                </div>
-                                <div class="publisher">
-                                    <img src="/static/dist/img/user2-160x160.jpg">
-                                    <span style="padding-left: 10px;"><b>{{ discuss['user']['name'] }}</b></span>
-                                    {#                                <span class="pull-right" style="padding-right: 20px;">{{ question['created_at'] }}</span>#}
-                                    <span class="pull-right" style="padding-right: 20px;">{{ discuss['creation'] }}</span>
-                                </div>
-                                <div class="panel-body">
-                                    {% if discuss.get('image') %}
-                                        <div class="col-md-3 col-sm-3">
-                                            <img src="{{ discuss['image'] }}" style="width: 100%; max-height: 250px;">
-                                        </div>
-                                        <div class="col-md-9">
-                                    {% else %}
-                                        <div class="col-md-12">
-                                    {% endif %}
-                                        {{ discuss['content'] }}
-                                    </div>
-
-                                    <div class="col-md-12">
-{#                                        <a href="#" class="btn btn-link pull-right" data-toggle="modal" data-target="#commentDiscussModal"><i class="fa fa-comment margin-icon"></i>Responder</a>#}
-                                        <a href="/discusses/{{ discuss.get('id') }}" class="btn btn-link pull-right"><i class="fa fa-comment margin-icon"></i>Ver mais</a>
-{#                                        <a href="#" id="recommend_btn" class="btn btn-link pull-right"><i class="fa fa-fire margin-icon"></i>Recomendar</a>#}
-
-                                        <recommend-button post="{{ discuss['id'] }}"></recommend-button>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                        </div>
-                    {% endif %}
+                    <div ng-controller="listDiscussController">
+                        <discuss ng-repeat="d in discusses" discuss="d" logged-user="loggedUser" discusses="discusses"></discuss>
+                    </div>
                 </section>
                 <section class="col-md-4 hidden-sm hidden-xs">
                     <div class="panel panel-default">

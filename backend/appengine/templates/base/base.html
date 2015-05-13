@@ -214,6 +214,7 @@
     <script src="/static/comments/js/comment.js"></script>
     <script src="/static/recommendation/js/recommendation.js"></script>
     <script src="/static/notifications/js/notification.js"></script>
+    <script src="/static/discuss/js/discuss.js"></script>
     <script src="/static/js/chosen.min.js"></script>
 
     {% block angular_app %}
@@ -228,7 +229,7 @@
             }
         });
 
-        var mainApp = angular.module('mainApp', ['questionModule', 'searchModule', 'commentModule', 'notificationModule']);
+        var mainApp = angular.module('mainApp', ['questionModule', 'searchModule', 'commentModule', 'notificationModule', 'discussModule']);
         mainApp.config(['$interpolateProvider', function($interpolateProvider) {
             $interpolateProvider.startSymbol('{[');
             $interpolateProvider.endSymbol(']}');
