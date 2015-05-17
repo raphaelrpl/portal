@@ -21,5 +21,6 @@ def index(_logged_user, post_id):
         if post is None:
             return JsonResponse({"error": "Invalid post"})
 
-    rec = Recommendation.query(Recommendation.origin == _logged_user.key and Recommendation.destination == post.key).fetch()
+    rec = Recommendation.query(Recommendation.origin == _logged_user.key and
+                               Recommendation.destination == post.key).fetch()
     return JsonResponse({"status": 1 if rec else 0})

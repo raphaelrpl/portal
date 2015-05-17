@@ -11,6 +11,7 @@ from tekton.gae.middleware.redirect import RedirectMiddleware
 from tekton.gae.middleware.router_middleware import RouterMiddleware, ExecutionMiddleware
 from tekton.gae.middleware.webapp2_dependencies import Webapp2Dependencies
 from gaepermission.middleware import LoggedUserMiddleware, PermissionMiddleware
+import os
 
 APP_URL = 'https://tutorship-portal.appspot.com'
 SENDER_EMAIL = 'raphael.wcosta@gmail.com'
@@ -19,6 +20,15 @@ DEFAULT_TIMEZONE = 'US/Eastern'
 LOCALES = ['en_US', 'pt_BR']
 TEMPLATE_404_ERROR = 'base/404.html'
 TEMPLATE_400_ERROR = 'base/400.html'
+
+
+# if os.environ.get("SERVER_NAME") == "localhost":
+if 'development' in os.environ.get('SERVER_SOFTWARE', '').lower():
+    # Development Env
+    FACEBOOK_APP_ID = "1612175862351897"
+else:
+    # Production Env
+    FACEBOOK_APP_ID = "1584135231847461"
 
 
 MIDDLEWARE_LIST = [MultitenacyMiddleware,

@@ -8,6 +8,8 @@ from tekton import router
 from config.template_middleware import TemplateResponse
 from routes.login import google, facebook
 from routes.login.passwordless import send_email
+from settings import FACEBOOK_APP_ID
+import os
 
 
 def prepare_login_services(ret_path="/"):
@@ -15,7 +17,8 @@ def prepare_login_services(ret_path="/"):
     dct = {'login_google_path': users.create_login_url(g_path),
            'login_passwordless_path': router.to_path(send_email, ret_path=ret_path),
            'login_facebook_path': router.to_path(facebook.index, ret_path=ret_path),
-           'faceapp': facade.get_facebook_app_data().execute().result}
+           'faceapp': facade.get_facebook_app_data().execute().result,
+           'facebook_app_id': FACEBOOK_APP_ID}
     return dct
 
 

@@ -14,7 +14,7 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 {% macro select_tabs(tab='') %}
-                    {% if _logged_user or 1 %}
+                    {% if _logged_user %}
                         <!-- Messages: style can be found in dropdown.less-->
                         <li class="dropdown messages-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -44,16 +44,14 @@
                                 <span class="hidden-xs">Adicionar um pergunta</span>
                             </a>
                         </li>
-                        <!-- Notifications: style can be found in dropdown.less -->
-{#                        <li class="dropdown notifications-menu">#}
 
-                            <notification post-url="/notifications/rest/" notification-url="/admin/notifications"></notification>
+                        <notification post-url="/notifications/rest/" notification-url="/admin/notifications"></notification>
 
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="/static/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                                <span class="hidden-xs">Fulano</span>
+                                <span class="hidden-xs">{{ _logged_user.name or "Test Name" }}</span>
 {#                                <span class="hidden-xs">{{ _logged_user.name }}</span>#}
                             </a>
                             <ul class="dropdown-menu">
@@ -61,10 +59,10 @@
                                 <li class="user-header">
                                     <img src="/static/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
                                     <p>
-                                        Fulano
+                                        {{ _logged_user.name or "Test Name" }}
 {#                                        {{ _logged_user.name }}#}
-{#                                        <small>Member since {{ _logged_user.creation.strftime('%B, %Y') }}</small>#}
-                                        <small>Membro desde Fevereiro, 2015</small>
+                                        <small>Membro desde {{ _logged_user.creation.strftime('%B, %Y') }}</small>
+{#                                        <small>Membro desde Fevereiro, 2015</small>#}
                                         <small>Desenvolvedor</small>
                                     </p>
                                 </li>

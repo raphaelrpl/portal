@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from config.template_middleware import TemplateResponse
 from gaecookie.decorator import no_csrf
 from gaepermission import facade
-from gaepermission.decorator import login_not_required, permissions
+from gaepermission.decorator import login_not_required, permissions, login_required
 from permission_app.model import ADMIN
 import settings
 from tekton import router
@@ -13,6 +13,7 @@ from routes.login import pending
 
 
 @login_not_required
+@no_csrf
 def index(_resp, token, ret_path='/'):
     cmd = facade.login_facebook(token, _resp)
     cmd()
@@ -24,14 +25,16 @@ def index(_resp, token, ret_path='/'):
         return TemplateResponse({'provider': 'Facebook', 'email': user_email}, 'login/pending.html')
     return RedirectResponse(ret_path)
 
-@permissions(ADMIN)
+
+@login_required
 @no_csrf
 def form():
     app = facade.get_facebook_app_data().execute().result
     dct = {'save_app_path': router.to_path(save), 'app': app}
     return TemplateResponse(dct)
 
-@permissions(ADMIN)
+
+@login_required
 def save(app_id, token):
     facade.save_or_update_facebook_app_data(app_id, token).execute()
     return RedirectResponse(admin)
