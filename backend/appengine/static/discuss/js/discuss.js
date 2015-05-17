@@ -22,8 +22,8 @@ discussModule.directive("discussform", function() {
             };
             $scope.publish = function() {
                 console.log($scope.uploadUrl);
-                $http.post($scope.uploadUrl.url, $scope.discuss, {headers: {'Content-Type': 'multipart/form-data'}}).success(function(question) {
-                    console.log(question);
+                $http.post($scope.uploadUrl.url, $scope.discuss, {headers: {'Content-Type': 'multipart/form-data'}}).success(function(discuss) {
+                    console.log(discuss);
                     alert("FOI");
                     //window.location = "/";
                 }).error(function(errors) {

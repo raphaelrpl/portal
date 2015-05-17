@@ -29,8 +29,8 @@
         <span class="pull-right" style="padding-right: 20px;">{[ discuss.creation ]}</span>
     </div>
     <div class="panel-body">
-        <div class="col-md-3 col-sm-3" ng-show="discuss.image">
-            <img src="{[ discuss.image ]}" style="width: 100%; max-height: 250px;">
+        <div ng-class="discuss.image ? 'col-md-3 col-sm-3' : ''" ng-show="discuss.image">
+            <img ng-src="{[ discuss.image ]}" style="width: 100%; max-height: 250px;">
         </div>
         <div ng-class="discuss.image ? 'col-md-9' : 'col-md-12'">
             {[ !editing ? discuss.content : "" ]}
