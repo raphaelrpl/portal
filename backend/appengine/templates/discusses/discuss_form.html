@@ -8,26 +8,6 @@
 {#sidebar-collapse sidebar-open#}
 {#{% endblock %}#}
 
-{% block js %}
-    <script charset="UTF-8">
-{#        $.ajax({#}
-{#            type: "POST",#}
-{#            url: "/categorys/rest/",#}
-{#            dataType: "json",#}
-{#            success: function(data) {#}
-{#                var element = $("#categorysIdForm");#}
-{#                element.empty();#}
-{#                console.log(data);#}
-{#                $.each(data, function(k, v) {#}
-{#                    element.append("<option value='"+ v.name + "'>" + v.name + "</option>");#}
-{#                });#}
-{##}
-{#                element.chosen('.chosen-select');#}
-{#            }#}
-{#        });#}
-    </script>
-{% endblock %}
-
 {% block body %}
     <div class="content-wrapper">
         <!-- News Content -->

@@ -12,15 +12,15 @@ searchModule.directive('typeahead', function($timeout) {
             model: '=',
             onSelect: '&'
         },
-        controller: function($scope, dataFactory) { // DI in action
+        controller: function($scope, $http) { // DI in action
             $scope.cleanField = function() {
 
             };
             $scope.dispatchSearch = function() {
                 console.log("DISPACHANDO");
-                dataFactory.get($scope.urlreq).success(function (data) {
-                $scope.items = data;
-            });
+                $http.get($scope.urlreq).success(function (data) {
+                    $scope.items = data;
+                });
             };
             $scope.name = ''; // This will hold the selected item
             $scope.onItemSelected = function () { // this gets executed when an item is selected

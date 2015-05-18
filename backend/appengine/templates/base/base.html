@@ -86,7 +86,7 @@
 
     {% block css %}{% endblock %}
 </head>
-<body class="skin-blue {% block body_class %}{% endblock %}" ng-app="mainApp">
+<body class="skin-blue {% block body_class %}{% endblock %}" {% block ngApp %}ng-app="mainApp"{% endblock %}>
     <div class="wrapper">
         <!-- header logo: style can be found in header.less -->
 
@@ -191,9 +191,6 @@
             form_discuss_btn.click(function(e){
                 console.log("antes");
                 $("#form-discuss").submit();
-                {#form_discuss.submit();
-                e.preventDefault();
-                return false;#}
                 console.log("antes");
             });
         });
@@ -205,10 +202,6 @@
     <!-- AdminLTE App -->
     <script src="/static/dist/js/app.min.js" type="text/javascript"></script>
     <script src="/static/angular/js/angular.min.js" type="text/javascript"></script>
-{#    <script src="/static/ng-file-upload/angular-file-upload-all.min.js"></script>#}
-{#    <script src="/static/ng-file-upload/angular-file-upload-shim.min.js"></script>#}
-{#    <script src="/static/ng-file-upload/ng-file-upload-all.min.js"></script>#}
-{#    <script src="/static/discuss/js/discuss.js" type="text/javascript"></script>#}
     <script src="/static/discuss/js/question.js" type="text/javascript"></script>
     <script src="/static/search/js/search.js" type="text/javascript"></script>
     <script src="/static/comments/js/comment.js"></script>
@@ -229,7 +222,7 @@
             }
         });
 
-        var mainApp = angular.module('mainApp', ['questionModule', 'searchModule', 'commentModule', 'notificationModule', 'discussModule']);
+        var mainApp = angular.module('mainApp', ['questionModule', 'searchModule', 'commentModule', 'notificationModule']);
         mainApp.config(['$interpolateProvider', function($interpolateProvider) {
             $interpolateProvider.startSymbol('{[');
             $interpolateProvider.endSymbol(']}');
