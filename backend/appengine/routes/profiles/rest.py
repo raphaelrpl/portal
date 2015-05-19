@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from gaebusiness.business import CommandExecutionException
+from gaecookie.decorator import no_csrf
 from gaepermission.decorator import login_required
 from tekton.gae.middleware.json_middleware import JsonResponse
 from profile_app import profile_facade

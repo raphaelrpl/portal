@@ -3,46 +3,59 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="thumbnail box">
-                    <img src="/static/dist/img/user2-160x160.jpg" alt=""/>
+                    <img ng-src="{[ profile.avatar || '/static/img/user-no-image.png' ]}" alt=""/>
 
                     <div class="caption">
-                        <h4>{[ loggedUser.name || "asdas" ]}</h4>
+                        <h4 style="font-size: 15px !important;">{[ loggedUser.name || "asdas" ]}</h4>
                     </div>
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="col-md-12 box">
-                    <h4>Compartilhamento</h4>
-
-                    <p class="no-margin">Posição: <span class="label label-default pull-right">2ª</span></p>
-
-                    <p class="no-margin">Pontução: <span class="label label-default pull-right">10002</span></p>
-
-                    <p class="no-margin">Questões</p>
-
-                    <div class="progress progress-sm active">
-                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                            <span class="sr-only">20% Complete</span>
-                        </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" style="display: inline-block !important;">
+                            Compartilhamento</h3>
                     </div>
-                    <p class="no-margin">Comentários</p>
+                    <div class="panel-body">
+                        <p class="no-margin">Posição: <span class="label label-default pull-right">2ª</span>
+                        </p>
 
-                    <div class="progress progress-sm active">
-                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"
-                             aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
-                            <span class="sr-only">30% Complete</span>
-                        </div>
-                    </div>
-                    <p class="no-margin">Publicações</p>
+                        <p class="no-margin">Pontução: <span
+                                class="label label-default pull-right">10002</span>
+                        </p>
 
-                    <div class="progress progress-sm active">
-                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                            <span class="sr-only">20% Complete</span>
+                        <p class="no-margin">Questões</p>
+
+                        <div class="progress progress-sm active">
+                            <div class="progress-bar progress-bar-success progress-bar-striped"
+                                 role="progressbar"
+                                 aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+                                 style="width: 20%">
+                                <span class="sr-only">20% Complete</span>
+                            </div>
                         </div>
+                        <p class="no-margin">Comentários</p>
+
+                        <div class="progress progress-sm active">
+                            <div class="progress-bar progress-bar-success progress-bar-striped"
+                                 role="progressbar"
+                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"
+                                 style="width: 50%">
+                                <span class="sr-only">30% Complete</span>
+                            </div>
+                        </div>
+                        <p class="no-margin">Publicações</p>
+
+                        <div class="progress progress-sm active">
+                            <div class="progress-bar progress-bar-success progress-bar-striped"
+                                 role="progressbar"
+                                 aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+                                 style="width: 20%">
+                                <span class="sr-only">20% Complete</span>
+                            </div>
+                        </div>
+                        <div style="padding-bottom: 5px !important;"></div>
                     </div>
-                    <div style="padding-bottom: 5px !important;"></div>
                 </div>
             </div>
         </div>
@@ -50,103 +63,152 @@
     <section class="col-sm-12 col-xs-12 col-md-8 col-lg-8">
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-12 box">
-                    <h4>Informações Pessoais</h4>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 ng-hide="editing" class="panel-title" style="display: inline-block !important;">
+                            Informações Pessoais</h3>
 
-                    <p>Email:
-                        <small>{[ loggedUser.email || "aop"]}</small>
-                    </p>
-                    <p>Escolaridade:
-                        <small>Mestrado em Engenharia de Software - <b>Lorem Ipsum Academy</b></small>
-                    </p>
-                    <p>Cargo:
-                        <small>Desenvolvedor na <b>Lorem Ipsum Web Solutions</b></small>
-                    </p>
-                    <p style="padding-bottom: 13px !important;">Sobre mim:
-                        <small>
-                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                            architecto
-                            beatae vitae dicta sunt explicabo.
-                        </small>
-                    </p>
+                        <div style="display: inline-block;" class="pull-right">
+                            <div class="dropdown pull-right"
+                                 ng-show="{[ profile.user.id == loggedUser.id && profile.user.email == loggedUser.email ]}">
+                                <button class="btn btn-default dropdown-toggle" type="button"
+                                        id="dropdownMenu1" style="padding: 0 !important;"
+                                        data-toggle="dropdown" aria-expanded="true"><i
+                                        class="fa fa-gear"></i>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                    <li role="presentation">
+                                        <a role="menuitem" tabindex="-1" ng-click="changeToEdit()">Editar</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <p>Email:
+                            <small>{[ loggedUser.email || "Não Preenchido"]}</small>
+                        </p>
+                        <div class="form-group" ng-class="{'has-error': errors.education}">
+                            <span>Escolaridade: <small ng-show="!editing">{[ profile.education || "Não Preenchido" ]}
+                            </small></span>
+                            <input type="text" class="form-control" ng-show="editing" ng-model="newProfile.education"/>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': errors.position}">
+                            <span>Cargo: <small ng-show="!editing">{[ profile.position || "Não Preenchido" ]}
+                            </small></span>
+                            <input type="text" class="form-control" ng-show="editing" ng-model="newProfile.position"/>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': errors.about}">
+                                        <span style="padding-bottom: 13px !important;">
+                                            Sobre mim:
+                                            <small ng-show="!editing">{[ profile.about || "Não Preenchido" ]}</small>
+                                        </span>
+                            <textarea class="form-control" ng-show="editing" ng-model="newProfile.about" rows="5"
+                                      style="width: 100% !important;"></textarea>
+                        </div>
+
+
+                        <div class="form-group" ng-show="editing">
+                            <button ng-click="editing=false;" class="btn btn-default pull-right"
+                                    style="margin-left: 10px;">Cancelar
+                            </button>
+                            <button ng-click="submitEdit(newProfile)" class="btn btn-primary pull-right">Salvar</button>
+                            <img ng-show="submitting" style="margin: 10px;" src="/static/img/ajax.gif"
+                                 class="pull-right">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="col-md-12 box">
-                    <h4>Atividades Recentes</h4>
-
-                    <div class="media">
-                        <a href="#" class="pull-left">
-                            <img src="/static/dist/img/user2-160x160.jpg" class="media-object recent-activity"
-                                 alt="Sample Image">
-                        </a>
-
-                        <div class="media-body">
-                            <h4 class="media-heading">Fulano
-                                <small><i>comentou em "Lorem Ipsum" 10 de Janeiro de 2014</i></small>
-                            </h4>
-                            <p>Excellent feature! I love it. One day I'm definitely going to put this Bootstrap
-                                component
-                                into use and I'll let you know once I do.</p>
-                        </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 ng-hide="editing" class="panel-title" style="display: inline-block !important;">
+                            Atividades Recentes</h3>
                     </div>
-                    <div class="media">
-                        <a href="#" class="pull-left">
-                            <img src="/static/dist/img/user2-160x160.jpg" class="media-object recent-activity"
-                                 alt="Sample Image">
-                        </a>
+                    <div class="panel-body">
+                        <div class="media">
+                            <a href="#" class="pull-left">
+                                <img src="/static/dist/img/user2-160x160.jpg"
+                                     class="media-object recent-activity"
+                                     alt="Sample Image">
+                            </a>
 
-                        <div class="media-body">
-                            <h4 class="media-heading">Fulano
-                                <small><i>fez uma pergunta em 20 de Janeiro de 2014</i></small>
-                            </h4>
-                            <p>Lorem ipsum ipsi?</p>
+                            <div class="media-body">
+                                <h4 class="media-heading">Fulano
+                                    <small><i>comentou em "Lorem Ipsum" 10 de Janeiro de 2014</i></small>
+                                </h4>
+                                <p>Excellent feature! I love it. One day I'm definitely going to put this
+                                    Bootstrap
+                                    component
+                                    into use and I'll let you know once I do.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="media">
-                        <a href="#" class="pull-left">
-                            <img src="/static/dist/img/user2-160x160.jpg" class="media-object recent-activity"
-                                 alt="Sample Image">
-                        </a>
+                        <div class="media">
+                            <a href="#" class="pull-left">
+                                <img src="/static/dist/img/user2-160x160.jpg"
+                                     class="media-object recent-activity"
+                                     alt="Sample Image">
+                            </a>
 
-                        <div class="media-body">
-                            <h4 class="media-heading">Fulano
-                                <small><i>comentou em "Lorem Ipsum" 10 de Janeiro de 2014</i></small>
-                            </h4>
-                            <p>Excellent feature! I love it. One day I'm definitely going to put this Bootstrap
-                                component
-                                into use and I'll let you know once I do.</p>
+                            <div class="media-body">
+                                <h4 class="media-heading">Fulano
+                                    <small><i>fez uma pergunta em 20 de Janeiro de 2014</i></small>
+                                </h4>
+                                <p>Lorem ipsum ipsi?</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="media">
-                        <a href="#" class="pull-left">
-                            <img src="/static/dist/img/user2-160x160.jpg" class="media-object recent-activity"
-                                 alt="Sample Image">
-                        </a>
+                        <div class="media">
+                            <a href="#" class="pull-left">
+                                <img src="/static/dist/img/user2-160x160.jpg"
+                                     class="media-object recent-activity"
+                                     alt="Sample Image">
+                            </a>
 
-                        <div class="media-body">
-                            <h4 class="media-heading">Fulano
-                                <small><i>comentou em "Lorem Ipsum" 10 de Janeiro de 2014</i></small>
-                            </h4>
-                            <p>Excellent feature! I love it. One day I'm definitely going to put this Bootstrap
-                                component
-                                into use and I'll let you know once I do.</p>
+                            <div class="media-body">
+                                <h4 class="media-heading">Fulano
+                                    <small><i>comentou em "Lorem Ipsum" 10 de Janeiro de 2014</i></small>
+                                </h4>
+                                <p>Excellent feature! I love it. One day I'm definitely going to put this
+                                    Bootstrap
+                                    component
+                                    into use and I'll let you know once I do.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="media">
-                        <a href="#" class="pull-left">
-                            <img src="/static/dist/img/user2-160x160.jpg" class="media-object recent-activity"
-                                 alt="Sample Image">
-                        </a>
+                        <div class="media">
+                            <a href="#" class="pull-left">
+                                <img src="/static/dist/img/user2-160x160.jpg"
+                                     class="media-object recent-activity"
+                                     alt="Sample Image">
+                            </a>
 
-                        <div class="media-body">
-                            <h4 class="media-heading">Fulano
-                                <small><i>comentou em "Lorem Ipsum" 10 de Janeiro de 2014</i></small>
-                            </h4>
-                            <p>Excellent feature! I love it. One day I'm definitely going to put this Bootstrap
-                                component
-                                into use and I'll let you know once I do.</p>
+                            <div class="media-body">
+                                <h4 class="media-heading">Fulano
+                                    <small><i>comentou em "Lorem Ipsum" 10 de Janeiro de 2014</i></small>
+                                </h4>
+                                <p>Excellent feature! I love it. One day I'm definitely going to put this
+                                    Bootstrap
+                                    component
+                                    into use and I'll let you know once I do.</p>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <a href="#" class="pull-left">
+                                <img src="/static/dist/img/user2-160x160.jpg"
+                                     class="media-object recent-activity"
+                                     alt="Sample Image">
+                            </a>
+
+                            <div class="media-body">
+                                <h4 class="media-heading">Fulano
+                                    <small><i>comentou em "Lorem Ipsum" 10 de Janeiro de 2014</i></small>
+                                </h4>
+                                <p>Excellent feature! I love it. One day I'm definitely going to put this
+                                    Bootstrap
+                                    component
+                                    into use and I'll let you know once I do.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
