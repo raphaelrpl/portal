@@ -1,4 +1,4 @@
-var profileModule = angular.module("profileModule", []);
+var profileModule = angular.module("profileModule", ['activityModule']);
 
 profileModule.directive("profile", function () {
     return {
@@ -14,6 +14,7 @@ profileModule.directive("profile", function () {
             $scope.submitting = false;
             $scope.editing = false;
             $scope.errors = {};
+            $scope.activities = [];
 
             $scope.changeToEdit = function () {
                 $scope.editing = true;
