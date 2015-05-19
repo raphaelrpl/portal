@@ -16,15 +16,21 @@ def index():
 
 
 @login_required
-def new(_resp, **profile_properties):
-    cmd = profile_facade.save_profile_cmd(**profile_properties)
-    return _save_or_update_json_response(cmd, _resp)
+def new(_resp, _logged_user, **profile_properties):
+    identifier = profile_properties.get('id')
+    if identifier:
+        # Edit
+        cmd = profile_facade.update_profile_cmd(identifier, **profile_properties)
+    else:
+        # New
+        cmd = profile_facade.save_profile_cmd(**profile_properties)
+    return _save_or_update_json_response(cmd, _resp, _logged_user)
 
 
 @login_required
-def edit(_resp, id, **profile_properties):
+def edit(_resp, _logged_user, id, **profile_properties):
     cmd = profile_facade.update_profile_cmd(id, **profile_properties)
-    return _save_or_update_json_response(cmd, _resp)
+    return _save_or_update_json_response(cmd, _resp, _logged_user)
 
 
 @login_required
@@ -37,7 +43,8 @@ def delete(_resp, id):
         return JsonResponse(cmd.errors)
 
 
-def _save_or_update_json_response(cmd, _resp):
+def _save_or_update_json_response(cmd, _resp, _logged_user):
+    cmd.form.user = _logged_user
     try:
         profile = cmd()
     except CommandExecutionException:

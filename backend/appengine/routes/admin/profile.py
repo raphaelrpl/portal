@@ -7,6 +7,8 @@ from permission_app.permission_facade import main_user_form
 from json import dumps
 from profile_app.profile_model import Profile
 from profile_app.profile_facade import profile_form
+from tekton import router
+from routes.profiles.rest import new
 
 
 @login_required
@@ -21,5 +23,6 @@ def index(_logged_user):
         output = pform.fill_with_model(profile)
     output['user'] = form.fill_with_model(_logged_user)
     context = {"profile": dumps(output),
-               "user": dumps(output['user'])}
+               "user": dumps(output['user']),
+               "new_profile_path": router.to_path(new)}
     return TemplateResponse(context=context)

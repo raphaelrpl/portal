@@ -32,6 +32,11 @@
         .recent-activity {
             width: 40px !important;
         }
+
+        .panel-title {
+
+            font-size: 15px !important;
+        }
     </style>
     <link rel="stylesheet" href="/static/css/default.css"/>
 {% endblock %}
@@ -47,15 +52,31 @@
             $scope.loggedUser = {{ user|safe or {} }};
             $scope.submitting = false;
             $scope.editing = false;
+            $scope.errors = {};
 
             $scope.changeToEdit = function() {
-                $scope.editing=true;
-                $scope.newProfile = Object.create($scope.profile);
+                $scope.editing = true;
+                $scope.newProfile = JSON.parse(JSON.stringify($scope.profile));
                 console.log($scope.newProfile);
             };
 
             $scope.submitEdit = function(newProfile) {
                 console.log(newProfile);
+                $scope.submitting = true;
+                $http.post("{{ new_profile_path }}", newProfile).success(function(data){
+                    console.log("FOI");
+                    console.log(data);
+                    $scope.profile = data;
+                    $scope.editing = false;
+                }).error(function(e){
+                    console.log("NUM FOI");
+                    console.log(e);
+                    $scope.errors = e;
+                    if (e.user)
+                        alert("You must be logged");
+                }).finally(function(){
+                    $scope.submitting = false;
+                });
             }
         }
     </script>
@@ -72,7 +93,7 @@
                                 <img ng-src="{[ profile.avatar || '/static/img/user-no-image.png' ]}" alt=""/>
 
                                 <div class="caption">
-                                    <h4>{[ loggedUser.name || "asdas" ]}</h4>
+                                    <h4 style="font-size: 15px !important;">{[ loggedUser.name || "asdas" ]}</h4>
                                 </div>
                             </div>
                         </div>
@@ -155,24 +176,28 @@
                                     <p>Email:
                                         <small>{[ loggedUser.email || "Não Preenchido"]}</small>
                                     </p>
-                                    <p>Escolaridade:
+                                    <div class="form-group" ng-class="{'has-error': errors.education}">
+                                        <span>Escolaridade: <small ng-show="!editing">{[ profile.education || "Não Preenchido" ]}</small></span>
                                         <input type="text" class="form-control" ng-show="editing" ng-model="newProfile.education"/>
-                                        <small ng-show="!editing">{[ profile.education || "Não Preenchido" ]}</small>
-                                    </p>
-                                    <p>Cargo:
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error': errors.position}">
+                                        <span>Cargo: <small ng-show="!editing">{[ profile.position || "Não Preenchido" ]}</small></span>
                                         <input type="text" class="form-control" ng-show="editing" ng-model="newProfile.position"/>
-                                        <small ng-show="!editing">{[ profile.position || "Não Preenchido" ]}</small>
-                                    </p>
-                                    <p style="padding-bottom: 13px !important;">Sobre mim:
+                                    </div>
+
+                                    <div class="form-group" ng-class="{'has-error': errors.about}">
+                                        <span style="padding-bottom: 13px !important;">
+                                            Sobre mim:
+                                            <small ng-show="!editing">{[ profile.about || "Não Preenchido" ]}</small>
+                                        </span>
                                         <textarea class="form-control" ng-show="editing" ng-model="newProfile.about" rows="5" style="width: 100% !important;"></textarea>
-                                        <small ng-show="!editing">
-                                            {[ profile.about || "Não Preenchido" ]}
-                                        </small>
-                                    </p>
+                                    </div>
+
 
                                     <div class="form-group" ng-show="editing">
                                         <button ng-click="editing=false;" class="btn btn-default pull-right" style="margin-left: 10px;">Cancelar</button>
                                         <button ng-click="submitEdit(newProfile)" class="btn btn-primary pull-right">Salvar</button>
+                                        <img ng-show="submitting" style="margin: 10px;" src="/static/img/ajax.gif" class="pull-right">
                                     </div>
                                 </div>
                             </div>
