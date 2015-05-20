@@ -9,7 +9,10 @@ activityModule.directive("activity", function () {
             data: '@'
         },
         controller: function ($scope) {
-
+            $scope.getter = function(data) {
+                console.log('GETTER');
+                console.log(data);
+            }
         }
     };
 });

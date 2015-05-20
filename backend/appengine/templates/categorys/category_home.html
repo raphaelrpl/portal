@@ -122,6 +122,11 @@
                         $(saveButton).prop("disabled", false);
                         if (data.id) {
                             var table = $("#categoryTable").find('tbody');
+                            var count = $(table).find('tr').length;
+                            console.log(count);
+                            if (count == 0 || count == -1) {
+                                $("#categoryTable tr").remove();
+                            }
                             var line = $('<tr>');
                             $(line).append($('<td>').text(data.name));
                             var col = $('<td>');

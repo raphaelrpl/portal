@@ -6,12 +6,10 @@
     </a>
 
     <div class="media-body">
-        <h4 class="media-heading">Fulano
-            <small><i>comentou em "Lorem Ipsum" 10 de Janeiro de 2014</i></small>
+        <h4 class="media-heading">{[ data.sender.name ]}
+            <small><i>{[ data.creation ]}</i></small>
         </h4>
-        <p>Excellent feature! I love it. One day I'm definitely going to put this
-            Bootstrap
-            component
-            into use and I'll let you know once I do.</p>
+        <p>{[ data.sender.name ]} - {[ data.user.name ]}</p>
+        <button class="btn btn-primary" ng-click="getter(data)">GETTER</button>
     </div>
 </div>

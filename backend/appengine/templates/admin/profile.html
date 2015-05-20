@@ -45,13 +45,15 @@
 
 {% block js %}
     <script src="/static/profiles/js/profile.js"></script>
+    <script src="/static/profiles/js/activities.js"></script>
     <script>
         angular.module('mainApp').requires.push('profileModule');
 
-        function profileController($scope, $http) {
+        function profileController($scope) {
             $scope.profile = {{ profile|safe }};
             $scope.loggedUser = {{ user|safe or {} }};
             $scope.postUrl = "{{ new_profile_path }}";
+            $scope.activities = {{ activities|safe or []}};
         }
     </script>
 {% endblock %}
@@ -59,7 +61,7 @@
 {% block body %}
     <div class="content-wrapper">
         <section class="content content-min" ng-controller="profileController">
-            <profile logged-user="loggedUser" profile="profile" post-url="postUrl"></profile>
+            <profile logged-user="loggedUser" profile="profile" post-url="postUrl" activities="activities"></profile>
         </section>
     </div>
 {% endblock %}

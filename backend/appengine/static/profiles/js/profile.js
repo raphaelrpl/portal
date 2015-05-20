@@ -8,13 +8,16 @@ profileModule.directive("profile", function () {
         scope: {
             profile: '=',
             loggedUser: '=',
-            postUrl: '='
+            postUrl: '=',
+            activities: '='
         },
         controller: function ($scope, $http) {
             $scope.submitting = false;
             $scope.editing = false;
             $scope.errors = {};
-            $scope.activities = [];
+            console.log("Entro na function");
+            console.log($scope.activities);
+            //$scope.activities = [{sender: {name:"Raphael"}, user: {name: "Fulano"}}];
 
             $scope.changeToEdit = function () {
                 $scope.editing = true;

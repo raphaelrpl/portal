@@ -128,7 +128,7 @@
                             Atividades Recentes</h3>
                     </div>
                     <div class="panel-body">
-                        <activity ng-repeat="data in activities" values="data"></activity>
+                        <activity ng-repeat="data in activities track by $index" data="data"></activity>
                         <div class="col-md-12" ng-hide="activities.length"><h3>Nenhuma atividade recente</h3></div>
                     </div>
                 </div>
