@@ -35,7 +35,7 @@ def index(question_id=""):
         def fill_comment_model(comment):
             comment_dct = comment_form.fill_with_model(comment)
             comment_dct['delete_path'] = router.to_path(router.to_path(comment_delete), comment_dct['id'])
-            comment_dct['publisher'] = main_user_form().fill_with_model(MainUser.get_by_id(int(question_dct['user'])))
+            comment_dct['publisher'] = main_user_form().fill_with_model(MainUser.get_by_id(question_dct['user']['id']))
             return comment_dct
 
         comments = [fill_comment_model(c) for c in comments_on_question]
