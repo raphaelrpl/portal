@@ -74,12 +74,16 @@ def index(category=""):
         qoutput = []
         for q in qs:
             question = q.destination.get()
+            if question is None:
+                continue
             dct = get_the_user(question, qform)
             dct["type"] = "Q"
             qoutput.append(dct)
 
         for d in ds:
             discuss = d.destination.get()
+            if discuss is None:
+                continue
             # doutput.append(get_the_user(discuss, dform))
             dct = get_the_user(discuss, dform)
             dct["type"] = "D"
