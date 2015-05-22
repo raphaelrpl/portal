@@ -222,7 +222,7 @@
             }
         });
 
-        var mainApp = angular.module('mainApp', ['questionModule', 'searchModule', 'commentModule', 'notificationModule']);
+        var mainApp = angular.module('mainApp', ['questionModule', 'searchModule', 'discussModule', 'commentModule', 'notificationModule']);
         mainApp.config(['$interpolateProvider', function($interpolateProvider) {
             $interpolateProvider.startSymbol('{[');
             $interpolateProvider.endSymbol(']}');

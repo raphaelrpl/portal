@@ -2,6 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 from google.appengine.ext import ndb
 from base_app.model import BasePost
+from gaegraph.business_base import DeleteArcs
 from gaegraph.model import Arc
 from category_app.category_model import Category
 from notification_app.notification_model import Notification
@@ -26,3 +27,10 @@ class Question(BasePost):
 class CategoryQuestion(Arc):
     origin = ndb.KeyProperty(Category, required=True)
     destination = ndb.KeyProperty(Question, required=True)
+
+
+class DeleteCategoryQuestion(DeleteArcs):
+    arc_class = CategoryQuestion
+
+    def __init__(self, origin=None, destination=None):
+        super(DeleteCategoryQuestion, self).__init__(origin, destination)
