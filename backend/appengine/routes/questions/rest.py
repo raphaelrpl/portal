@@ -86,7 +86,7 @@ def delete(_resp, id):
     cmd = question_facade.delete_question_cmd(id)
     try:
         question = cmd()
-        DeleteCategoryQuestion(destination=question).execute()
+        # DeleteCategoryQuestion(destination=question).execute()
     except CommandExecutionException:
         _resp.status_code = 500
         return JsonResponse(cmd.errors)
