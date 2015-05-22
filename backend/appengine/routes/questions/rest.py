@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from time import sleep
-from google.appengine.ext import ndb
 from gaebusiness.business import CommandExecutionException
 from permission_app.permission_facade import main_user_form
 from tekton.gae.middleware.json_middleware import JsonResponse
 from question_app import question_facade
 from gaepermission.decorator import login_required
-from question_app.question_model import CategoryQuestion, Question
+from question_app.question_model import CategoryQuestion, Question, DeleteCategoryQuestion
 from category_app.category_model import Category
 
 
@@ -87,6 +86,7 @@ def delete(_resp, id):
     cmd = question_facade.delete_question_cmd(id)
     try:
         question = cmd()
+        DeleteCategoryQuestion(destination=question).execute()
     except CommandExecutionException:
         _resp.status_code = 500
         return JsonResponse(cmd.errors)
