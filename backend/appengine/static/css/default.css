@@ -146,3 +146,15 @@
 .hover-show:hover {
     background-color: #ddd7d2;
 }
+
+.notification-selected {
+    background-color: inherit !important;
+}
+
+.notification-selected:hover {
+    background-color: #f3f3f3 !important;
+}
+
+.notification-cursor {
+    cursor: pointer !important;
+}

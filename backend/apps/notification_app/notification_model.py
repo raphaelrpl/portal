@@ -10,4 +10,5 @@ class Notification(Node):
     user = ndb.KeyProperty(MainUser, required=True)
     message = ndb.StringProperty(required=True)
     notification_type = ndb.StringProperty(required=True)
+    post = ndb.IntegerProperty(required=False)
     is_read = ndb.BooleanProperty(required=True, default=False)

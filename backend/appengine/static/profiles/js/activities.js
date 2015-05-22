@@ -6,12 +6,16 @@ activityModule.directive("activity", function () {
         replace: true,
         templateUrl: '/static/profiles/html/activity.html',
         scope: {
-            data: '@'
+            data: '='
         },
         controller: function ($scope) {
-            $scope.getter = function(data) {
-                console.log('GETTER');
-                console.log(data);
+            $scope.redirectPage = function(data) {
+                if (data.notification_type == "question") {
+                    window.location = "/questions/" + data.post;
+                }
+                if (data.notification_type == "discuss") {
+                    window.location = "/discusses/" + data.post;
+                }
             }
         }
     };

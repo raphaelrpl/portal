@@ -127,7 +127,7 @@
                         <h3 ng-hide="editing" class="panel-title" style="display: inline-block !important;">
                             Atividades Recentes</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body notification-selected">
                         <activity ng-repeat="data in activities track by $index" data="data"></activity>
                         <div class="col-md-12" ng-hide="activities.length"><h3>Nenhuma atividade recente</h3></div>
                     </div>

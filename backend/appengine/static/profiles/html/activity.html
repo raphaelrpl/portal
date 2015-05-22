@@ -1,15 +1,8 @@
-<div class="media">
-    <a href="#" class="pull-left">
-        <img src="/static/dist/img/user2-160x160.jpg"
-             class="media-object recent-activity"
-             alt="Sample Image">
-    </a>
-
+<div class="media notification-cursor" ng-click="redirectPage(data)">
     <div class="media-body">
         <h4 class="media-heading">{[ data.sender.name ]}
             <small><i>{[ data.creation ]}</i></small>
         </h4>
-        <p>{[ data.sender.name ]} - {[ data.user.name ]}</p>
-        <button class="btn btn-primary" ng-click="getter(data)">GETTER</button>
+        <p>{[ data.message ]}</p>
     </div>
 </div>

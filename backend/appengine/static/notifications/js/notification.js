@@ -2,7 +2,12 @@ var notificationModule = angular.module('notificationModule', []);
 
 function get_notifications($scope, $http) {
     $http.post($scope.postUrl, {}).success(function(data) {
-        $scope.notifications = data;
+        $scope.notifications = [];
+        angular.forEach(data, function(k, v){
+            if (k.sender.id != $scope.loggedUser) {
+                $scope.notifications.push(k);
+            }
+        });
         console.log(data);
     }).error(function(errors) {
         $scope.errors = errors;
@@ -17,11 +22,12 @@ notificationModule.directive("notification", function() {
         templateUrl: '/static/notifications/html/notification.html',
         scope: {
             postUrl: '@',
-            notificationUrl: '@'
+            notificationUrl: '@',
+            loggedUser: '@'
         },
         controller: function($scope, $http) {
             $scope.errors = {};
-            $scope.notifications = [];
+            $scope.notifictions = [];
             $scope.notificationsRead = [];
             get_notifications($scope, $http);
         }

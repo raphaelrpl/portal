@@ -18,7 +18,7 @@ class Comment(Base):
     def _post_put_hook(self, future):
         post = self.post.get()
         notification = Notification(sender=self.user, message="comentou sua publicação", user=post.user)
-        notification.notification_type = post.class_[-1]
+        notification.notification_type = "comment"
         notification.put()
 
         super(Comment, self)._post_put_hook(future)
