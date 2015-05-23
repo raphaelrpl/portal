@@ -287,7 +287,9 @@
 
                     element.chosen('.chosen-select');
                     e2.chosen('.chosen-select');
-
+                    $(".chosen-container").focusout(function(e){
+                        $(".chosen-results li[class=active-result]").removeClass("active-result");
+                    });
                 }
             });
         });
