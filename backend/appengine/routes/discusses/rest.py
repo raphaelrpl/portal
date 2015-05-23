@@ -15,11 +15,19 @@ from tekton import router
 
 
 @login_required
+@no_csrf
 def index():
     cmd = discuss_facade.list_discusss_cmd()
     discuss_list = cmd()
     discuss_form = discuss_facade.discuss_form()
-    discuss_dcts = [discuss_form.fill_with_model(m) for m in discuss_list]
+
+    def localize_user(model):
+        dct = discuss_form.fill_with_model(model)
+        user = main_user_form().fill_with_model(model.user.get())
+        dct['user'] = user
+        return dct
+
+    discuss_dcts = [localize_user(m)for m in discuss_list]
     return JsonResponse(discuss_dcts)
 
 

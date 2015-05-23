@@ -15,8 +15,16 @@
         }
 
         function commentController($scope, $window, $http) {
+            $scope.searching = true;
+            $http.get('{{ list_comment_path or "/comments/rest/%s" % discuss['id'] }}').success(function(data){
+                $scope.commentList = data;
+            }).error(function(e){
+                $scope.commentList = [];
+            }).finally(function(f){
+                $scope.searching = false;
+            });
             $scope.comment = {post: {{ discuss['id'] }}, type: "D"};
-            $scope.commentList = {{ comments|safe }};
+{#            $scope.commentList = {{ comments|safe }};#}
             $scope.loggedUser = {
                 id: {{ _logged_user.key.id() }},
                 email: "{{ _logged_user.email }}"
@@ -70,6 +78,7 @@
                     <div class="col-md-12">
                         <h2 class="page-header">Comentários</h2>
                         <section class="comment-list">
+                            <img src="/static/img/ajax.gif" ng-show="searching">
                             <usercomment ng-repeat="c in commentList" comment="c" logged-user="loggedUser" comment-list="commentList"></usercomment>
                         </section>
                     </div>

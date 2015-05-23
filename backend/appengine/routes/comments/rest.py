@@ -11,26 +11,32 @@ from comment_app.comment_model import Comment
 from question_app.question_model import Question
 from discuss_app.discuss_model import Discuss
 from gaepermission.decorator import login_required
+from base_app.model import BasePost
 
 
 @login_required
-def index(question_id):
-    # cmd_question = question_facade.get_question_cmd(question_id)
-    # question = cmd_question()
+@no_csrf
+def index(post_id=None):
+    def localize_user(model, form):
+        dct = form.fill_with_model(model)
+        dct['publisher'] = main_user_form().fill_with_model(model.user.get())
+        dct['user'] = dct['publisher']
+        return dct
 
-    cmd = comment_facade.list_comments_cmd()
-    comment_list = cmd()
+    if post_id:
+        key = ndb.Key(BasePost, int(post_id)).get()
+        if key is None:
+            return JsonResponse([])
+        comments = Comment.query(Comment.post == key.key).fetch()
+        if not comments:
+            return JsonResponse([])
+
+        comments_dcts = [localize_user(m, comment_facade.comment_form()) for m in comments]
+        return JsonResponse(comments_dcts)
+
+    comment_list = Comment.query().fetch()
     comment_form = comment_facade.comment_form()
-    comment_dcts = [comment_form.fill_with_model(m) for m in comment_list]
-
-    # comments_on_question = Comment.filter_by_question_key(question.key).fetch()
-    #
-    # def fill_comment_model(comment):
-    #     comment_dct = comment_form.fill_with_model(comment)
-    #     comment_dct['publisher'] = main_user_form().fill_with_model(MainUser.get_by_id(int(question_dct['user'])))
-    #     return comment_dct
-    #
-    # comments = [fill_comment_model(c) for c in comments_on_question]
+    comment_dcts = [localize_user(m, comment_form) for m in comment_list]
     return JsonResponse(comment_dcts)
 
 

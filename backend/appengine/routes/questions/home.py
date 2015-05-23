@@ -29,37 +29,13 @@ def index(question_id=""):
         question_dct = form.fill_with_model(question)
         question_dct['user'] = main_uform.fill_with_model(MainUser.get_by_id(question_dct['user']))
 
-        comment_form = comment_facade.comment_form()
-        comments_on_question = Comment.filter_by_question_key(question.key).fetch()
-
-        def fill_comment_model(comment):
-            comment_dct = comment_form.fill_with_model(comment)
-            comment_dct['delete_path'] = router.to_path(router.to_path(comment_delete), comment_dct['id'])
-            comment_dct['publisher'] = main_user_form().fill_with_model(MainUser.get_by_id(question_dct['user']['id']))
-            return comment_dct
-
-        comments = [fill_comment_model(c) for c in comments_on_question]
-
         context = {
             "question": question_dct,
             "questions": dumps([question_dct]),
-            "comments": dumps(comments),
             "comment_url": router.to_path(comment_new),
             "comment_list": router.to_path(comment_list)}
         return TemplateResponse(context=context, template_path='questions/question.html')
-    cmd = question_facade.list_questions_cmd()
-    questions = cmd()
-    question_form = question_facade.question_form()
-
-    def localize_question(question):
-        question_dct = question_form.fill_with_model(question)
-        question_dct['user'] = main_uform.fill_with_model(MainUser.get_by_id(question_dct['user']))
-        return question_dct
-
-    localized_questions = [localize_question(question) for question in questions][::-1]
-
-    context = {'questions': dumps(localized_questions)}
-    return TemplateResponse(context, template_path='questions/home.html')
+    return TemplateResponse(template_path='questions/home.html')
 
 
 @login_required

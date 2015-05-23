@@ -6,16 +6,26 @@ from permission_app.permission_facade import main_user_form
 from tekton.gae.middleware.json_middleware import JsonResponse
 from question_app import question_facade
 from gaepermission.decorator import login_required
-from question_app.question_model import CategoryQuestion, Question, DeleteCategoryQuestion
+from gaecookie.decorator import no_csrf
+from question_app.question_model import CategoryQuestion, Question
 from category_app.category_model import Category
 
 
 @login_required
+@no_csrf
 def index():
     cmd = question_facade.list_questions_cmd()
     question_list = cmd()
+
     question_form = question_facade.question_form()
-    question_dcts = [question_form.fill_with_model(m) for m in question_list]
+
+    def localize_user(model):
+        dct = question_form.fill_with_model(model)
+        user = main_user_form().fill_with_model(model.user.get())
+        dct['user'] = user
+        return dct
+
+    question_dcts = [localize_user(m) for m in question_list]
     return JsonResponse(question_dcts)
 
 

@@ -6,8 +6,16 @@
 
 {% block js %}
     <script>
-        function listQuestionController($scope) {
-            $scope.questions = {{ questions|safe or [] }};
+        function listQuestionController($scope, $http) {
+            $scope.searching = true;
+            $http.post("/questions/rest/", {}).success(function(data){
+                $scope.questions = data;
+            }).error(function(e){
+                $scope.questions = [];
+            }).finally(function(f) {
+                $scope.searching = false;
+            });
+{#            $scope.questions = {{ questions|safe or [] }};#}
             $scope.loggedUser = {
                 id: {{ _logged_user.key.id() or "" }},
                 email: "{{ _logged_user.email or '' }}"
@@ -34,6 +42,7 @@
                 <div class="hidden-xs hidden-sm" style="height: 20px !important;"></div>
                 <section class="col-md-8 col-md-offset-2">
                     <div ng-controller="listQuestionController">
+                        <img src="/static/img/ajax.gif" ng-show="searching" alt=""/>
                         <question ng-repeat="q in questions" question="q" logged-user="loggedUser" questions="questions"></question>
                     </div>
                 </section>

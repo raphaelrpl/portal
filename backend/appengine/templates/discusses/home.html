@@ -13,8 +13,16 @@
 {#    <script src="/static/discuss/js/discuss.js"></script>#}
     <script>
 {#        angular.module('mainApp').requires.push('discussModule');#}
-        function listDiscussController($scope) {
-            $scope.discusses = {{ discusses|safe or [] }};
+        function listDiscussController($scope, $http) {
+            $scope.searching = true;
+            $http.post("/discusses/rest/", {}).success(function(data){
+                $scope.discusses = data;
+            }).error(function(e){
+                $scope.discusses = [];
+            }).finally(function(f) {
+                $scope.searching = false;
+            });
+{#            $scope.discusses = {{ discusses|safe or [] }};#}
             $scope.loggedUser = {
                 id: {{ _logged_user.key.id() or "" }},
                 email: "{{ _logged_user.email or '' }}"
@@ -41,6 +49,7 @@
                 <div class="hidden-xs hidden-sm" style="height: 20px !important;"></div>
                 <section class="col-md-8 col-md-offset-2">
                     <div ng-controller="listDiscussController">
+                        <img src="/static/img/ajax.gif" ng-show="searching" alt=""/>
                         <discuss ng-repeat="d in discusses" discuss="d" logged-user="loggedUser" discusses="discusses"></discuss>
                     </div>
                 </section>
