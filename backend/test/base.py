@@ -10,6 +10,8 @@ from config.template import render
 
 
 # workaround for i18n. without this test will not run
+from gaepermission.model import MainUser
+from question_app.question_model import Question
 
 app = webapp2.WSGIApplication(
     [webapp2.Route('/', None, name='upload_handler')])
@@ -54,6 +56,33 @@ class GAETestCase(unittest.TestCase):
         :return:
         """
         json.dumps(json_response.context)
+
+    def get_and_insert_dummy_user(self):
+        user = MainUser(name="user", email="user@user.com")
+        user.put()
+        return user
+
+
+class TestQuestion(GAETestCase):
+    def insert_dummy_question(self, name="question", user=None):
+        """
+        Make a question insert using rest.new method. Retrieve JSONResponse object
+        """
+        from routes.questions.rest import new as new_question
+        from mock import Mock
+        if user is None:
+            user = self.get_and_insert_dummy_user()
+        resp = Mock()
+        question_dct = {'question': {'name': name}}
+        return new_question(_resp=resp, _logged_user=user, **question_dct)
+
+    def get_question_by_id(self, question_id):
+        """
+        Get Dummy User by ID
+        """
+        from google.appengine.ext.ndb import Key
+        key = Key(Question, int(question_id))
+        return key.get()
 
 
 class BlobstoreTestCase(GAETestCase):
